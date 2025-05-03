@@ -5,7 +5,7 @@
     header("Access-Control-Allow-Headers: Content-Type");
     header("Content-Type: application/json");//Indicar que la respuesta del servidor será en formato JSON
     header("Access-Control-Allow-Credentials: true"); // Permite el uso de credenciales (como cookies)
-
+    require_once '../models/cookies_sesiones.php';
 
     //Obtener el método HTTP usado en la solicitud (GET, POST, PUT, DELETE).
     $method = $_SERVER['REQUEST_METHOD'];
@@ -34,6 +34,41 @@ switch ($action) {
             echo json_encode([
                 "loggedIn" => false,
                 "currentSession" =>$currentSesion
+            ]);
+        }
+    
+    break;
+
+    case 'login':
+        if ($method === 'POST') {
+            // $data = json_decode(file_get_contents("php://input"), true);
+            // $controller = new UserLoginController();
+            // $controller->loginUser($data);
+            require_once '../controllers/loginController.php';
+            checkLoginCredentials();
+        }
+    break;
+
+    case 'session':
+        if ($method === 'POST') {
+            require_once '../controllers/loginController.php';
+            $response= setSessions($_POST['nickname']);
+            return $response;
+            
+        }
+    break;
+
+    case 'close':
+        $sesion= new Sesion();
+        $closed=$sesion->unset_session();
+
+        if($closed){
+            echo json_encode([
+                "closedSesion" => true,
+            ]);
+        }else{
+            echo json_encode([
+                "closedSesion" => false,
             ]);
         }
     

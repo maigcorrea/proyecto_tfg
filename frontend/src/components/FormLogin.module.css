@@ -1,0 +1,35 @@
+.formInicio{
+    width: fit-content;
+    min-height: 400px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    padding: 80px;
+    /* Glass background effect */
+    background: rgba(255, 255, 255, 0.21);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    justify-content: center;
+    /* background-image: url("../assets/textures/Crashed-Scanner-Techno\ \(8\).jpg");
+    background-size: cover;
+    mix-blend-mode: overlay; */
+}
+
+.formSecundario{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    min-height: 400px;
+    margin: auto;
+    padding: 40px;
+    /* Glass background effect */
+    background: rgba(255, 255, 255, 0.51);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}

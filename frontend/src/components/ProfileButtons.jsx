@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-//import { checkSession } from '../services/authService';
-//import { closeSes } from '../services/authService';
+import { checkSession } from '../services/authService';
+import { closeSes } from '../services/authService';
 import { useNavigate } from "react-router";
 
 const ProfileButtons = () => {
@@ -10,6 +10,39 @@ const ProfileButtons = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [img, setImg] = useState(null);
     const [usu, setUsu] = useState("");
+
+
+    useEffect(() => {
+        checkSession()
+          .then(response => {
+            console.log(response.data); // Opcional, para debug
+            // console.log('Status:', response.status);
+            // console.log('Status Text:', response.statusText);
+            console.log('User data:', response.data.usuario);
+            setLoggedIn(response.data.loggedIn); 
+            console.log('Sesión activa', response.data.loggedIn)
+            setUsu(response.data.usuario);
+            setImg(response.data.img);
+            setIsLoading(false);
+          })
+          .catch(error => {
+            console.error('Error comprobando la sesión:', error);
+            setLoggedIn(false);
+            setIsLoading(false);
+          });
+      }, []);
+
+const [cerrar, setCerrar] = useState(false);
+  const cerrarSesion = () =>{
+    closeSes().then(response =>{
+      // setCerrar(response);
+      console.log(response);
+      //Redireccionar o recargar página
+      navigate("/");
+      window.location.reload();
+    });
+  }
+  
 
   return (
     <>

@@ -1,10 +1,10 @@
 import React from 'react'
+import FormLogin from '../components/FormLogin'
 
 const Login = () => {
   return (
     <>
-    <h1 className='text-7xl my-6'>LOGIN</h1>
-    
+    <FormLogin></FormLogin>
     </>
   )
 }

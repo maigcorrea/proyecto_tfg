@@ -1,5 +1,5 @@
 <?php
-require_once "../config/conection.php";
+require_once "../config/connection.php";
 
     class User{
         private $conn;
@@ -188,7 +188,7 @@ require_once "../config/conection.php";
                     "Email" => $mail,
                     "Teléfono" => $phone,
                     "Nacimiento" => $birth,
-                ]
+                ];
             }
 
             $stmt->close();
