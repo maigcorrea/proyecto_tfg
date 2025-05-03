@@ -13,23 +13,26 @@ require_once "../config/connection.php";
         public function userRegistration($tel,$nom,$email,$nickname, $f_nac, $pass, $img){
             $inserted=false;
 
-            if(!$this->checkNicknameExists($nickname)){
-                try {
-                    $query="INSERT INTO usuario(telefono, nombre, email, nickname, nacimiento, passwrd, img) VALUES(?,?,?,?,?,?,?);";
-                    $stmt=$this->conn->getConnection()->prepare($query);
-
-                    // Hashear la contraseña
-                    $hash = password_hash($pass, PASSWORD_BCRYPT);
-
-                    $stmt->bind_param("issssss",$tel,$nom,$email,$nickname, $f_nac, $hash, $img);
-                     //NOTA: Cuando un usuario intente iniciar sesión, puedes usar password_verify($passwordIntroducida, $hashAlmacenado) para comprobar si la contraseña coincide con el hash almacenado.
-
-                    $stmt->execute();
-                    $inserted=true;
-                } catch (\Throwable $th) {
-                    $inserted="duplicated";
+            if(!$this->checkEmailExists($email)){
+                if(!$this->checkNicknameExists($nickname)){
+                    try {
+                        $query="INSERT INTO usuario(telefono, nombre, email, nickname, nacimiento, passwrd, img) VALUES(?,?,?,?,?,?,?);";
+                        $stmt=$this->conn->getConnection()->prepare($query);
+    
+                        // Hashear la contraseña
+                        $hash = password_hash($pass, PASSWORD_BCRYPT);
+    
+                        $stmt->bind_param("issssss",$tel,$nom,$email,$nickname, $f_nac, $hash, $img);
+                         //NOTA: Cuando un usuario intente iniciar sesión, puedes usar password_verify($passwordIntroducida, $hashAlmacenado) para comprobar si la contraseña coincide con el hash almacenado.
+    
+                        $stmt->execute();
+                        $inserted=true;
+                    } catch (\Throwable $th) {
+                        $inserted=false;
+                    }
+    
                 }
-
+                
                 // if ($this->checkNicknameExists($nickname)) {
                 //     return [
                 //         "success" => false,
@@ -57,7 +60,10 @@ require_once "../config/connection.php";
                 //     ];
                 // }
                 
+            }else{
+                $inserted="email_taken";
             }
+
             return $inserted;
         }
 
@@ -65,6 +71,23 @@ require_once "../config/connection.php";
             $query="SELECT count(nickname) FROM usuario WHERE nickname=?;";
             $stmt=$this->conn->getConnection()->prepare($query);
             $stmt->bind_param("s",$nickname);
+            $stmt->bind_result($exists);
+
+            $stmt->execute();
+            $stmt->fetch();
+
+            if($exists==1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function checkEmailExists($email){
+            $email=trim($email);
+            $query="SELECT COUNT(email) FROM usuario WHERE email=?";
+            $stmt=$this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("s",$email);
             $stmt->bind_result($exists);
 
             $stmt->execute();

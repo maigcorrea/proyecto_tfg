@@ -20,7 +20,8 @@ const ProfileButtons = () => {
             // console.log('Status Text:', response.statusText);
             console.log('User data:', response.data.usuario);
             setLoggedIn(response.data.loggedIn); 
-            console.log('Sesión activa', response.data.loggedIn)
+            console.log('Sesión activa', response.data.loggedIn);
+            console.log("Imagen",response.data.img);
             setUsu(response.data.usuario);
             setImg(response.data.img);
             setIsLoading(false);
@@ -32,7 +33,6 @@ const ProfileButtons = () => {
           });
       }, []);
 
-const [cerrar, setCerrar] = useState(false);
   const cerrarSesion = () =>{
     closeSes().then(response =>{
       // setCerrar(response);

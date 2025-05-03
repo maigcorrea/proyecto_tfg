@@ -5,6 +5,8 @@
     header("Access-Control-Allow-Headers: Content-Type");
     header("Content-Type: application/json");//Indicar que la respuesta del servidor será en formato JSON
     header("Access-Control-Allow-Credentials: true"); // Permite el uso de credenciales (como cookies)
+    
+    require_once '../models/user.php';
     require_once '../models/cookies_sesiones.php';
 
     //Obtener el método HTTP usado en la solicitud (GET, POST, PUT, DELETE).
@@ -21,13 +23,13 @@ switch ($action) {
 
         if (isset($currentSesion) && $currentSesion!=null) {
             //  Obtener la foto para mostrarla en el perfil
-            //$user=new User();
-            //$img=$user->getImg($currentSesion);
+            $user=new User();
+            $img=$user->getImg($currentSesion);
             // var_dump($_SESSION);
             echo json_encode([
                 "loggedIn" => true,
                 "usuario" => $currentSesion,
-                //"img" => $img
+                "img" => $img
                 // "tipo" => $_SESSION['tipo']
             ]);
         } else {
@@ -72,6 +74,16 @@ switch ($action) {
             ]);
         }
     
+    break;
+
+    case 'register':
+        if ($method === 'POST') {
+            //Controlar si el nickname no está pillado
+            //Si no está pillado se crea una carpeta para subir la foto
+            //Se registra al usuario
+            require_once '../controllers/registerController.php';
+            userRegistration();
+        }
     break;
 }
 ?>
