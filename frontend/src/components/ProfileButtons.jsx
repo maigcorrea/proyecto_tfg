@@ -53,7 +53,7 @@ const ProfileButtons = () => {
                 {loggedIn ? <button onClick={cerrarSesion}>Cerrar Sesión</button> : <Link to='/login'>Iniciar Sesión</Link>}
                 {/* <Link to='/login'>Iniciar Sesión</Link> */}
                 {/* Foto del usuario y desplegable con opciones al hacer hover sobre la foto*/}
-                {loggedIn ? img!=null ? <img src={`../userAssets/${usu}/${img}`} className="w-10 h-10 rounded-full object-cover cursor-pointer"/> :<p>Foto</p> : <Link to='/register'>Registrarse</Link>}
+                {loggedIn ? img!=null ? <Link to="/my-profile"><img src={`../userAssets/${usu}/${img}`} className="w-10 h-10 rounded-full object-cover cursor-pointer"/></Link> :<p>Foto</p> : <Link to='/register'>Registrarse</Link>}
                 {/* <Link to='/register'>Registrarse</Link> */}
             </ul>
         </div>

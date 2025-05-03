@@ -8,6 +8,7 @@ import Noticias from './pages/Noticias'
 import Login from './pages/Login'
 import Registro from './pages/Registro'
 import PrivateRoute from './components/PrivateRoute'
+import UserPanel from './pages/UserPanel'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
             <Route path='/noticias' element={<PrivateRoute><Noticias></Noticias></PrivateRoute>}></Route>
             <Route path='login' element={<Login></Login>}></Route>
             <Route path='/register' element={<Registro></Registro>}></Route>
+            <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
