@@ -1,11 +1,16 @@
 <?php
     header("Access-Control-Allow-Origin: http://localhost:5173");
-    header("Access-Control-Allow-Credentials: true"); // ✅ Esto permite enviar cookies
-    header("Access-Control-Allow-Methods: GET, POST");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type");
     header("Content-Type: application/json");//Indicar que la respuesta del servidor será en formato JSON
     header("Access-Control-Allow-Credentials: true"); // Permite el uso de credenciales (como cookies)
     
+    // 👉 Manejo explícito del preflight CORS
+/*if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}*/
+
     require_once '../models/user.php';
     require_once '../models/cookies_sesiones.php';
 
@@ -16,7 +21,7 @@
 
 
     //En función del action, llamar al controlador y la función correspondiente
-switch ($action) {
+    switch ($action) {
     case 'checkSessionExists':
         $sesion= new Sesion();
         $currentSesion= $sesion->get_session("usu");
@@ -83,6 +88,22 @@ switch ($action) {
             //Se registra al usuario
             require_once '../controllers/registerController.php';
             userRegistration();
+        }
+    break;
+
+    case 'getDataProfile':
+        $sesion= new Sesion();
+        $currentSesion= $sesion->get_session("usu");
+
+        if (isset($currentSesion) && $currentSesion != null) {
+            //Obtener los datos del perfil
+            //Llamar a función del controlador
+            require_once "../controllers/getUserDataController.php";
+            $userData = getDataUserProfile();
+            header('Content-Type: application/json');
+            echo json_encode($userData);
+        }else{
+            echo json_encode(["error" => "Error en users.php al obtener los datos del usuario loggeado"]);
         }
     break;
 }

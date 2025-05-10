@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //Ruta base
-const API_URL = "http://localhost/proyecto_intermodular/backend/routes/";
+const API_URL = "http://localhost/proyecto_tfg/backend/routes/";
 
 export const getDataProfile = async() =>{
     try {
