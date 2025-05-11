@@ -4,6 +4,8 @@ import { getDataProfile } from '../services/userService'
 const ProfileUserData = () => {
   const [userData, setUserData] = useState(null);
   const [editingField, setEditingField] = useState({});
+  const date = new Date();
+  const limitYear = (date.getFullYear()-10)+"-12-31"; //Año actual - 10 años para el límite del campo de nacimiento
 
    useEffect(() => {
       getDataProfile()
@@ -74,6 +76,8 @@ const handleSave = (field) => {
                       input.focus();
                     }
                   }}
+                  min={clave === "Nacimiento" ? "1927-01-01" : undefined}
+                  max={clave === "Nacimiento" ? limitYear : undefined}
                 ></input>
                 {!editingField[clave] ? (
                   <button

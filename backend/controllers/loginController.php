@@ -36,23 +36,25 @@ function checkLoginCredentials(){
       }
 }
 
-//Sacar el email y el tipo para almacenar las sesiones 
-function getEmailType($email){
+//Sacar el nickname y el tipo para almacenar las sesiones 
+function getNickType($identificador){
     //Recoger datos
     $user=new User();
-    $type= $user->getType($email);
+    $data= $user->getTypeAndNick($identificador);
   
-    return $type;
+    return $data;
   }
 
 
-function setSessions($email){
+function setSessions($identificador){
 
-    $tipo=getEmailType($email);
+    $data=getNickType($identificador);
+    $tipo=$data['tipo'];
+    $nickname=$data['nickname'];
   
     $sesion=new Sesion();
     //$sesion->start_session();
-    $sesion->set_session("usu", $email, "tipo", $tipo);
+    $sesion->set_session("usu", $nickname, "tipo", $tipo);
     $haySesion=$sesion->get_session("usu");
     
     //Se devuelve el tipo y ya en el frontend se redirige al dashboard en función del tipo de usuario
@@ -60,7 +62,7 @@ function setSessions($email){
     echo json_encode([
       "success" => true,
       "contenidoSesion"=>$haySesion,
-      "usu" =>$email,
+      "usu" =>$nickname,
       "tipo" => $tipo
       // aquí podrías devolver un token o datos del usuario
     ]);

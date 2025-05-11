@@ -115,17 +115,23 @@ require_once "../config/connection.php";
             return $profile;
         }
 
-        public function getType($nom){
-            $query="SELECT tipo FROM usuario WHERE email=? OR nickname=?";
+        public function getTypeAndNick($nom){
+            $query="SELECT tipo, nickname FROM usuario WHERE email=? OR nickname=?";
             $stmt=$this->conn->getConnection()->prepare($query);
             $stmt->bind_param("ss", $nom, $nom);
-            $stmt->bind_result($tipo);
+            $stmt->bind_result($tipo, $nickname);
 
+            $data=[];
             $stmt->execute();
-            $stmt->fetch();
+            while($stmt->fetch()){
+                $data=[
+                    "tipo" => $tipo,
+                    "nickname" => $nickname
+                ];
+            }
 
             $stmt->close();
-            return $tipo;
+            return $data;
         }
 
         public function checkLoginPassword($nom, $passw){
@@ -217,6 +223,16 @@ require_once "../config/connection.php";
 
             $stmt->close();
             return $dataList;
+        }
+
+
+        //MODIFICAR NOMBRE
+        public function updateName($name, $nick){
+            $query="UPDATE usuario SET nombre=? WHERE nickname=?";
+            $stmt=$this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("ss", $name, $nick);
+            $stmt->execute();
+            $stmt->close();
         }
 
     }
