@@ -14,3 +14,18 @@ export const getDataProfile = async() =>{
         throw error;
     }
 }
+
+
+
+export const sendUpdateData = async (data) => {
+  try {
+    const response = await axios.post(`${API_URL}users.php?action=updateProfile`, 
+      data, 
+      { withCredentials: true } // Muy importante si usas cookies de sesión
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error actualizando los datos:", error);
+    throw error;
+  }
+}

@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { getDataProfile } from '../services/userService'
+import { sendUpdateData } from '../services/userService';
 
 const ProfileUserData = () => {
   const [userData, setUserData] = useState(null);
   const [editingField, setEditingField] = useState({});
   const date = new Date();
   const limitYear = (date.getFullYear()-10)+"-12-31"; //Año actual - 10 años para el límite del campo de nacimiento
+  //Toast de verificación de que se ha actualizado el campo
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState(''); // success o error
+
+  const fieldMapping = {
+  Nombre: "nombre",
+  Email: "email",
+  Telefono: "telefono",
+  Nacimiento: "nacimiento",
+  Nickname: "nickname"
+};
+
 
    useEffect(() => {
       getDataProfile()
@@ -29,13 +42,37 @@ const handleEdit = (field) => {
   };
 
 //Cuando guardas el nuevo valor
-const handleSave = (field) => {
+const handleSave = async (field) => {
     setEditingField((prev) => ({
       ...prev, //Para mantener los datos anteriores de los otros campos al guardar un campo concreto
       [field]: false //Campo que guardamos
     }));
 
-    // Aquí puedes hacer una llamada a la API para guardar el nuevo valor
+    // Lógica para guardar el nuevo valor en el backend
+    try {
+      await sendUpdateData(fieldMapping[field], userData[field]); // usamos directamente la clave y su nuevo valor
+      console.log("Actualización exitosa");
+      console.log("Campo actualizado:", fieldMapping[field], " valor nuevo:", userData[field]);
+      // Actualizar los datos del perfil después de guardar
+      //getDataProfile();
+
+      // Mostrar el toast de éxito
+      setToastMessage(`Campo ${fieldMapping[field]} actualizado correctamente`);
+      setToastType('success');
+    } catch (error) {
+      console.error("Error al actualizar el campo", error);
+
+      // Mostrar el toast de error
+      setToastMessage(`Error al actualizar el campo ${field}`);
+      setToastType('error');
+    } finally {
+      // Volver a bloquear el input y quitar el toast después de unos segundos
+      setEditingField((prev) => ({ ...prev, [field]: false }));
+      setTimeout(() => {
+        setToastMessage('');
+        setToastType('');
+      }, 3000);
+    }
   }
 
   // Cuando editas el valor mientras escribe
@@ -56,6 +93,13 @@ const handleSave = (field) => {
     
   return (
     <>
+      {toastMessage && (
+        <div className={`fixed top-5 right-5 p-4 rounded shadow-md z-50
+        ${toastType === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+          {toastMessage}
+        </div>
+      )}
+
       <form action="" className='flex flex-col gap-4 w-fit'>
         <h1 className='text-3xl'>Datos de usuario</h1>
         {Object.entries(userData)

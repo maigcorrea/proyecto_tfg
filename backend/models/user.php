@@ -226,14 +226,36 @@ require_once "../config/connection.php";
         }
 
 
-        //MODIFICAR NOMBRE
-        public function updateName($name, $nick){
-            $query="UPDATE usuario SET nombre=? WHERE nickname=?";
-            $stmt=$this->conn->getConnection()->prepare($query);
-            $stmt->bind_param("ss", $name, $nick);
-            $stmt->execute();
-            $stmt->close();
+        //ACTUALIZAR DATOS DEL USUARIO
+        public function updateUserProfileField($nickname, $field, $newValue) {
+            $allowedFields = ['nombre', 'email', 'telefono', 'nacimiento', 'nickname'];
+
+            if (!in_array($field, $allowedFields)) {
+                return false; // Campo no permitido
+            }
+
+            try {
+                $query = "UPDATE usuario SET $field = ? WHERE nickname = ?";
+                $stmt = $this->conn->getConnection()->prepare($query);
+
+                if (!$stmt) {
+                    throw new Exception("Error preparando consulta: " . $this->conn->getConnection()->error);
+                }
+
+                $stmt->bind_param("ss", $newValue, $nickname);
+
+                if ($stmt->execute()) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            } catch (Throwable $th) {
+                return false;
+            }
         }
+
+        //
 
     }
 

@@ -106,5 +106,13 @@
             echo json_encode(["error" => "Error en users.php al obtener los datos del usuario loggeado"]);
         }
     break;
+
+    case 'updateProfile':
+    if ($method === 'POST') {
+        require_once '../controllers/updateProfileDataController.php';
+        updateUserProfile();
+    }
+    break;
+
 }
 ?>
