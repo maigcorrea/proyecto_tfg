@@ -50,7 +50,11 @@ const handleSave = async (field) => {
 
     // Lógica para guardar el nuevo valor en el backend
     try {
-      await sendUpdateData(fieldMapping[field], userData[field]); // usamos directamente la clave y su nuevo valor
+      const formData= new FormData();
+      formData.append("campo", fieldMapping[field])
+      formData.append("valor", userData[field]);
+      
+      await sendUpdateData(formData); // usamos directamente la clave y su nuevo valor
       console.log("Actualización exitosa");
       console.log("Campo actualizado:", fieldMapping[field], " valor nuevo:", userData[field]);
       // Actualizar los datos del perfil después de guardar

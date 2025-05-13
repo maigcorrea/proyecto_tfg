@@ -23,6 +23,7 @@ export const sendUpdateData = async (data) => {
       data, 
       { withCredentials: true } // Muy importante si usas cookies de sesión
     );
+    console.log(data);
     return response.data;
   } catch (error) {
     console.error("Error actualizando los datos:", error);
