@@ -203,21 +203,22 @@ require_once "../config/connection.php";
 
         //OBTENER TODOS LOS DATOS DEL USUARIO LOGGEADO
         public function getDataUser($identifier){
-            $query="SELECT telefono, email, nombre, nickname, nacimiento, img, tipo FROM usuario WHERE email=? OR nickname=?;";
+            $query="SELECT telefono, email, nombre, nickname, descripcion, nacimiento, img, tipo FROM usuario WHERE nickname=?;";
             $stmt=$this->conn->getConnection()->prepare($query);
-            $stmt->bind_param("ss", $identifier, $identifier);
+            $stmt->bind_param("s", $identifier);
             $stmt->execute();
-            $stmt->bind_result($phone, $mail, $name, $nick, $birth, $img, $tipo);
+            $stmt->bind_result($phone, $mail, $name, $nick, $desc, $birth, $img, $tipo);
 
             $dataList=[];
             while($stmt->fetch()){
                 $dataList=[
+                    "Sobre mí" => $desc,
                     "Nombre" => $name,
                     "Nickname" => $nick,
                     "Email" => $mail,
                     "Teléfono" => $phone,
                     "Nacimiento" => $birth,
-                    "Perfil" => $img,
+                    "ImgPerfil" => $img,
                 ];
             }
 

@@ -12,10 +12,11 @@
         }
 
         $currentSession = $_SESSION['usu'];
+        
+
+
+        //Lista con los datos del usuario de la sesión
         $user=new User();
-
-
-        //Lista con los datos del usuario
         $dataList=$user -> getDataUser($currentSession);
 
         return $dataList ;

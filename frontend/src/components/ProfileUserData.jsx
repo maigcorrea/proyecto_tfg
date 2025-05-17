@@ -20,6 +20,7 @@ const ProfileUserData = () => {
 };
 
 
+// Obtener datos del perfil al cargar el componente
    useEffect(() => {
       getDataProfile()
       .then(data => {
@@ -107,14 +108,14 @@ const handleEdit = (field) => {
       <form action="" className='flex flex-col gap-4 w-fit'>
         <h1 className='text-3xl'>Datos de usuario</h1>
         {Object.entries(userData)
-          .filter(([clave]) => clave !== 'Perfil')
+          .filter(([clave]) => clave !== 'ImgPerfil') // Filtar los campos que no quieres mostrar
           .map(([clave, valor]) => (
             <div className='flex flex-col gap-2' key={clave}>
               <label htmlFor={clave}>{clave}</label>
               <div className='flex gap-2'>
                 <input
                   type={clave != "Nacimiento" ? "text" : "date"}
-                  value={valor}
+                  value={valor || 'Añade información para que otros usuarios puedan conocerte mejor'}
                   name={clave}
                   className='border p-2'
                   disabled={!editingField[clave]}
