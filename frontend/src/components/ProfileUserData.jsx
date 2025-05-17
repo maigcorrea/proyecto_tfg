@@ -105,6 +105,11 @@ const handleEdit = (field) => {
         </div>
       )}
 
+      {/* Imagen de perfil */}
+      <div className='flex justify-center items-center h-screen'>
+        <img src={`../userAssets/${userData.Nickname}/${userData.ImgPerfil}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer'/>
+      </div>
+
       <form action="" className='flex flex-col gap-4 w-fit'>
         <h1 className='text-3xl'>Datos de usuario</h1>
         {Object.entries(userData)
