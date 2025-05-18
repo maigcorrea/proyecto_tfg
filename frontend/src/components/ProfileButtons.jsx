@@ -3,40 +3,44 @@ import { Link } from 'react-router-dom'
 import { checkSession } from '../services/authService';
 import { closeSes } from '../services/authService';
 import { useNavigate } from "react-router";
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserrContext';
 
 const ProfileButtons = () => {
+  const { userSession, setUserSession } = useContext(UserContext); // Contexto para manejar la sesión del usuario
     const navigate= useNavigate();
     const [isLoading, setIsLoading] = useState(true);
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [img, setImg] = useState(null);
-    const [usu, setUsu] = useState("");
+    
 
 
     useEffect(() => {
         checkSession()
           .then(response => {
             console.log(response.data); // Opcional, para debug
-            // console.log('Status:', response.status);
-            // console.log('Status Text:', response.statusText);
+
+            setUserSession({
+              loggedIn: response.data.loggedIn,
+              usuario: response.data.usuario,
+              img: response.data.img
+            });
+
             console.log('User data:', response.data.usuario);
-            setLoggedIn(response.data.loggedIn); 
             console.log('Sesión activa', response.data.loggedIn);
             console.log("Imagen",response.data.img);
-            setUsu(response.data.usuario);
-            setImg(response.data.img);
+            
             setIsLoading(false);
           })
           .catch(error => {
             console.error('Error comprobando la sesión:', error);
-            setLoggedIn(false);
+            setUserSession({ loggedIn: false, usuario: '', img: '' });
             setIsLoading(false);
           });
       }, []);
 
   const cerrarSesion = () =>{
     closeSes().then(response =>{
-      // setCerrar(response);
       console.log(response);
+      setUserSession({ loggedIn: false, usuario: '', img: '' });
       //Redireccionar o recargar página
       navigate("/");
       window.location.reload();
@@ -50,10 +54,10 @@ const ProfileButtons = () => {
             <ul className='flex gap-4'>
                 {/* Una vez que el usuario se ha autenticado estos link desaparecerán y se verá una foto de perfil del usuario */}
                 {/* Botón de cerrar sesión */}
-                {loggedIn ? <button onClick={cerrarSesion}>Cerrar Sesión</button> : <Link to='/login'>Iniciar Sesión</Link>}
+                {userSession.loggedIn ? <button onClick={cerrarSesion}>Cerrar Sesión</button> : <Link to='/login'>Iniciar Sesión</Link>}
                 {/* <Link to='/login'>Iniciar Sesión</Link> */}
                 {/* Foto del usuario y desplegable con opciones al hacer hover sobre la foto*/}
-                {loggedIn ? img!=null ? <Link to="/my-profile"><img src={`../userAssets/${usu}/${img}`} className="w-10 h-10 rounded-full object-cover cursor-pointer"/></Link> :<p>Foto</p> : <Link to='/register'>Registrarse</Link>}
+                {userSession.loggedIn ? userSession.img!=null ? <Link to="/my-profile"><img src={`../userAssets/${userSession.usuario}/${userSession.img}`} className="w-10 h-10 rounded-full object-cover cursor-pointer"/></Link> :<p>Foto</p> : <Link to='/register'>Registrarse</Link>}
                 {/* <Link to='/register'>Registrarse</Link> */}
             </ul>
         </div>

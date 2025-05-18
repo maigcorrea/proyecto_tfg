@@ -114,5 +114,12 @@
     }
     break;
 
+    case 'updateImg':
+    if ($method === 'POST') {
+        require_once '../controllers/updateProfileDataController.php';
+        updateUserImg();
+    }
+    break;
+
 }
 ?>

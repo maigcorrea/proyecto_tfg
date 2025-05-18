@@ -228,6 +228,23 @@ require_once "../config/connection.php";
 
 
         //ACTUALIZAR DATOS DEL USUARIO
+
+        public function updateImgProfile($nickname, $img){
+            $query="UPDATE usuario SET img=? WHERE nickname=?";
+            $stmt=$this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("ss", $img, $nickname);
+
+            if($stmt->execute()){
+                return true;
+            }else{
+                return false;
+            }
+
+            $stmt->close();
+        }
+
+
+
         public function updateUserProfileField($nickname, $field, $newValue) {
             $allowedFields = ['nombre', 'email', 'telefono', 'nacimiento', 'nickname'];
 

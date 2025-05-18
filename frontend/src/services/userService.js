@@ -15,6 +15,20 @@ export const getDataProfile = async() =>{
     }
 }
 
+export const sendUpdateImg = async (data) => {
+  try {
+    const response = await axios.post(`${API_URL}users.php?action=updateImg`, 
+      data, 
+      { withCredentials: true } // Muy importante si usas cookies de sesión
+    );
+    console.log(data); // Para debug para ver qué se está enviando
+    return response.data;
+  } catch (error) {
+    console.error("Error actualizando la imagen:", error);
+    throw error;
+  }
+}
+
 
 
 export const sendUpdateData = async (data) => {

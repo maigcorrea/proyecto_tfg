@@ -9,11 +9,13 @@ import Login from './pages/Login'
 import Registro from './pages/Registro'
 import PrivateRoute from './components/PrivateRoute'
 import UserPanel from './pages/UserPanel'
+import { UserProvider } from '../context/UserrContext'
 
 function App() {
 
   return (
     <>
+      <UserProvider>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Layout />}>
@@ -27,6 +29,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      </UserProvider>
     </>
   )
 }

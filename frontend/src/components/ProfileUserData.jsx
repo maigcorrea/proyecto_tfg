@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { getDataProfile } from '../services/userService'
 import { sendUpdateData } from '../services/userService';
+import { sendUpdateImg } from '../services/userService';
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserrContext';
 
 const ProfileUserData = () => {
   const [userData, setUserData] = useState(null);
+  const fileInputRef = useRef(null); // Referencia al input de tipo file
   const [editingField, setEditingField] = useState({});
   const date = new Date();
   const limitYear = (date.getFullYear()-10)+"-12-31"; //Año actual - 10 años para el límite del campo de nacimiento
   //Toast de verificación de que se ha actualizado el campo
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState(''); // success o error
+
+  // Contexto para manejar la sesión del usuario
+  const { setUserSession } = useContext(UserContext);
 
   const fieldMapping = {
   Nombre: "nombre",
@@ -33,6 +40,38 @@ const ProfileUserData = () => {
 console.log("User data",userData);
 
 if (!userData) return <p>Cargando datos...</p>;
+
+  //Cuando le das a la imagen de perfil
+  const handleImageClick = () => { 
+    fileInputRef.current.click(); // Simula un clic en el input de tipo file
+  }
+
+  //Cuando seleccionas una nueva imagen
+  const handleImgChange = (event) => {
+    const file = event.target.files[0]; // Obtiene el archivo seleccionado
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("oldImg", userData.ImgPerfil); // Añadir la imagen actual al FormData
+      formData.append("newImg", file); // Añadir la nueva imagen al FormData
+
+      // Lógica para enviar la imagen al backend
+      sendUpdateImg(formData)
+      .then(response => {
+        console.log("Imagen actualizada:", response);
+        return getDataProfile();
+      })
+      .then((updatedData) => {
+        console.log("Datos actualizados:", updatedData);
+        setUserData(updatedData); // 👈 Actualizar el estado local
+        setUserSession(prev => ({ ...prev, img: updatedData.ImgPerfil })); // 👈 Actualizar el global
+      })
+      .catch(error => {
+        console.error("Error al actualizar la imagen", error);
+      });
+    }
+  }
+
 
 //Cuando le das al boton de editar
 const handleEdit = (field) => {
@@ -107,7 +146,8 @@ const handleEdit = (field) => {
 
       {/* Imagen de perfil */}
       <div className='flex justify-center items-center h-screen'>
-        <img src={`../userAssets/${userData.Nickname}/${userData.ImgPerfil}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer'/>
+        <img src={`../userAssets/${userData.Nickname}/${userData.ImgPerfil}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer' onClick={handleImageClick}/>
+        <input type="file" accept="image/*" className='hidden' ref={fileInputRef} onChange={handleImgChange} />
       </div>
 
       <form action="" className='flex flex-col gap-4 w-fit'>
