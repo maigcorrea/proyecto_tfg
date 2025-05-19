@@ -115,7 +115,17 @@ const SelectTags = () => {
       </div>
 
       <div className="flex justify-between mt-10 max-w-3xl mx-auto w-full">
-        <a href="/" className="text-sm text-gray-600 hover:underline">Saltar</a>
+        <button onClick={() => {
+            setUserSession(prev => ({
+              ...prev,
+              tags: [], // asegurar que el contexto queda en blanco
+            }));
+            navigate('/');
+          }}
+          className="text-sm text-gray-600 hover:underline cursor-pointer">
+          Saltar
+        </button>
+
         <button
           className={`px-6 py-2 rounded-full text-white transition ${
             selectedTags.length < 12
