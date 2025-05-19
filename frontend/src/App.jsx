@@ -10,6 +10,7 @@ import Registro from './pages/Registro'
 import PrivateRoute from './components/PrivateRoute'
 import UserPanel from './pages/UserPanel'
 import { UserProvider } from '../context/UserrContext'
+import SelectTags from './pages/SelectTags'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
             <Route path='login' element={<Login></Login>}></Route>
             <Route path='/register' element={<Registro></Registro>}></Route>
             <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
+            <Route path='/tags' element={<PrivateRoute><SelectTags></SelectTags></PrivateRoute>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

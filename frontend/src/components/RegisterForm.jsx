@@ -67,7 +67,7 @@ const RegisterForm = () => {
                 return;
             }else{
                 alert(response.message);
-                navigate("/");
+                navigate("/tags");
                 window.location.reload();
             }
 
