@@ -1,8 +1,12 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { selectUserTags } from '../services/userService';
+import { UserContext } from '../../context/UserrContext';
+import {useNavigate} from 'react-router-dom';
 
 const SelectTags = () => {
+  const navigate= useNavigate();
+
   // Etiquetas predefinidas
     const predefinedTags = [
         'Neurología', 'Genética', 'Dermatología', 'Autoinmunes',
@@ -13,6 +17,10 @@ const SelectTags = () => {
     // Estado para las etiquetas seleccionadas y la etiqueta personalizada
     const [selectedTags, setSelectedTags] = useState([]);
     const [customTag, setCustomTag] = useState('');
+
+    // Para guaradar las tags en el contexto global
+    const { setUserSession } = useContext(UserContext);
+
 
     // Función para alternar la selección de etiquetas
     // Si la etiqueta ya está seleccionada, la deselecciona
@@ -48,7 +56,14 @@ const SelectTags = () => {
       .then(res => {
         console.log('Respuesta del frontend:', res);
         if (res?.success) {
-          // Redirigir o actualizar contexto
+          // Actualizar contexto
+          setUserSession(prev => ({
+            ...prev,
+            tags:res.tags //Las tags se guardarían en el contesto así: ['Genética', 'Diagnóstico']
+          }))
+
+          // Redirigir a la pantalla principal
+          navigate('/');
         }
       })
       .catch(err => {

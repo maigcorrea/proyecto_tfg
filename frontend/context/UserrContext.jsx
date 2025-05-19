@@ -7,6 +7,7 @@ export const UserProvider = ({ children }) => {
     loggedIn: false,
     usuario: '',
     img: '',
+    tags: [],
   });
 
   return (
