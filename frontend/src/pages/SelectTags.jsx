@@ -38,8 +38,19 @@ const SelectTags = () => {
     };
 
     const handleContinue = async() =>{
+
       //Lógica para meter las tags en la bd
-      const res = await selectUserTags(selectedTags);
+      selectUserTags(selectedTags)
+      .then(res => {
+        console.log('Respuesta del frontend:', res);
+        if (res?.success) {
+          // Redirigir o actualizar contexto
+        }
+      })
+      .catch(err => {
+        console.error('Error al hacer la petición:', err);
+      });
+
     }
   return (
     <>

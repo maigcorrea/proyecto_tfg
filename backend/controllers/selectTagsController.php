@@ -12,25 +12,22 @@
 
 
     function selectTags(){
-        // Leer JSON directamente del cuerpo si $_POST está vacío
-        // ⚠️ Aquí lees el cuerpo crudo JSON enviado desde axios
-        $data = json_decode(file_get_contents('php://input'), true);
-        $tagsArray = $data['tags'] ?? [];
+        error_log(print_r($_POST, true)); 
+        
+         $tagsString = $_POST['tags'] ?? '';
+         $user=$_SESSION["usu"];
 
-        if (!is_array($tagsArray)) {
-            echo json_encode(['success' => false, 'message' => 'Formato inválido']);
+        if (empty($tagsString)) {
+            echo json_encode(['success' => false, 'message' => 'No se enviaron tags']);
             return;
         }
 
-        $tagsString = implode(',', array_map('trim', $tagsArray));
-
-        require_once '../models/User.php';
         $userModel = new User();
-        $success = $userModel->updateTags($_SESSION['user_id'], $tagsString);
+        $success = $userModel->selectTags($user, $tagsString);
 
         echo json_encode([
             'success' => $success,
-            'tags' => $tagsArray
+            'tags' => explode(',', $tagsString)
         ]);
     }
 ?>

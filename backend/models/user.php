@@ -274,10 +274,19 @@ require_once "../config/connection.php";
         }
 
         //Meter tags en la bd
-        public function updateTags($userId, $tagsString) {
-            $stmt = $this->conn->prepare("UPDATE users SET tags = ? WHERE id = ?");
+        public function selectTags($userId, $tagsString) {
+            $query = "UPDATE usuario SET tags= ? WHERE nickname= ?";
+            $stmt = $this->conn->prepare($query);
             $stmt->bind_param("si", $tagsString, $userId);
-            return $stmt->execute();
+
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+
+            $stmt -> close();
         }
 
     }

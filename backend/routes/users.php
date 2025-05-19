@@ -6,10 +6,10 @@
     header("Access-Control-Allow-Credentials: true"); // Permite el uso de credenciales (como cookies)
     
     // 👉 Manejo explícito del preflight CORS
-/*if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
-}*/
+}
 
     require_once '../models/user.php';
     require_once '../models/cookies_sesiones.php';

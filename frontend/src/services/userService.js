@@ -49,10 +49,15 @@ export const sendUpdateData = async (data) => {
 
 export const selectUserTags = async (tags) => {
   try {
+      console.log(tags);
+     const formData = new FormData();
+      formData.append('tags', tags.join(',')); // Aquí conviertes el array a string y lo añadimos al formData
+
     const response = await axios.post(
-      'http://localhost/backend/routes/users.php?action=updateTags',
-      { tags },
-      { withCredentials: true }
+      `${API_URL}users.php?action=updateProfile`,
+      formData,
+      {  
+         withCredentials: true }
     );
     return response.data;
   } catch (error) {
