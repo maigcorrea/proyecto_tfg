@@ -44,3 +44,19 @@ export const sendUpdateData = async (data) => {
     throw error;
   }
 }
+
+
+
+export const selectUserTags = async (tags) => {
+  try {
+    const response = await axios.post(
+      'http://localhost/backend/routes/users.php?action=updateTags',
+      { tags },
+      { withCredentials: true }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error al actualizar tags:', error);
+    return null;
+  }
+}

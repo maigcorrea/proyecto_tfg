@@ -121,5 +121,10 @@
     }
     break;
 
+    case 'updateTags':
+        require_once '../controllers/selectTagsController.php';
+        selectTags();
+    break;
+
 }
 ?>

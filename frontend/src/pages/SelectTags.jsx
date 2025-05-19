@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
+import { selectUserTags } from '../services/userService';
 
 const SelectTags = () => {
 
@@ -36,6 +37,10 @@ const SelectTags = () => {
         }
     };
 
+    const handleContinue = async() =>{
+      //Lógica para meter las tags en la bd
+      const res = await selectUserTags(selectedTags);
+    }
   return (
     <>
         <h1 className='text-8xl'>SELECCIONAR TAGS</h1>
@@ -78,6 +83,7 @@ const SelectTags = () => {
               : 'bg-gray-400 cursor-not-allowed'
           }`}
           disabled={selectedTags.length === 12}
+          onClick={handleContinue}
         >
           Continuar
         </button>
