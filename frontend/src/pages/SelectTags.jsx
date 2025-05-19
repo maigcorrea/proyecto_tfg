@@ -115,7 +115,7 @@ const SelectTags = () => {
       </div>
 
       <div className="flex justify-between mt-10 max-w-3xl mx-auto w-full">
-        <button className="text-sm text-gray-600 hover:underline">Saltar</button>
+        <a href="/" className="text-sm text-gray-600 hover:underline">Saltar</a>
         <button
           className={`px-6 py-2 rounded-full text-white transition ${
             selectedTags.length < 12
