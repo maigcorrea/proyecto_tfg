@@ -12,22 +12,22 @@
 
 
     function selectTags(){
-        error_log(print_r($_POST, true)); 
         
-         $tagsString = $_POST['tags'] ?? '';
-         $user=$_SESSION["usu"];
+    $tagsString = $_REQUEST['tags'] ?? '';
 
-        if (empty($tagsString)) {
-            echo json_encode(['success' => false, 'message' => 'No se enviaron tags']);
-            return;
-        }
+    if (empty($tagsString)) {
+        echo json_encode(['success' => false, 'message' => 'No se enviaron tags']);
+        return;
+    }
 
-        $userModel = new User();
-        $success = $userModel->selectTags($user, $tagsString);
+    $userModel = new User();
+    $sesion = new Sesion();
+    $usuario = $sesion->get_session("usu");
+    $success = $userModel->selectTags($usuario, $tagsString);
 
-        echo json_encode([
-            'success' => $success,
-            'tags' => explode(',', $tagsString)
-        ]);
+    echo json_encode([
+        'success' => $success,
+        'tags' => explode(',', $tagsString)
+    ]);
     }
 ?>

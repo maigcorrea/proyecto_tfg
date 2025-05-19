@@ -46,22 +46,35 @@ export const sendUpdateData = async (data) => {
 }
 
 
-
 export const selectUserTags = async (tags) => {
-  try {
-      console.log(tags);
-     const formData = new FormData();
-      formData.append('tags', tags.join(',')); // Aquí conviertes el array a string y lo añadimos al formData
 
-    const response = await axios.post(
-      `${API_URL}users.php?action=updateProfile`,
-      formData,
-      {  
-         withCredentials: true }
+  const formData = new FormData();
+  formData.append('tags', tags.join(',')); // Convertimos el array en string
+
+  try {
+    const response = await axios.post(`${API_URL}users.php?action=selectUserTags`, 
+      formData , 
+      
+      {
+        headers:
+        {
+            'Content-Type':'multipart/form-data' //Asegura que lo lea bien el backend
+        },
+        withCredentials: true } // Muy importante si usas cookies de sesión
     );
+
+    console.log("Datos que se meten dentro del formData:",tags);
+    console.log("Datos del formData");
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+
     return response.data;
+
   } catch (error) {
-    console.error('Error al actualizar tags:', error);
-    return null;
+    console.error("Error seleccionando las etiquetas:", error);
+    throw error;
   }
 }
+
+

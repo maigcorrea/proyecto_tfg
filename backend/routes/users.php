@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     }
     break;
 
-    case 'updateTags':
+    case 'selectUserTags':
         require_once '../controllers/selectTagsController.php';
         selectTags();
     break;

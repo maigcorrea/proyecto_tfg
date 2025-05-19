@@ -3,25 +3,28 @@ import { useState } from 'react';
 import { selectUserTags } from '../services/userService';
 
 const SelectTags = () => {
-
+  // Etiquetas predefinidas
     const predefinedTags = [
         'Neurología', 'Genética', 'Dermatología', 'Autoinmunes',
         'Pediatría', 'Oncología', 'Raras', 'Síntomas crónicos',
         'Diagnóstico', 'Apoyo emocional', 'Investigación', 'Tratamientos'
     ];
 
-
+    // Estado para las etiquetas seleccionadas y la etiqueta personalizada
     const [selectedTags, setSelectedTags] = useState([]);
     const [customTag, setCustomTag] = useState('');
 
+    // Función para alternar la selección de etiquetas
+    // Si la etiqueta ya está seleccionada, la deselecciona
     const toggleTag = (tag) => {
         if (selectedTags.includes(tag)) {
             setSelectedTags(prev => prev.filter(t => t !== tag));
-        } else if (selectedTags.length < 12) {
+        } else if (selectedTags.length < 12) { // Si no está seleccionada y hay espacio, la selecciona
             setSelectedTags(prev => [...prev, tag]);
         }
     };
 
+   //Añade una etiqueta personalizada a la lista de etiquetas seleccionadas
     const addCustomTag = () => {
         const trimmed = customTag.trim();
         if (trimmed && !selectedTags.includes(trimmed) && selectedTags.length < 12) {
@@ -30,6 +33,7 @@ const SelectTags = () => {
         }
     };
 
+    //Añade la etiqueta personalizada al pulsar enter
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -50,11 +54,10 @@ const SelectTags = () => {
       .catch(err => {
         console.error('Error al hacer la petición:', err);
       });
-
     }
+
   return (
     <>
-        <h1 className='text-8xl'>SELECCIONAR TAGS</h1>
          <div className="min-h-screen flex flex-col justify-between p-6 bg-gray-50">
       <div className="max-w-3xl mx-auto w-full">
         <h1 className="text-2xl font-semibold mb-4 text-center">Selecciona tus temas de interés</h1>
