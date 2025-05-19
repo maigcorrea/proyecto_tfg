@@ -18,6 +18,11 @@ const SelectTags = () => {
     const [selectedTags, setSelectedTags] = useState([]);
     const [customTag, setCustomTag] = useState('');
 
+    const [message, setMessage] = useState("");
+    
+
+    const [cont, setCont] = useState(0);
+
     // Para guaradar las tags en el contexto global
     const { setUserSession } = useContext(UserContext);
 
@@ -27,8 +32,11 @@ const SelectTags = () => {
     const toggleTag = (tag) => {
         if (selectedTags.includes(tag)) {
             setSelectedTags(prev => prev.filter(t => t !== tag));
+            setCont(prev => prev - 1);
         } else if (selectedTags.length < 12) { // Si no está seleccionada y hay espacio, la selecciona
             setSelectedTags(prev => [...prev, tag]);
+            setMessage("Sólo puedes seleccionar un máximo de 12 temas de interés");
+            setCont(prev => prev + 1);
         }
     };
 
@@ -38,6 +46,7 @@ const SelectTags = () => {
         if (trimmed && !selectedTags.includes(trimmed) && selectedTags.length < 12) {
             setSelectedTags(prev => [...prev, trimmed]);
             setCustomTag('');
+            setCont(prev => prev + 1);
         }
     };
 
@@ -77,6 +86,7 @@ const SelectTags = () => {
       <div className="max-w-3xl mx-auto w-full">
         <h1 className="text-2xl font-semibold mb-4 text-center">Selecciona tus temas de interés</h1>
 
+        {selectedTags.length ===12 && <p className='text-red-700'>{message}</p>}
         <input
           type="text"
           placeholder="Buscar o añadir tema..."
@@ -85,6 +95,7 @@ const SelectTags = () => {
           onKeyPress={handleKeyPress}
           className="w-full px-4 py-2 border rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 mb-6"
         />
+        <p className='text-gray-500'>{cont}/12</p>
 
         <div className="flex flex-wrap gap-3 justify-center">
           {[...predefinedTags, ...selectedTags.filter(tag => !predefinedTags.includes(tag))].map(tag => (
