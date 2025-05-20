@@ -1,8 +1,11 @@
 import React from 'react'
 import { useContext } from 'react'
 import { UserContext } from '../../context/UserrContext'
+import { useNavigate } from 'react-router-dom';
 
 const UserCard = ({user}) => {
+  const navigate = useNavigate();
+  
     console.log('Renderizando UserCard para:', user);
 
 
@@ -33,7 +36,7 @@ const UserCard = ({user}) => {
 
   return (
     <>
-          <div className="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300">
+          <div className="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300 cursor-pointer" onClick={() => navigate(`/userDetail/${user.nickname}`)}>
               <img
                   src={`../../public/userAssets/${user.nickname}/${user.img}` || '/default-avatar.png'}
                   alt={user.nickname}

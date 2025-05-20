@@ -12,6 +12,7 @@ import UserPanel from './pages/UserPanel'
 import { UserProvider } from '../context/UserrContext'
 import SelectTags from './pages/SelectTags'
 import DescubrirUsuarios from './pages/DescubrirUsuarios'
+import UserDetails from './pages/UserDetails'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='/' element={<Layout />}>
             <Route index element={<Inicio/>}></Route>
             <Route path='discover' element={<PrivateRoute><DescubrirUsuarios></DescubrirUsuarios></PrivateRoute>}></Route>
+            <Route path='userDetail/:nickname' element={<PrivateRoute><UserDetails></UserDetails></PrivateRoute>}></Route>
             <Route path='foro' element={<PrivateRoute><Foro/></PrivateRoute>}></Route>
             <Route path='comunidades' element={<PrivateRoute><Comunidades></Comunidades></PrivateRoute>}></Route>
             <Route path='/noticias' element={<PrivateRoute><Noticias></Noticias></PrivateRoute>}></Route>

@@ -324,6 +324,17 @@ require_once "../config/connection.php";
             return $usuarios;
         }
 
+
+        //OBTENER TODOS LOS DATOS DE UN USUARIO EN BASE A SU NICKNAME
+        public function getUserByNickname($nickname) {
+            $query = "SELECT * FROM usuario WHERE nickname = ?";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("s", $nickname);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
+        }
+
     }
 
 ?>

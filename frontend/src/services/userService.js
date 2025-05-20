@@ -95,3 +95,18 @@ export const getAllUsers = async () => {
 }
 
 
+export const getUserByNickname = async (nickname) => {
+  try {
+    const response = await axios.get(`${API_URL}users.php?action=getUserByNickname&nickname=${nickname}`, {
+      withCredentials: true,
+    });
+    console.log("Nickname", nickname);
+    console.log("Datos del usuario clickado: ",response.data);
+    return response.data;
+
+  } catch (error) {
+    console.error("Error obteniendo el usuario por nickname", error);
+    throw error;
+  }
+}
+

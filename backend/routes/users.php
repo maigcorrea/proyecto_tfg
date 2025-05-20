@@ -134,5 +134,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         getAllUsers();
     break;
 
+    case 'getUserByNickname':
+        require_once '../controllers/getUserByNicknameController.php';
+        getUserByNickname(); // Asegúrate de que este nombre coincida
+    break;
+
 }
 ?>
