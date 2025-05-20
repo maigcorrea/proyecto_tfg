@@ -273,7 +273,11 @@ require_once "../config/connection.php";
             }
         }
 
-        //Meter tags en la bd
+
+
+
+
+        //METER TAGAS EN LA BD DESPUÉS DEL REGISTRO
         public function selectTags($nickname, $tagsString) {
             $query = "UPDATE usuario SET tags= ? WHERE nickname= ?";
             $stmt = $this->conn->getConnection()->prepare($query);
@@ -284,6 +288,39 @@ require_once "../config/connection.php";
 
             $stmt -> close();
             return $success;
+        }
+
+        //OBTENER TAGS DE UN USUARIO
+        public function getTags($nickname) {
+            $query = "SELECT tags FROM usuario WHERE nickname=?";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("s", $nickname);
+            $stmt->bind_result($tags);
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($row = $result->fetch_assoc()) {
+                return $row['tags']; // Devuelve string tipo: "Genética,Diagnóstico"
+            }
+            return null;
+        }
+
+
+
+        //OBTENER TODOS LOS USUARIOS DE LA BD
+        public function getAllUsers() {
+            $query = "SELECT telefono, nombre, nickname, descripcion, nacimiento, img, tags FROM usuario";
+            $stmt = $this->conn->getConnection()->prepare($query);
+
+            $stmt->execute();
+            $result = $stmt->get_result(); // ← necesario para poder usar fetch_assoc()
+
+            $usuarios = [];
+            while ($row = $result->fetch_assoc()) {
+                $usuarios[] = $row;
+            }
+
+            return $usuarios;
         }
 
     }

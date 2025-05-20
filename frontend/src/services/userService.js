@@ -78,3 +78,20 @@ export const selectUserTags = async (tags) => {
 }
 
 
+
+export const getAllUsers = async () => {
+  try {
+    const response = await axios.get(`${API_URL}users.php?action=getAllUsers`, {
+      withCredentials: true // Importante si usas cookies para la sesión
+    });
+
+    console.log("Datos de todos:", response.data)
+    return response.data.usuarios || [];
+
+  } catch (error) {
+    console.error("Error obteniendo todos los usuarios", error);
+    throw error;
+  }
+}
+
+

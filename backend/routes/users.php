@@ -30,11 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
             //  Obtener la foto para mostrarla en el perfil
             $user=new User();
             $img=$user->getImg($currentSesion);
+            $tags=$user->getTags($currentSesion);
             // var_dump($_SESSION);
             echo json_encode([
                 "loggedIn" => true,
                 "usuario" => $currentSesion,
-                "img" => $img
+                "img" => $img,
+                "tags" => $tags,
+                
                 // "tipo" => $_SESSION['tipo']
             ]);
         } else {
@@ -124,6 +127,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     case 'selectUserTags':
         require_once '../controllers/selectTagsController.php';
         selectTags();
+    break;
+
+    case 'getAllUsers':
+        require_once '../controllers/getAllUsersController.php';
+        getAllUsers();
     break;
 
 }
