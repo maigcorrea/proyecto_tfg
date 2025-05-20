@@ -8,11 +8,26 @@ const DescubrirUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
 
     //Usuarios visibles al cargar la app (Va de 10 en 10)
-    const [visibleCount, setVisibleCount] = useState(10);
+    const [visibleCount, setVisibleCount] = useState(() => {
+  return parseInt(localStorage.getItem('visibleCount')) || 10;
+});
 
     useEffect(() => {
         getAllUsers().then(setUsuarios);
+
+        return () => {
+    localStorage.removeItem('visibleCount');
+  };
     }, []);
+
+    const handleVerMas = () => {
+  setVisibleCount(prev => {
+    const nuevo = prev + 10;
+    localStorage.setItem('visibleCount', nuevo);
+    return nuevo;
+  });
+
+};
 
   return (
     <>
@@ -37,7 +52,7 @@ const DescubrirUsuarios = () => {
         {visibleCount < usuarios.length && (
   <div className="text-center mt-6">
     <button
-      onClick={() => setVisibleCount(prev => prev + 10)}
+      onClick={handleVerMas}
       className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
     >
       Ver más
