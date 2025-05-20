@@ -5,11 +5,18 @@
     header("Content-Type: application/json");
     include_once '../config/connection.php';
     include_once '../models/user.php';
+    include_once '../models/cookies_sesiones.php';
 
 
     function getAllUsers() {
+
+        $session= new Sesion();
+        $currentUser = $session->get_session('usu');
+
         $userModel = new User();
-        $usuarios = $userModel->getAllUsers();
+        $usuarios = $userModel->getAllUsers($currentUser);
+
+        
 
         echo json_encode([
             'success' => true,

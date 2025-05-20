@@ -308,9 +308,10 @@ require_once "../config/connection.php";
 
 
         //OBTENER TODOS LOS USUARIOS DE LA BD
-        public function getAllUsers() {
-            $query = "SELECT telefono, nombre, nickname, descripcion, nacimiento, img, tags FROM usuario";
+        public function getAllUsers($nickname) {
+            $query = "SELECT telefono, nombre, nickname, descripcion, nacimiento, img, tags FROM usuario WHERE nickname!=?";
             $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("s", $nickname);
 
             $stmt->execute();
             $result = $stmt->get_result(); // ← necesario para poder usar fetch_assoc()
