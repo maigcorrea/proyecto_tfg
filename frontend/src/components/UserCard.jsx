@@ -34,6 +34,22 @@ const UserCard = ({user}) => {
     };
 
 
+    //Calcular edad del usuario
+  const calcularEdad = (fechaNacimiento) => {
+  if (!fechaNacimiento) return null;
+
+  const nacimiento = new Date(fechaNacimiento);
+  const hoy = new Date();
+  let edad = hoy.getFullYear() - nacimiento.getFullYear();
+  const mes = hoy.getMonth() - nacimiento.getMonth();
+
+  if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+    edad--;
+  }
+
+  return edad;
+};
+
   return (
     <>
           <div className="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300 cursor-pointer" onClick={() => navigate(`/userDetail/${user.nickname}`)}>
@@ -44,7 +60,7 @@ const UserCard = ({user}) => {
               />
               <h3 className="text-lg font-semibold">{user.nombre}</h3>
               <p className="text-sm text-gray-500">@{user.nickname}</p>
-              <p className="text-sm text-gray-500">{user.nacimiento || 'País no disponible'}</p>
+              <p className="text-sm text-gray-500">{user.nacimiento ? `${calcularEdad(user.nacimiento)} años` : 'Edad no disponible'}</p>
 
                 <p className="text-sm text-gray-700">
                 En común: {calcularCoincidencias(user.tags)}/12
