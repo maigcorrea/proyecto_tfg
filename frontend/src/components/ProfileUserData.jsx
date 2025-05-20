@@ -82,7 +82,7 @@ const handleEdit = (field) => {
   };
 
 //Cuando guardas el nuevo valor
-/*const handleSave = async (field) => {
+const handleSave = async (field) => {
     setEditingField((prev) => ({
       ...prev, //Para mantener los datos anteriores de los otros campos al guardar un campo concreto
       [field]: false //Campo que guardamos
@@ -117,7 +117,7 @@ const handleEdit = (field) => {
         setToastType('');
       }, 3000);
     }
-  }*/
+  }
 
   // Cuando editas el valor mientras escribe
   const handleChange = (field, value) => {

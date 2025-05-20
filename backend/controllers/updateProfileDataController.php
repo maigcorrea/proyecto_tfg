@@ -74,8 +74,8 @@ function updateUserProfile() {
         return;
     }
 
-    $field = $_POST['field'] ?? null;
-    $newValue = $_POST['newValue'] ?? null;
+    $field = $_POST['campo'] ?? null;
+    $newValue = $_POST['valor'] ?? null;
 
     if (!$field || $newValue === null) {
         echo json_encode(["success" => false, "message" => "Datos incompletos"]);
