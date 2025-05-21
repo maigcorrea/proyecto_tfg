@@ -295,7 +295,7 @@ require_once "../config/connection.php";
             $query = "SELECT tags FROM usuario WHERE nickname=?";
             $stmt = $this->conn->getConnection()->prepare($query);
             $stmt->bind_param("s", $nickname);
-            $stmt->bind_result($tags);
+            
 
             $stmt->execute();
             $result = $stmt->get_result();

@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
                 "loggedIn" => true,
                 "usuario" => $currentSesion,
                 "img" => $img,
-                "tags" => $tags,
+                "tags" => explode(',', $tags),
                 
                 // "tipo" => $_SESSION['tipo']
             ]);

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Layout from './layout/Layout'
 import Inicio from './pages/Inicio'
