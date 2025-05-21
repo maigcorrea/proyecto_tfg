@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { getUserByNickname } from '../services/userService';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserrContext';
 
 const UserDetails = () => {
     const navigate = useNavigate();
-
+    const { userSession } =useContext(UserContext);
     const { nickname } = useParams();
   const [user, setUser] = useState(null);
 
@@ -34,6 +35,11 @@ const UserDetails = () => {
 
   if (!user) return <p className="text-center mt-10">Cargando información del usuario...</p>;
 
+
+  // Comparar tags
+  const propias = userSession?.tags || [];
+  const otras = user.tags?.split(',').map(t => t.trim()) || [];
+
   return (
     <>
     
@@ -58,14 +64,21 @@ const UserDetails = () => {
             <h2 className="font-bold">Intereses</h2>
             <div className="flex flex-wrap gap-2 mt-2 justify-center">
                 {!user.tags && "Este usuario no ha añadido ningún interés de momento"}
-                {user.tags?.split(',').map((tag, index) => (
-                    <span
-                    key={index}
-                    className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm border border-blue-300"
-                    >
-                    {tag.trim()}
-                    </span>
-                ))}
+                 {otras.map((tag, index) => {
+            const enComun = propias.includes(tag);
+            return (
+              <span
+                key={index}
+                className={`px-3 py-1 rounded-full text-sm border ${
+                  enComun
+                    ? 'bg-green-100 text-green-800 border-green-300'  // tags en común
+                    : 'bg-blue-100 text-blue-700 border-blue-300'    // tags normales
+                }`}
+              >
+                {tag}
+              </span>
+            );
+          })}
             </div>
 
            
