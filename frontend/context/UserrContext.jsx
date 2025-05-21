@@ -11,6 +11,7 @@ export const UserProvider = ({ children }) => {
     tags: [],
   });
 
+  // Comprobar si hay una sesión activa al cargar el componente
   useEffect(() => {
     checkSession()
       .then(res => {
