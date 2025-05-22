@@ -25,7 +25,12 @@
         $inserted = $post -> createPost($contenido, $id_telefono);
 
         if ($inserted) {
-            echo json_encode(['success' => 'Post creado con éxito']);
+            echo json_encode([
+                'success' => 'Post creado con éxito',
+                'contenido' => $contenido,
+                'fecha' => date('c'),
+                'nickname' => $currentSesion,
+            ]);
         } else {
             echo json_encode(['error' => 'Error al crear el post']);
         }

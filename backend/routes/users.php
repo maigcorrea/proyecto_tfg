@@ -27,15 +27,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         $currentSesion= $sesion->get_session("usu");
 
         if (isset($currentSesion) && $currentSesion!=null) {
-            //  Obtener la foto para mostrarla en el perfil
+            //  Obtener los datos (la foto para mostrarla en el perfil, nombre, etc)
             $user=new User();
-            $img=$user->getImg($currentSesion);
+            $data = $user->getDataUser($currentSesion); // Se obtienen todos los datos del usuario menos las tags
+            $img= $data['ImgPerfil'];
+            $nombre = $data['Nombre'];
+
             $tagsAvailable=$user->getTags($currentSesion);
             //$tags= $tagsAvailable || "";
             // var_dump($_SESSION);
             echo json_encode([
                 "loggedIn" => true,
                 "usuario" => $currentSesion,
+                "nombre" => $nombre,
                 "img" => $img,
                 "tags" => explode(',', $tagsAvailable),
                 

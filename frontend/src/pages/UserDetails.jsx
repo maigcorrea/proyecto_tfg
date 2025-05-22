@@ -10,6 +10,7 @@ const UserDetails = () => {
     const { nickname } = useParams();
   const [user, setUser] = useState(null);
 
+  //Tendría que pasarle el nickname desde donde se muestran los post hasta aquí al redirigir a esta página (al darle click al usuario del post)
   useEffect(() => {
     getUserByNickname(nickname)
       .then(data => setUser(data))

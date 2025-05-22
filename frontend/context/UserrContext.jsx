@@ -7,6 +7,7 @@ export const UserProvider = ({ children }) => {
   const [userSession, setUserSession] = useState({
     loggedIn: false,
     usuario: '',
+    nombre:'',
     img: '',
     tags: [],
   });
@@ -19,6 +20,7 @@ export const UserProvider = ({ children }) => {
           setUserSession({
             loggedIn: true,
             usuario: res.data.usuario,
+            nombre: res.data.nombre,
             img: res.data.img,
             tags: res.data.tags || [],
           });
