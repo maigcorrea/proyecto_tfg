@@ -30,13 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
             //  Obtener la foto para mostrarla en el perfil
             $user=new User();
             $img=$user->getImg($currentSesion);
-            $tags=$user->getTags($currentSesion);
+            $tagsAvailable=$user->getTags($currentSesion);
+            //$tags= $tagsAvailable || "";
             // var_dump($_SESSION);
             echo json_encode([
                 "loggedIn" => true,
                 "usuario" => $currentSesion,
                 "img" => $img,
-                "tags" => explode(',', $tags),
+                "tags" => explode(',', $tagsAvailable),
                 
                 // "tipo" => $_SESSION['tipo']
             ]);
