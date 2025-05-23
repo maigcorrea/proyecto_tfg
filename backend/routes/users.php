@@ -34,14 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
             $nombre = $data['Nombre'];
 
             $tagsAvailable=$user->getTags($currentSesion);
-            //$tags= $tagsAvailable || "";
+            $tags= $tagsAvailable || "";
             // var_dump($_SESSION);
             echo json_encode([
                 "loggedIn" => true,
                 "usuario" => $currentSesion,
                 "nombre" => $nombre,
                 "img" => $img,
-                "tags" => explode(',', $tagsAvailable),
+                "tags" => explode(',', $tags),
                 
                 // "tipo" => $_SESSION['tipo']
             ]);
