@@ -1,13 +1,31 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import CreatePost from '../components/Foro/CreatePost';
 import PostCard from '../components/Foro/PostCard';
-import { createPost } from '../services/postService';
+import { createPost, getAllPosts } from '../services/postService';
 import { UserContext } from '../../context/UserrContext';
 
 const Foro = () => {
   // Contexto del usuario donde están los datos
   const { userSession } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
+
+  // Ontener todos los post de la bd al cargar el componente
+  useEffect(() => {
+    const cargarPosts = async () => {
+      try {
+        const response = await getAllPosts();
+        if (response.success) {
+          setPosts(response.posts);
+        } else {
+          console.error("Error al cargar publicaciones:", response);
+        }
+      } catch (error) {
+        console.error("Error en la carga inicial:", error);
+      }
+    };
+
+    cargarPosts();
+  }, []);
 
   const handleCreate = async (contenido) => {
     const formData= new FormData();

@@ -26,7 +26,8 @@
         break;
 
         case 'getAllPosts':
-            require_once "../controllers/getAllPostController.php";
+            require_once "../controllers/getAllPostsController.php";
+            getAllPosts();
         break;
         
         default:
