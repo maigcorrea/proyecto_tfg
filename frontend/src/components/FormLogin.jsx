@@ -54,7 +54,7 @@ const FormLogin = () => {
             const sesionsResponse= await setSessions(formData);
             console.log("Sesiones:",sesionsResponse.success);
             console.log("Sesiones:",sesionsResponse);
-            console.log("Datos que supuestamente están guardados en las sesiones:",sesionsResponse.usu," ",sesionsResponse.tipo);
+            console.log("Datos que supuestamente están guardados en las sesiones:",sesionsResponse.usu," ",sesionsResponse.tipo, " ", sesionsResponse.id);
             console.log("Hay sesión:",sesionsResponse.contenidoSesion);
 
             if(sesionsResponse.success){

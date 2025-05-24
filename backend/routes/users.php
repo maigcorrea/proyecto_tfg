@@ -23,22 +23,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     //En función del action, llamar al controlador y la función correspondiente
     switch ($action) {
     case 'checkSessionExists':
+        //Como he guardado en la sesión el id del usuario (aparte del nickname y el tipo), se obtienen los datos en base a eso y no en base al nickname
         $sesion= new Sesion();
-        $currentSesion= $sesion->get_session("usu");
+        $currentSesion= $sesion->get_session("id");
+
 
         if (isset($currentSesion) && $currentSesion!=null) {
+            
+            
             //  Obtener los datos (la foto para mostrarla en el perfil, nombre, etc)
             $user=new User();
-            $data = $user->getDataUser($currentSesion); // Se obtienen todos los datos del usuario menos las tags
+            $data = $user->getDataUser($currentSesion); // Se obtienen todos los datos del usuario menos las tags (en base a su id)
             $img= $data['ImgPerfil'];
             $nombre = $data['Nombre'];
+            $nickname = $data['Nickname'];
 
             $tagsAvailable=$user->getTags($currentSesion);
             $tags= $tagsAvailable || "";
             // var_dump($_SESSION);
             echo json_encode([
                 "loggedIn" => true,
-                "usuario" => $currentSesion,
+                "id" => $currentSesion,
+                "usuario" => $nickname,
                 "nombre" => $nombre,
                 "img" => $img,
                 "tags" => explode(',', $tags),

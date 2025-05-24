@@ -115,16 +115,17 @@ require_once "../config/connection.php";
             return $profile;
         }
 
-        public function getTypeAndNick($nom){
-            $query="SELECT tipo, nickname FROM usuario WHERE email=? OR nickname=?";
+        public function getIdTypeAndNick($nom){
+            $query="SELECT id, tipo, nickname FROM usuario WHERE email=? OR nickname=?";
             $stmt=$this->conn->getConnection()->prepare($query);
             $stmt->bind_param("ss", $nom, $nom);
-            $stmt->bind_result($tipo, $nickname);
+            $stmt->bind_result($id, $tipo, $nickname);
 
             $data=[];
             $stmt->execute();
             while($stmt->fetch()){
                 $data=[
+                    "id" => $id,
                     "tipo" => $tipo,
                     "nickname" => $nickname
                 ];
@@ -200,12 +201,26 @@ require_once "../config/connection.php";
         }
 
 
+        //OBTENER ID DEL USUARIO LOGGEADO
+        /*public function getIdByNickname($nickname){
+            $query="SELECT id FROM usuario WHERE nickname=?;";
+            $stmt=$this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("s", $nickname);
+            $stmt->bind_result($id);
+
+            $stmt->execute();
+            $stmt->fetch();
+
+            $stmt->close();
+            return $id;
+        }*/
+
 
         //OBTENER TODOS LOS DATOS DEL USUARIO LOGGEADO
         public function getDataUser($identifier){
-            $query="SELECT telefono, email, nombre, nickname, descripcion, nacimiento, img, tipo FROM usuario WHERE nickname=?;";
+            $query="SELECT telefono, email, nombre, nickname, descripcion, nacimiento, img, tipo FROM usuario WHERE id=?;";
             $stmt=$this->conn->getConnection()->prepare($query);
-            $stmt->bind_param("s", $identifier);
+            $stmt->bind_param("i", $identifier);
             $stmt->execute();
             $stmt->bind_result($phone, $mail, $name, $nick, $desc, $birth, $img, $tipo);
 
@@ -291,10 +306,10 @@ require_once "../config/connection.php";
         }
 
         //OBTENER TAGS DE UN USUARIO
-        public function getTags($nickname) {
-            $query = "SELECT tags FROM usuario WHERE nickname=?";
+        public function getTags($id) {
+            $query = "SELECT tags FROM usuario WHERE id=?";
             $stmt = $this->conn->getConnection()->prepare($query);
-            $stmt->bind_param("s", $nickname);
+            $stmt->bind_param("i", $id);
             
 
             $stmt->execute();

@@ -30,10 +30,9 @@ class Sesion{
 
 
     //Abrir una sesión
-    function set_session(String $nom1, $val1, String $nom2, $val2){
+    function set_session(String $nom1, $val1){
         $this->start_session();
         $_SESSION[$nom1]=$val1;
-        $_SESSION[$nom2]=$val2;
     }
 
 

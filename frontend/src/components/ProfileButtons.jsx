@@ -11,7 +11,7 @@ const ProfileButtons = () => {
     const navigate= useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     
-
+  console.log("Datos dentro del contexto", userSession);
 
     useEffect(() => {
         checkSession()

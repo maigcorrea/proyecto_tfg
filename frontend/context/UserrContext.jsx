@@ -6,6 +6,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [userSession, setUserSession] = useState({
     loggedIn: false,
+    id:'',
     usuario: '',
     nombre:'',
     img: '',
@@ -19,6 +20,7 @@ export const UserProvider = ({ children }) => {
         if (res.data.loggedIn) {
           setUserSession({
             loggedIn: true,
+            id: res.data.id,
             usuario: res.data.usuario,
             nombre: res.data.nombre,
             img: res.data.img,
