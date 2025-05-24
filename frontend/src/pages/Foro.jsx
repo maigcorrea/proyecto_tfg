@@ -1,16 +1,18 @@
 import React, {useState, useContext, useEffect} from 'react'
 import CreatePost from '../components/Foro/CreatePost';
 import PostCard from '../components/Foro/PostCard';
-import { createPost, getAllPosts } from '../services/postService';
-import { UserContext } from '../../context/UserrContext';
+import { PostContext } from '../../context/PostContext';
 
 const Foro = () => {
-  // Contexto del usuario donde están los datos
-  const { userSession } = useContext(UserContext);
-  const [posts, setPosts] = useState([]);
 
-  // Ontener todos los post de la bd al cargar el componente
-  useEffect(() => {
+  //AHORA ESTO SE HACE DESDE EL CONTEXTO DE POSTS
+  // Contexto del usuario donde están los datos
+  //const { userSession } = useContext(UserContext);
+  //const [posts, setPosts] = useState([]);
+
+
+  // Obtener todos los post de la bd al cargar el componente
+  /*useEffect(() => {
     const cargarPosts = async () => {
       try {
         const response = await getAllPosts();
@@ -27,6 +29,8 @@ const Foro = () => {
     cargarPosts();
   }, []);
 
+
+  // Crear un nuevo post y añadirlo al principio
   const handleCreate = async (contenido) => {
     const formData= new FormData();
     formData.append("contenido", contenido);
@@ -48,6 +52,12 @@ const Foro = () => {
       console.error("Error creating post:", error);
     }
     
+  };*/
+
+  const { posts, addPost } = useContext(PostContext);
+
+  const handleCreate = async (contenido) => {
+    await addPost(contenido);
   };
 
   return (

@@ -3,7 +3,7 @@ import { UserContext } from '../../../context/UserrContext'
 
 const CreatePost = ({onCreate}) => {
 
-    const { userSession } = useContext(UserContext);
+  const { userSession } = useContext(UserContext);
   const [contenido, setContenido] = useState('');
   const [mostrarModal, setMostrarModal] = useState(false);
 

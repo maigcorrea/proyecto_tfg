@@ -13,28 +13,33 @@ import { UserProvider } from '../context/UserrContext'
 import SelectTags from './pages/SelectTags'
 import DescubrirUsuarios from './pages/DescubrirUsuarios'
 import UserDetails from './pages/UserDetails'
+import { PostProvider } from '../context/PostContext'
 
 function App() {
 
   return (
     <>
       <UserProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route index element={<Inicio/>}></Route>
-            <Route path='discover' element={<PrivateRoute><DescubrirUsuarios></DescubrirUsuarios></PrivateRoute>}></Route>
-            <Route path='userDetail/:nickname' element={<PrivateRoute><UserDetails></UserDetails></PrivateRoute>}></Route>
-            <Route path='foro' element={<PrivateRoute><Foro/></PrivateRoute>}></Route>
-            <Route path='comunidades' element={<PrivateRoute><Comunidades></Comunidades></PrivateRoute>}></Route>
-            <Route path='/noticias' element={<PrivateRoute><Noticias></Noticias></PrivateRoute>}></Route>
-            <Route path='login' element={<Login></Login>}></Route>
-            <Route path='/register' element={<Registro></Registro>}></Route>
-            <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
-            <Route path='/tags' element={<PrivateRoute><SelectTags></SelectTags></PrivateRoute>}></Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+        <PostProvider>
+
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<Layout />}>
+                <Route index element={<Inicio/>}></Route>
+                <Route path='discover' element={<PrivateRoute><DescubrirUsuarios></DescubrirUsuarios></PrivateRoute>}></Route>
+                <Route path='userDetail/:nickname' element={<PrivateRoute><UserDetails></UserDetails></PrivateRoute>}></Route>
+                <Route path='foro' element={<PrivateRoute><Foro/></PrivateRoute>}></Route>
+                <Route path='comunidades' element={<PrivateRoute><Comunidades></Comunidades></PrivateRoute>}></Route>
+                <Route path='/noticias' element={<PrivateRoute><Noticias></Noticias></PrivateRoute>}></Route>
+                <Route path='login' element={<Login></Login>}></Route>
+                <Route path='/register' element={<Registro></Registro>}></Route>
+                <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
+                <Route path='/tags' element={<PrivateRoute><SelectTags></SelectTags></PrivateRoute>}></Route>
+              </Route>
+            </Routes>
+          </BrowserRouter>
+          
+        </PostProvider>
       </UserProvider>
     </>
   )
