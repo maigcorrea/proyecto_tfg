@@ -3,9 +3,10 @@ import axios from "axios";
 //Ruta base
 const API_URL = "http://localhost/proyecto_tfg/backend/routes/";
 
-export const getDataProfile = async() =>{
+export const getDataProfile = async(userId) =>{
     try {
         const response = await axios.get(`${API_URL}users.php?action=getDataProfile`, {
+            //params: { userId }, // Pasamos el userId como parámetro
             withCredentials: true // Importante si usas cookies para la sesión
           });
         return response.data;

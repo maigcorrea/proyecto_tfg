@@ -11,8 +11,7 @@
             session_start();
         }
 
-        $currentSession = $_SESSION['usu'];
-        
+        $currentSession = $_SESSION['id'];
 
 
         //Lista con los datos del usuario de la sesión

@@ -47,8 +47,11 @@ function saveImg($img, $nickname, $oldImg){
     move_uploaded_file($origen, $destino);
 
     // Llamar a la función del modelo para actualizar la imagen en la bd
+    $sesion = new Sesion();
+    $id = $sesion->get_session("id");
+
     $user= new User();
-    $inserted=$user->updateImgProfile($nickname,$imgName); //Subo el nombre de la img, no la ruta completa
+    $inserted=$user->updateImgProfile($id,$imgName); //Subo el nombre de la img, no la ruta completa
 
     if ($inserted) {
         //Borrar la img anterior de la carpeta
@@ -67,7 +70,7 @@ function saveImg($img, $nickname, $oldImg){
 
 function updateUserProfile() {
     $sesion = new Sesion();
-    $currentSesion = $sesion->get_session("usu");
+    $currentSesion = $sesion->get_session("id");
 
     if (!$currentSesion) {
         echo json_encode(["success" => false, "message" => "Sesión no iniciada"]);

@@ -244,10 +244,10 @@ require_once "../config/connection.php";
 
         //ACTUALIZAR DATOS DEL USUARIO
 
-        public function updateImgProfile($nickname, $img){
-            $query="UPDATE usuario SET img=? WHERE nickname=?";
+        public function updateImgProfile($id, $img){
+            $query="UPDATE usuario SET img=? WHERE id=?";
             $stmt=$this->conn->getConnection()->prepare($query);
-            $stmt->bind_param("ss", $img, $nickname);
+            $stmt->bind_param("si", $img, $id);
 
             if($stmt->execute()){
                 return true;
@@ -260,22 +260,22 @@ require_once "../config/connection.php";
 
 
 
-        public function updateUserProfileField($nickname, $field, $newValue) {
-            $allowedFields = ['nombre', 'email', 'telefono', 'nacimiento', 'nickname'];
+        public function updateUserProfileField($id, $field, $newValue) {
+            $allowedFields = ['nombre', 'email', 'telefono', 'nacimiento', 'nickname', 'descripcion'];
 
             if (!in_array($field, $allowedFields)) {
                 return false; // Campo no permitido
             }
 
             try {
-                $query = "UPDATE usuario SET $field = ? WHERE nickname = ?";
+                $query = "UPDATE usuario SET $field = ? WHERE id = ?";
                 $stmt = $this->conn->getConnection()->prepare($query);
 
                 if (!$stmt) {
                     throw new Exception("Error preparando consulta: " . $this->conn->getConnection()->error);
                 }
 
-                $stmt->bind_param("ss", $newValue, $nickname);
+                $stmt->bind_param("si", $newValue, $id);
 
                 if ($stmt->execute()) {
                     return true;
