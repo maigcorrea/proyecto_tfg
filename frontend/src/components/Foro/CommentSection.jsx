@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { createComment } from '../../services/commentService';
 
 const CommentSection = ({postId}) => {
     const [comentario, setComentario] = useState('');
@@ -13,6 +14,9 @@ const CommentSection = ({postId}) => {
 
   const handleEnviar = () => {
     if (comentario.trim()) {
+
+
+      //Mostrar comentario (localmente) que se acaba de crear
       setComentarios(prev => [
         { usuario: 'yo', texto: comentario, tiempo: 'ahora' },
         ...prev
