@@ -56,9 +56,12 @@ const Foro = () => {
 
   const { posts, addPost } = useContext(PostContext);
 
+  
   const handleCreate = async (contenido) => {
     await addPost(contenido);
   };
+
+  // APUNTE PARA EL FUTURO: Se puede simplificar más aún moviendo la llamada a addPost directamente a CreatePost.jsx, haciendo que el propio componente gestione la creación del post desde el contexto. Así no se necesita pasarle onCreate desde Foro.jsx. Sin embargo, de cara a que en el  futuro exista la posibilidad de que CreatePost.jsx sea un componente reutilizable al que se le pase otra función como prop(desde otra página o componente por ejemplo), he decidido dejarlo así por ahora. Si en el futuro veo que no se reutiliza, lo simplificaré si lo veo oportuno.
 
   return (
     <>

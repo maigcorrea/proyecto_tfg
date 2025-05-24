@@ -15,6 +15,8 @@ const CreatePost = ({onCreate}) => {
     }
   };
 
+  // VER APUNTE EN Foro.jsx SOBRE SIMPLIFICAR MÁS LA LÓGICA:  Se puede mover la llamada a addPost directamente a CreatePost.jsx, haciendo que el propio componente gestione la creación del post desde el contexto. Así no se necesita pasarle onCreate desde Foro.jsx. (Hacerlo en caso de que no se reutilice CreatePost.jsx en el futuro, si se reutiliza, dejarlo así para poder pasarle otra función como prop desde otro componente o página).
+
   return (
     <>
         {/* 🔹 Área inicial */}
