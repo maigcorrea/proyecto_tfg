@@ -1,8 +1,10 @@
 //REPRESENTA UN POST INDIVIDUAL EN EL FORO
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import CommentSection from './CommentSection';
+import { useNavigate } from 'react-router-dom';
 
 const PostCard = ({post}) => {
+    const navigate = useNavigate();
     const [mostrarComentarios, setMostrarComentarios] = useState(false);
 
   const tiempoDesde = (fecha) => {
@@ -15,10 +17,13 @@ const PostCard = ({post}) => {
     return `${dias} d`;
   };
 
+  const handleNavigate = () => {
+    navigate(`../userDetail/${post.nickname}`);
+  }
   return (
     <>
         <div className="bg-white p-4 rounded shadow mb-4">
-      <div className="flex items-center space-x-3 mb-2">
+      <div className="flex items-center space-x-3 mb-2 cursor-pointer" onClick={handleNavigate}>
         <img
           src={`/userAssets/${post.nickname}/${post.img}`}
           alt={post.nickname}
