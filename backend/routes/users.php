@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
             $nickname = $data['Nickname'];
 
             $tagsAvailable=$user->getTags($currentSesion);
-            $tags= $tagsAvailable || "";
+            $tags= $tagsAvailable ?? "";
             // var_dump($_SESSION);
             echo json_encode([
                 "loggedIn" => true,

@@ -11,7 +11,7 @@
     function getAllUsers() {
 
         $session= new Sesion();
-        $currentUser = $session->get_session('usu');
+        $currentUser = $session->get_session('id');
 
         $userModel = new User();
         $usuarios = $userModel->getAllUsers($currentUser);

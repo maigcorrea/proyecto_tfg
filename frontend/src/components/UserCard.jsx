@@ -25,7 +25,7 @@ const UserCard = ({user}) => {
         const propias = userSession?.tags || [];
         const otras = tagsDelOtroUsuario?.split(',').map(tag => tag.trim()) || [];
 
-        console.log('Mis tags:', propias);
+        console.log('Mis tags:', userSession.tags);
         console.log('Tags del otro usuario:', otras);
 
         const coincidencias = propias.filter(tag => otras.includes(tag));
