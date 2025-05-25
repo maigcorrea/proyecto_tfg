@@ -12,7 +12,7 @@
 
 
         public function createComment($content, $userId, $postId){
-            $query = "INSERT INTO comentario VALUES (?, ?, ?, NOW());";
+            $query = "INSERT INTO comentario (contenido, usuario, post, fecha) VALUES (?, ?, ?, NOW());";
             $stmt = $this->conn->getConnection()->prepare($query);
             $stmt-> bind_param("sii", $content, $userId, $postId);
 

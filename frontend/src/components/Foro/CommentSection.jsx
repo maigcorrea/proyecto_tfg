@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
 import { createComment } from '../../services/commentService';
+import { useContext } from 'react';
+import { UserContext } from '../../../context/UserrContext'
 
 const CommentSection = ({postId}) => {
-    const [comentario, setComentario] = useState('');
+  const { userSession } = useContext(UserContext);
+  const [comentario, setComentario] = useState('');
   const [mostrarMas, setMostrarMas] = useState(3);
   const [comentarios, setComentarios] = useState([
     // temporalmente simulados
@@ -12,9 +15,37 @@ const CommentSection = ({postId}) => {
     { usuario: 'laura', texto: 'Buen post!', tiempo: '12 min' },
   ]);
 
-  const handleEnviar = () => {
+  const handleEnviar = async () => {
     if (comentario.trim()) {
+      const formData = new FormData();
+      formData.append('contenido', comentario);
+      formData.append('postId', postId);
 
+      // Aquí se llamaría al servicio para crear el comentario
+      try {
+        const response = await createComment(formData);
+        console.log('Comentario creado:', response);
+
+        if (response.success) {
+          // Añadir el nuevo comentario al inicio
+          setComentarios(prev => [
+            {
+              usuario: userSession.nombre || userSession.usuario,
+              texto: comentario,
+              tiempo: 'ahora',
+            },
+            ...prev,
+          ]);
+          setComentario('');
+
+          //AQUÍ
+          // Actualizar estado global creando un CommentContext????
+        } else {
+          console.error('Error al crear comentario:', response);
+        }
+      } catch (error) {
+        console.error('Error al enviar comentario:', error);
+      }
 
       //Mostrar comentario (localmente) que se acaba de crear
       setComentarios(prev => [

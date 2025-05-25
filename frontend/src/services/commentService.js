@@ -6,7 +6,7 @@ const API_URL = "http://localhost/proyecto_tfg/backend/routes/";
 
 export const createComment = async (formData) => {
     try {
-      const response = await axios.post(`${API_URL}comment.php?action=createComment`,
+      const response = await axios.post(`${API_URL}comments.php?action=createComment`,
         formData,
         { withCredentials: true})
 

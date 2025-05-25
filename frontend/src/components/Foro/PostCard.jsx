@@ -38,8 +38,8 @@ const PostCard = ({post}) => {
       <p className="mb-2 text-gray-800">{post.contenido}</p>
 
       <div className="flex space-x-6 text-sm text-gray-600">
-        <button className="hover:text-blue-500">❤️ Like</button>
-        <button onClick={() => setMostrarComentarios(!mostrarComentarios)} className="hover:text-blue-500">
+        <button className="cursor-pointer hover:text-blue-500">❤️ Like</button>
+        <button onClick={() => setMostrarComentarios(!mostrarComentarios)} className="cursor-pointer hover:text-blue-500">
           💬 Comentar
         </button>
       </div>
