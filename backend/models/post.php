@@ -23,7 +23,7 @@ require_once "../config/connection.php";
 
 
         public function getAllPosts(){
-            $query = "SELECT p.id, p.contenido, p.fecha, u.nombre, u.nickname, u.img FROM post p INNER JOIN usuario u ON p.usuario = u.telefono ORDER BY p.fecha DESC";
+            $query = "SELECT p.id, p.contenido, p.fecha, u.nombre, u.nickname, u.img FROM post p INNER JOIN usuario u ON p.usuario = u.id ORDER BY p.fecha DESC";
             $stmt = $this->conn->getConnection()->prepare($query);
 
             $stmt->execute();

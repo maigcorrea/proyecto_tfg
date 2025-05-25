@@ -41,6 +41,7 @@ export const PostProvider = ({children}) => {
     
           const nuevoPostCompleto={
             ...nuevoPost, //El que viene del backend(success, fecha, contenido, nickname)
+            nickname: userSession.usuario, // Usar el nickname del usuario
             nombre: userSession.nombre,
             img: userSession.img,
           }

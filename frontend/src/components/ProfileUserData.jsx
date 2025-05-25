@@ -18,12 +18,20 @@ const ProfileUserData = () => {
   // Contexto para manejar la sesión del usuario
   const { setUserSession } = useContext(UserContext);
 
+// Mapeo de campos del formulario a los nombres que espera el backend
   const fieldMapping = {
   Nombre: "nombre",
   Email: "email",
   Telefono: "telefono",
   Nacimiento: "nacimiento",
   Nickname: "nickname"
+};
+
+// Mapeo de campos del contexto a los nombres que se mostrarán en el formulario
+const contextFieldMapping = {
+  Nombre: "nombre",
+  Nickname: "usuario",
+  // Si quieres guardar email o telefono en el contexto, añádelos aquí
 };
 
 
@@ -97,6 +105,13 @@ const handleSave = async (field) => {
       await sendUpdateData(formData); // usamos directamente la clave y su nuevo valor
       console.log("Actualización exitosa");
       console.log("Campo actualizado:", fieldMapping[field], " valor nuevo:", userData[field]);
+
+      // Actualizar el contexto global del usuario
+      setUserSession((prev) => ({
+        ...prev,
+        [contextFieldMapping[field]]: userData[field] // Actualizar el campo correspondiente en la sesión del usuario
+      }));
+
       // Actualizar los datos del perfil después de guardar
       //getDataProfile();
 

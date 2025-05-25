@@ -7,7 +7,7 @@
 
     function createPost(){
         $sesion= new Sesion();
-        $currentSesion= $sesion->get_session("usu");
+        //$currentSesion= $sesion->get_session("usu");
         $id = $sesion->get_session("id");
        
 
@@ -27,7 +27,7 @@
                 'success' => 'Post creado con éxito',
                 'contenido' => $contenido,
                 'fecha' => date('c'),
-                'nickname' => $currentSesion,
+                //'nickname' => $currentSesion,
             ]);
         } else {
             echo json_encode(['error' => 'Error al crear el post']);
