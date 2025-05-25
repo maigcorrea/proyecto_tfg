@@ -354,7 +354,7 @@ require_once "../config/connection.php";
 
         //OBTENER ID DE UN USUARIO EN BASE A SU NICKNAME
         public function getId($nickname){
-            $query="SELECT telefono FROM usuario WHERE nickname=?;";
+            $query="SELECT id FROM usuario WHERE nickname=?;";
             $stmt= $this->conn->getConnection() -> prepare($query);
             $stmt->bind_param("s",$nickname);
             $stmt->bind_result($id);

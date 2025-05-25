@@ -8,10 +8,8 @@
     function createPost(){
         $sesion= new Sesion();
         $currentSesion= $sesion->get_session("usu");
-
-        //En base al nickname del usuario sacar su id(telefono)
-        $user = new User();
-        $id_telefono = $user -> getId($currentSesion);
+        $id = $sesion->get_session("id");
+       
 
         $contenido= $_POST["contenido"] ?? '';
 
@@ -22,7 +20,7 @@
         }
 
         $post= new Post();
-        $inserted = $post -> createPost($contenido, $id_telefono);
+        $inserted = $post -> createPost($contenido, $id);
 
         if ($inserted) {
             echo json_encode([
