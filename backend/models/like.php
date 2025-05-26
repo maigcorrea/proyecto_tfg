@@ -52,5 +52,23 @@
 
             $stmt->close();
         }
+
+
+        public function getLikesCountByPost($postId) {
+            $query = "SELECT COUNT(*) as likesCount FROM likes WHERE post = ?;";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("i", $postId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                return $row['likesCount'];
+            } else {
+                return 0; //No hay likes
+            }
+
+            $stmt->close();
+        }
     }
 ?>

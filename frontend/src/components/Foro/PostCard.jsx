@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { createLike } from '../../services/likeService';
 import { removeLike } from '../../services/likeService';
 import { hasUserLikedPost } from '../../services/likeService';
+import { getLikesCountByPost } from '../../services/likeService';
 
 const PostCard = ({post}) => {
     const navigate = useNavigate();
     const [mostrarComentarios, setMostrarComentarios] = useState(false);
     const [crear, setCrear] = useState(true); // Estado para controlar la creación de likes
     const [color, setColor] = useState("");
+    const [likesCount, setLikesCount] = useState(0);
 
     useEffect(() => {
       const checkLikes = async () => {
@@ -25,7 +27,20 @@ const PostCard = ({post}) => {
     }
   };
 
+
+  const getLikesCount = async () => {
+    try {
+      const response = await getLikesCountByPost(post.id);
+      if(response.success){
+        setLikesCount(response.likesCount);
+      }
+    } catch (error) {
+      console.error("Error obteniendo el número de likes:", error);
+    }
+  }
+
   checkLikes();
+  getLikesCount();
     }, [post.id])
     
   const tiempoDesde = (fecha) => {
@@ -53,6 +68,7 @@ const PostCard = ({post}) => {
         console.log("Like creado:", response);
         setCrear(false) // Cambiamos a false para evitar crear más likes
         setColor("text-blue-500"); 
+        setLikesCount(prev => prev + 1); // Incrementa el contador al instante
       }else{
         console.log("Error al crear el like");
       }
@@ -71,6 +87,7 @@ const PostCard = ({post}) => {
         console.log("Like eliminado:", response);
         setCrear(true);
         setColor("text-gray-600");
+        setLikesCount(prev => Math.max(prev - 1, 0)); // Decrementa el contador, sin permitir negativos
       }else{
         console.log("Error al eliminar el like");
       }
@@ -98,7 +115,7 @@ const PostCard = ({post}) => {
       <p className="mb-2 text-gray-800">{post.contenido}</p>
 
       <div className="flex space-x-6 text-sm text-gray-600">
-        <button className={`cursor-pointer hover:text-blue-500 ${color}`} onClick={crear ? handleCreateLike : handleRemoveLike}>❤️ Like</button>
+        <button className={`cursor-pointer hover:text-blue-500 ${color}`} onClick={crear ? handleCreateLike : handleRemoveLike}>{crear ? "🤍 Like" : "❤️ Like"} {likesCount !=0 && likesCount}</button>
         <button onClick={() => setMostrarComentarios(!mostrarComentarios)} className="cursor-pointer hover:text-blue-500">
           💬 Comentar
         </button>

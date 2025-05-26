@@ -28,5 +28,10 @@
             require_once "../controllers/hasUserLikedPostController.php";
             hasLikedPost();
         break;
+
+        case 'getLikesCountByPost':
+            require_once "../controllers/getLikesCountByPostController.php";
+            getLikesCountByPost();
+        break;
     }
 ?>

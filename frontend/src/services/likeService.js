@@ -41,3 +41,15 @@ export const hasUserLikedPost = async (postId) => {
         throw error;
     }
 }
+
+export const getLikesCountByPost = async (postId) => {
+    try {
+        const response = await axios.get(`${API_URL}likes.php?action=getLikesCountByPost&postId=${postId}`,
+            { withCredentials: true });
+
+        return response.data;
+    } catch (error) {
+        console.error("Error obteniendo el nuemro total de likes del post:", error);
+        throw error;
+    }
+}
