@@ -43,5 +43,26 @@
             $stmt->close();
             return $comments;
         }
+
+
+
+        public function getAllComments(){
+            $query = "SELECT c.id, c.contenido, c.fecha, u.nombre AS usuario_nombre, p.contenido AS post_contenido 
+                      FROM comentario c 
+                      JOIN usuario u ON c.usuario = u.id 
+                      JOIN post p ON c.post = p.id 
+                      ORDER BY c.fecha DESC;";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            $comments = [];
+            while ($row = $result->fetch_assoc()) {
+                $comments[] = $row;
+            }
+
+            $stmt->close();
+            return $comments;
+        }
     }
 ?>

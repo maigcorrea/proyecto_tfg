@@ -22,6 +22,11 @@
             require_once "../controllers/getCommentsByPostController.php";
             getCommentsByPost();
         break;
+
+        case 'getAllComments':
+            require_once "../controllers/getAllCommentsController.php";
+            getAllComments();
+        break;
     }
 
 ?>

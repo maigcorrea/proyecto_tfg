@@ -26,3 +26,13 @@ export const getCommentsByPost = async (postId) => {
         throw error;
     }
 }
+
+export const getAllComments = async () => {
+  try {
+      const response = await axios.get(`${API_URL}comments.php?action=getAllComments`, { withCredentials: true });
+      return response.data;
+  } catch (error) {
+      console.error("Error obteniendo todos loa comentarios:", error);
+      throw error;
+  }
+}
