@@ -81,5 +81,18 @@
 
             return $deleted;
         }
+
+
+        public function countCommentsByPost($postId) {
+            $query = "SELECT COUNT(*) as total FROM comentario WHERE post = ?;";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("i", $postId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $stmt->close();
+
+            return (int)$row['total'];
+        }
     }
 ?>
