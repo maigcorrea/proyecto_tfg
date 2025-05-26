@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-05-2025 a las 14:41:12
+-- Tiempo de generación: 26-05-2025 a las 18:13:54
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -61,7 +61,8 @@ INSERT INTO `comentario` (`id`, `contenido`, `usuario`, `post`, `fecha`) VALUES
 (22, 'aerf', 1, 21, '2025-05-26 12:17:11'),
 (23, 'refwer', 1, 20, '2025-05-26 12:17:46'),
 (24, 'ced', 1, 20, '2025-05-26 12:17:49'),
-(25, 'hyhuhbe', 1, 21, '2025-05-26 12:55:16');
+(25, 'hyhuhbe', 1, 21, '2025-05-26 12:55:16'),
+(26, 'cfraf', 1, 21, '2025-05-26 16:12:08');
 
 -- --------------------------------------------------------
 
@@ -81,7 +82,11 @@ CREATE TABLE `likes` (
 --
 
 INSERT INTO `likes` (`id`, `usuario`, `post`, `fecha`) VALUES
-(1, 1, 21, '2025-05-26 13:39:42');
+(39, 1, 21, '2025-05-26 17:35:45'),
+(40, 1, 21, '2025-05-26 17:38:13'),
+(41, 1, 20, '2025-05-26 17:43:52'),
+(42, 1, 21, '2025-05-26 17:47:17'),
+(43, 1, 20, '2025-05-26 17:57:57');
 
 -- --------------------------------------------------------
 
@@ -184,13 +189,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `post`
