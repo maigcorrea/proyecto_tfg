@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-05-2025 a las 00:14:11
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 26-05-2025 a las 14:41:12
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,28 @@ CREATE TABLE `comentario` (
 --
 
 INSERT INTO `comentario` (`id`, `contenido`, `usuario`, `post`, `fecha`) VALUES
-(4, 'dewSF', 1, 21, '2025-05-26 00:11:25');
+(4, 'dewSF', 1, 21, '2025-05-26 00:11:25'),
+(5, 'Vaya mierda', 1, 21, '2025-05-26 10:54:49'),
+(6, 'vaya mierda', 1, 21, '2025-05-26 10:56:44'),
+(7, 'cvarg', 1, 21, '2025-05-26 11:35:52'),
+(8, 'csdcfs', 1, 21, '2025-05-26 11:39:38'),
+(9, 'csdc', 1, 21, '2025-05-26 11:39:42'),
+(10, 'csafera', 1, 21, '2025-05-26 11:40:03'),
+(11, 'nada', 1, 21, '2025-05-26 11:42:49'),
+(12, 'hola', 1, 21, '2025-05-26 11:48:16'),
+(13, 'vsdfvd', 1, 21, '2025-05-26 11:50:34'),
+(14, 'TFG', 1, 21, '2025-05-26 11:55:32'),
+(15, 'cadecf', 1, 21, '2025-05-26 11:56:13'),
+(16, 'cvsfvsfr', 1, 21, '2025-05-26 11:57:09'),
+(17, 'nuevo comentario', 1, 21, '2025-05-26 11:59:25'),
+(18, 'getg', 1, 21, '2025-05-26 12:09:03'),
+(19, 'csdacfa', 1, 21, '2025-05-26 12:13:08'),
+(20, 'dWF', 1, 21, '2025-05-26 12:14:12'),
+(21, 'fwegt', 1, 21, '2025-05-26 12:17:09'),
+(22, 'aerf', 1, 21, '2025-05-26 12:17:11'),
+(23, 'refwer', 1, 20, '2025-05-26 12:17:46'),
+(24, 'ced', 1, 20, '2025-05-26 12:17:49'),
+(25, 'hyhuhbe', 1, 21, '2025-05-26 12:55:16');
 
 -- --------------------------------------------------------
 
@@ -54,6 +75,13 @@ CREATE TABLE `likes` (
   `post` int(11) UNSIGNED NOT NULL,
   `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `likes`
+--
+
+INSERT INTO `likes` (`id`, `usuario`, `post`, `fecha`) VALUES
+(1, 1, 21, '2025-05-26 13:39:42');
 
 -- --------------------------------------------------------
 
@@ -156,13 +184,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `post`
