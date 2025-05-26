@@ -15,3 +15,17 @@ export const createLike = async (formData) => {
         throw error;
     }
 }
+
+
+export const removeLike = async (formData) => {
+    try {
+        const response = await axios.post(`${API_URL}likes.php?action=removeLike`,
+            formData,
+            { withCredentials: true });
+
+        return response.data;
+    } catch (error) {
+        console.error("Error eliminando like:", error);
+        throw error;
+    }
+}

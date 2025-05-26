@@ -23,5 +23,18 @@
             $stmt->close();
 
         }
+
+        public function removeLike($postId, $userId){
+            $query = "DELETE FROM likes WHERE post = ? AND usuario = ?;";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("ii", $postId, $userId);
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+
+            $stmt->close();
+        }
     }
 ?>

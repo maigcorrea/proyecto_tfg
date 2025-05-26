@@ -18,5 +18,10 @@
             require_once "../controllers/createLikeController.php";
             createLike();
         break;
+
+        case 'removeLike':
+            require_once "../controllers/removeLikeController.php";
+            removeLike();
+        break;
     }
 ?>
