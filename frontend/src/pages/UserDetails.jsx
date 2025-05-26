@@ -48,7 +48,7 @@ const UserDetails = () => {
         
         <div className="max-w-xl mx-auto mt-10 p-4 bg-white shadow-md rounded">
             <img
-                src={`../../public/userAssets/${user.nickname}/${user.img}`}
+                src={`../../public/userAssets/${user.id}/${user.img}`}
                 alt={user.nickname}
                 className="w-32 h-32 rounded-full mx-auto object-cover border"
             />

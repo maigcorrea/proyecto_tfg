@@ -54,7 +54,7 @@ const UserCard = ({user}) => {
     <>
           <div className="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300 cursor-pointer" onClick={() => navigate(`/userDetail/${user.nickname}`)}>
               <img
-                  src={`../../public/userAssets/${user.nickname}/${user.img}` || '/default-avatar.png'}
+                  src={`../../public/userAssets/${user.id}/${user.img}` || '/default-avatar.png'}
                   alt={user.nickname}
                   className="w-20 h-20 mx-auto rounded-full mb-3 object-cover border"
               />
