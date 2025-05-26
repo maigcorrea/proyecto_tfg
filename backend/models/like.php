@@ -36,5 +36,21 @@
 
             $stmt->close();
         }
+
+        public function hasUserLiked($postId, $userId) {
+            $query = "SELECT * FROM likes WHERE post = ? AND usuario = ?;";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("ii", $postId, $userId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+            $stmt->close();
+        }
     }
 ?>

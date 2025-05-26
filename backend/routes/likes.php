@@ -23,5 +23,10 @@
             require_once "../controllers/removeLikeController.php";
             removeLike();
         break;
+
+        case 'hasUserLiked';
+            require_once "../controllers/hasUserLikedPostController.php";
+            hasLikedPost();
+        break;
     }
 ?>

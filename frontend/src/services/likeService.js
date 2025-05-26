@@ -29,3 +29,15 @@ export const removeLike = async (formData) => {
         throw error;
     }
 }
+
+export const hasUserLikedPost = async (postId) => {
+    try {
+        const response = await axios.get(`${API_URL}likes.php?action=hasUserLiked&postId=${postId}`,
+            { withCredentials: true });
+
+        return response.data;
+    } catch (error) {
+        console.error("Error verificando si el usuario ha dado like al post:", error);
+        throw error;
+    }
+}

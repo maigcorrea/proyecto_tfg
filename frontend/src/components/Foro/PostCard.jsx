@@ -4,13 +4,30 @@ import CommentSection from './CommentSection';
 import { useNavigate } from 'react-router-dom';
 import { createLike } from '../../services/likeService';
 import { removeLike } from '../../services/likeService';
+import { hasUserLikedPost } from '../../services/likeService';
 
 const PostCard = ({post}) => {
     const navigate = useNavigate();
     const [mostrarComentarios, setMostrarComentarios] = useState(false);
     const [crear, setCrear] = useState(true); // Estado para controlar la creación de likes
-    const [color, setColor] = useState("text-gray-600");
+    const [color, setColor] = useState("");
 
+    useEffect(() => {
+      const checkLikes = async () => {
+    try {
+      const response = await hasUserLikedPost(post.id);
+      if(response.success){
+        setCrear(false);
+        setColor("text-blue-500");
+      }
+    } catch (error) {
+      console.error("Error verificando like:", error);
+    }
+  };
+
+  checkLikes();
+    }, [post.id])
+    
   const tiempoDesde = (fecha) => {
     const diff = Date.now() - new Date(fecha).getTime();
     const minutos = Math.floor(diff / 60000);
@@ -24,6 +41,7 @@ const PostCard = ({post}) => {
   const handleNavigate = () => {
     navigate(`../userDetail/${post.nickname}`);
   }
+
 
   const handleCreateLike = async () => {
     const formData = new FormData();
