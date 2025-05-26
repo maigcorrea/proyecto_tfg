@@ -36,3 +36,13 @@ export const getAllComments = async () => {
       throw error;
   }
 }
+
+export const getCommentsCountByPost = async (postId) => {
+    try {
+        const response = await axios.get(`${API_URL}comments.php?action=getCommentsCountByPost&postId=${postId}`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Error obteniendo el número de comentarios:", error);
+        throw error;
+    }
+}

@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../../context/UserrContext'
 import { getCommentsByPost } from '../../services/commentService';
 
-const CommentSection = ({postId}) => {
+const CommentSection = ({postId, setCommentsCount }) => {
   const { userSession } = useContext(UserContext);
   const [comentario, setComentario] = useState('');
   const [mostrarMas, setMostrarMas] = useState(3);
@@ -39,6 +39,9 @@ const CommentSection = ({postId}) => {
         console.log('Comentario creado:', response);
 
         if (response.success) {
+          //Aquí se actualizaría el estado local del numero de comentarios que tiene el post
+          setCommentsCount(prev => prev + 1); 
+          
           // Después de crear, recargar los comentarios del backend
           const updatedCommentsResponse = await getCommentsByPost(postId);
           console.log('Comentarios actualizados:', updatedCommentsResponse.comments);

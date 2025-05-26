@@ -27,6 +27,10 @@
             require_once "../controllers/getAllCommentsController.php";
             getAllComments();
         break;
+
+        case 'getCommentsCountByPost':
+            require_once "../controllers/getCommentsCountByPostController.php";
+            getCommentsCountByPost();
     }
 
 ?>

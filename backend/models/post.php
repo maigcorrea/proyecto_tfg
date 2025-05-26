@@ -25,7 +25,8 @@ require_once "../config/connection.php";
         public function getAllPosts($userId){
             $query = "SELECT p.id, p.contenido, p.fecha, u.nombre, u.nickname, u.img,
                      (SELECT COUNT(*) FROM likes l WHERE l.post = p.id) as likesCount,
-                     EXISTS(SELECT 1 FROM likes l2 WHERE l2.post = p.id AND l2.usuario = ?) as userLiked
+                     EXISTS(SELECT 1 FROM likes l2 WHERE l2.post = p.id AND l2.usuario = ?) as userLiked,
+                     (SELECT COUNT(*) FROM comentario c WHERE c.post = p.id) as commentsCount
               FROM post p
               INNER JOIN usuario u ON p.usuario = u.id
               ORDER BY p.fecha DESC";

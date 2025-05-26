@@ -83,16 +83,21 @@
         }
 
 
-        public function countCommentsByPost($postId) {
-            $query = "SELECT COUNT(*) as total FROM comentario WHERE post = ?;";
+        public function getCommentsCountByPost($postId) {
+            $query = "SELECT COUNT(*) as commentsCount FROM comentario WHERE post = ?;";
             $stmt = $this->conn->getConnection()->prepare($query);
             $stmt->bind_param("i", $postId);
             $stmt->execute();
             $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            $stmt->close();
 
-            return (int)$row['total'];
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                return $row['commentsCount'];
+            } else {
+                return 0; //No hay comentarios
+            }
+
+            $stmt->close();
         }
     }
 ?>

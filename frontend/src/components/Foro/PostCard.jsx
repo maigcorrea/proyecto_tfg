@@ -7,6 +7,7 @@ import { removeLike } from '../../services/likeService';
 import { hasUserLikedPost } from '../../services/likeService';
 import { getLikesCountByPost } from '../../services/likeService';
 import { PostContext } from '../../../context/PostContext';
+import { getCommentsCountByPost } from '../../services/commentService';
 
 const PostCard = ({post}) => {
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ const PostCard = ({post}) => {
     const [crear, setCrear] = useState(!post.userLiked); // Estado para controlar la creación de likes
     const [color, setColor] = useState(post.userLiked ? "text-blue-500" : "text-gray-600");
     const [likesCount, setLikesCount] = useState(post.likesCount || 0);
+    const [commentsCount, setCommentsCount] = useState( post.commentsCount || 0); //Faltaría recuperar el número inicial de comentarios del post del contexto 
 
     //AQUÍ
     /*const { setPosts } = useContext(PostContext); // <- Obtenemos setPosts del contexto
@@ -49,8 +51,20 @@ const PostCard = ({post}) => {
     }
   }
 
+  const getCommentsCount = async () => {
+    try {
+      const response = await getCommentsCountByPost(post.id);
+      if(response.success){
+        setCommentsCount(response.commentsCount);
+      }
+    } catch (error) {
+      console.error("Error obteniendo el número de comentarios:", error);
+    }
+  }
+
   checkLikes();
   getLikesCount();
+  getCommentsCount();
     }, [post.id])
 
   const tiempoDesde = (fecha) => {
@@ -82,7 +96,7 @@ const PostCard = ({post}) => {
 
         //AQUI
         //setLocalState({ liked: true, likes: localState.likes + 1 });
-        // 🔥 Actualizamos el contexto PostContext
+        //  Actualizamos el contexto PostContext
           /*setPosts(prev =>
             prev.map(p => p.id === post.id ? { ...p, userLiked: true, likesCount: p.likesCount + 1 } : p)
           );*/
@@ -141,11 +155,11 @@ const PostCard = ({post}) => {
         {/*<button className={`cursor-pointer hover:text-blue-500 ${localState.liked  ? "text-blue-500" : "text-gray-600"}`} onClick={!localState.liked ? handleCreateLike : handleRemoveLike}>{!localState.liked ? "🤍 Like" : "❤️ Like"} {localState.likes !=0 && localState.likes}</button>*/}
         <button className={`cursor-pointer hover:text-blue-500 ${color}`} onClick={crear ? handleCreateLike : handleRemoveLike}>{crear ? "🤍 Like" : "❤️ Like"} {likesCount !=0 && likesCount}</button>
         <button onClick={() => setMostrarComentarios(!mostrarComentarios)} className="cursor-pointer hover:text-blue-500">
-          💬 Comentar
+          💬 Comentar {commentsCount !=0 && commentsCount}
         </button>
       </div>
 
-      {mostrarComentarios && <CommentSection postId={post.id} />}
+      {mostrarComentarios && <CommentSection postId={post.id} setCommentsCount={setCommentsCount} />}
     </div>
     </>
   )
