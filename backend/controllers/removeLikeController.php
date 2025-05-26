@@ -15,5 +15,16 @@
         $like = new Like();
         $removed = $like->removeLike($idPost, $idUsuario);
         
+        if($removed) {
+            echo json_encode([
+                'success' => true,
+                'postId' => $idPost,
+                'userId' => $idUsuario,
+                'fecha' => date('c'),
+            ]);
+        } else {
+            echo json_encode(['error' => 'Error al eliminar like']);
+            http_response_code(500);
+        }
     }
 ?>

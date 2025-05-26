@@ -3,10 +3,12 @@ import React,{useEffect, useState} from 'react'
 import CommentSection from './CommentSection';
 import { useNavigate } from 'react-router-dom';
 import { createLike } from '../../services/likeService';
+import { removeLike } from '../../services/likeService';
 
 const PostCard = ({post}) => {
     const navigate = useNavigate();
     const [mostrarComentarios, setMostrarComentarios] = useState(false);
+    const [crear, setCrear] = useState(true); // Estado para controlar la creación de likes
 
   const tiempoDesde = (fecha) => {
     const diff = Date.now() - new Date(fecha).getTime();
@@ -30,11 +32,29 @@ const PostCard = ({post}) => {
       const response = await createLike(formData);
       if(response.success){
         console.log("Like creado:", response);
+        setCrear(false) // Cambiamos a false para evitar crear más likes
       }else{
         console.log("Error al crear el like");
       }
     } catch (error) {
       console.error("Error creando like:", error);
+    }
+  }
+
+  const handleRemoveLike = async () => {
+    const formData = new FormData();
+    formData.append('postId', post.id);
+
+    try {
+      const response = await removeLike(formData);
+      if(response.success){
+        console.log("Like eliminado:", response);
+        setCrear(true);
+      }else{
+        console.log("Error al eliminar el like");
+      }
+    } catch (error) {
+      console.error("Error eliminando like:", error);
     }
   }
 
@@ -57,7 +77,7 @@ const PostCard = ({post}) => {
       <p className="mb-2 text-gray-800">{post.contenido}</p>
 
       <div className="flex space-x-6 text-sm text-gray-600">
-        <button className="cursor-pointer hover:text-blue-500" onClick={handleCreateLike}>❤️ Like</button>
+        <button className="cursor-pointer hover:text-blue-500" onClick={crear ? handleCreateLike : handleRemoveLike}>❤️ Like</button>
         <button onClick={() => setMostrarComentarios(!mostrarComentarios)} className="cursor-pointer hover:text-blue-500">
           💬 Comentar
         </button>
