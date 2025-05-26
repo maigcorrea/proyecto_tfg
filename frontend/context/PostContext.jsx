@@ -42,7 +42,7 @@ export const PostProvider = ({children}) => {
           const nuevoPost= await createPost(formData); // Crear post en el backend, devuelve si ha habido éxito o no y datos (contenido, fecha y nickname del usuario que ha hecho el post). Los demás datos necesarios se obtienen del contexto del usuario.
           console.log("Post que me devuelve el backend: ",nuevoPost);
     
-          const nuevoPostCompleto={
+          /*const nuevoPostCompleto={
             ...nuevoPost, //El que viene del backend(success, fecha, contenido)
             nickname: userSession.usuario, // Usar el nickname del usuario
             nombre: userSession.nombre,
@@ -53,7 +53,17 @@ export const PostProvider = ({children}) => {
     
           console.log("Nuevo post completo, con el backend y la info del contexto del usuario: ", nuevoPostCompleto);
     
-          setPosts(prev => [nuevoPostCompleto, ...prev]);
+          setPosts(prev => [nuevoPostCompleto, ...prev]);*/
+
+          // En vez de simular localmente, recarga desde backend:
+          const response = await getAllPosts();
+          if (response.success) {
+            setPosts(response.posts);
+            console.log("Posts actualizados tras crear nuevo:", response.posts);
+          } else {
+            console.error("Error recargando posts tras crear nuevo:", response);
+          }
+          
         } catch (error) {
           console.error("Error creando post desde PostContext:", error);
         }
