@@ -9,6 +9,7 @@ const PostCard = ({post}) => {
     const navigate = useNavigate();
     const [mostrarComentarios, setMostrarComentarios] = useState(false);
     const [crear, setCrear] = useState(true); // Estado para controlar la creación de likes
+    const [color, setColor] = useState("text-gray-600");
 
   const tiempoDesde = (fecha) => {
     const diff = Date.now() - new Date(fecha).getTime();
@@ -33,6 +34,7 @@ const PostCard = ({post}) => {
       if(response.success){
         console.log("Like creado:", response);
         setCrear(false) // Cambiamos a false para evitar crear más likes
+        setColor("text-blue-500"); 
       }else{
         console.log("Error al crear el like");
       }
@@ -50,6 +52,7 @@ const PostCard = ({post}) => {
       if(response.success){
         console.log("Like eliminado:", response);
         setCrear(true);
+        setColor("text-gray-600");
       }else{
         console.log("Error al eliminar el like");
       }
@@ -77,7 +80,7 @@ const PostCard = ({post}) => {
       <p className="mb-2 text-gray-800">{post.contenido}</p>
 
       <div className="flex space-x-6 text-sm text-gray-600">
-        <button className="cursor-pointer hover:text-blue-500" onClick={crear ? handleCreateLike : handleRemoveLike}>❤️ Like</button>
+        <button className={`cursor-pointer hover:text-blue-500 ${color}`} onClick={crear ? handleCreateLike : handleRemoveLike}>❤️ Like</button>
         <button onClick={() => setMostrarComentarios(!mostrarComentarios)} className="cursor-pointer hover:text-blue-500">
           💬 Comentar
         </button>
