@@ -64,5 +64,22 @@
             $stmt->close();
             return $comments;
         }
+
+
+        public function deleteComment($commentId){
+            $query = "DELETE FROM comentario WHERE id = ?;";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("i", $commentId);
+
+            $deleted=false;
+            $stmt->execute();
+            if($stmt->affected_rows > 0){
+                $deleted = true;
+            } //Comprueba si se eliminó al menos una fila
+
+            $stmt->close();
+
+            return $deleted;
+        }
     }
 ?>

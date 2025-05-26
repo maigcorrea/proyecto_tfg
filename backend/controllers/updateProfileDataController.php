@@ -11,7 +11,7 @@ require_once '../models/cookies_sesiones.php';
 
 function updateUserImg() {
     $sesion = new Sesion();
-    $currentSesion = $sesion->get_session("usu");
+    $currentSesion = $sesion->get_session("id");
 
     if (!$currentSesion) {
         echo json_encode(["success" => false, "message" => "Sesión no iniciada"]);
@@ -31,12 +31,12 @@ function updateUserImg() {
 
 
 
-function saveImg($img, $nickname, $oldImg){
-    //PARA LA FOTO, crear carpeta con el nickname del usuario si todavía no existe y meter la imagen, luego coger esa ruta para meterla en la bd
+function saveImg($img, $id, $oldImg){
+    //PARA LA FOTO, crear carpeta con el id del usuario si todavía no existe y meter la imagen, luego coger esa ruta para meterla en la bd
     $imgName= uniqid() . '_' . preg_replace('/[^a-zA-Z0-9\._]/', "", $img);
     $origen = $_FILES['newImg']['tmp_name'];
-    $ruta="../../frontend/public/userAssets/".$nickname.'/';
-    $rutaImgActual="../../frontend/public/userAssets/".$nickname.'/'.$oldImg;
+    $ruta="../../frontend/public/userAssets/".$id.'/';
+    $rutaImgActual="../../frontend/public/userAssets/".$id.'/'.$oldImg;
 
     if(!file_exists($ruta)){
         mkdir($ruta,0777,true);
@@ -47,8 +47,8 @@ function saveImg($img, $nickname, $oldImg){
     move_uploaded_file($origen, $destino);
 
     // Llamar a la función del modelo para actualizar la imagen en la bd
-    $sesion = new Sesion();
-    $id = $sesion->get_session("id");
+    //$sesion = new Sesion();
+    //$id = $sesion->get_session("id");
 
     $user= new User();
     $inserted=$user->updateImgProfile($id,$imgName); //Subo el nombre de la img, no la ruta completa

@@ -23,13 +23,31 @@ function userRegistration(){
     // $user= new User();
     // $inserted= $user->userRegistration($telefono,$nombre,$email,$nickname,$nacimiento,$password);
     // echo json_encode($inserted);
-    $inserted=saveImg($telefono,$nombre,$email,$nickname,$nacimiento,$password);
+
+    // Llamar a la función del modelo
+    $user= new User();
+    $inserted= $user->userRegistration($telefono,$nombre,$email,$nickname,$nacimiento,$password);
+
+    //$inserted=saveImg($telefono,$nombre,$email,$nickname,$nacimiento,$password);
 
     if ($inserted === true) {
-        echo json_encode([
-            "success" => true,
-            "message" => "Usuario registrado correctamente"
-        ]);
+        // Obtener id del usuario recién insertado
+        $id = $user->getId($nickname);
+        
+
+        // Guardar la imagen
+        $uploaded = saveImg($id);
+        if($uploaded){
+            echo json_encode([
+                "success" => true,
+                "message" => "Usuario registrado correctamente"
+            ]);
+        } else{
+            echo json_encode([
+                "success" => true,
+                "message" => "Usuario registrado correctamente, pero no se pudo guardar la imagen"
+            ]);
+        }
     } else if ($inserted === false) {
         echo json_encode([
             "success" => false,
@@ -49,14 +67,14 @@ function userRegistration(){
 }
 
 
-function saveImg($telefono,$nombre,$email,$nickname,$nacimiento,$password){
-    //PARA LA FOTO, crear carpeta con el nickname del usuario si todavía no existe y meter la imagen, luego coger esa ruta para meterla en la bd
+function saveImg($id){
+    //PARA LA FOTO, crear carpeta con el id del usuario si todavía no existe y meter la imagen, luego coger esa ruta para meterla en la bd
     $imgName=null;
 
         if (!empty($_FILES['img']['name'])) {
             $imgName= uniqid() . '_' . preg_replace('/[^a-zA-Z0-9\._]/', "", $_FILES['img']['name']);
             $origen = $_FILES['img']['tmp_name'];
-            $ruta="../../frontend/public/userAssets/".$nickname.'/';
+            $ruta="../../frontend/public/userAssets/".$id.'/';
 
             if(!file_exists($ruta)){
                 mkdir($ruta,0777,true);
@@ -65,14 +83,15 @@ function saveImg($telefono,$nombre,$email,$nickname,$nacimiento,$password){
             $destino=$ruta . $imgName;
 
             move_uploaded_file($origen, $destino);
+            $uploadedImage = true;
         // }else {
         //     $imgName = null; // O una imagen por defecto
         }
 
         // Llamar a la función del modelo
         $user= new User();
-        $inserted= $user->userRegistration($telefono,$nombre,$email,$nickname,$nacimiento,$password,$imgName);
+        $uploadedImage = $user->saveImgProfile($id, $imgName);
 
-        return $inserted;
+        return $uploadedImage;;
 }
 ?>

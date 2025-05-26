@@ -44,5 +44,24 @@ require_once "../config/connection.php";
             $stmt->close();
             return $posts;
         }
+
+
+
+        public function deletePost($postId){
+            $query = "DELETE FROM post WHERE id = ?;";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("i", $postId);
+            
+            $deleted=false;
+            $stmt->execute();
+            if($stmt->affected_rows > 0){
+                $deleted = true;
+            } //Comprueba si se eliminó al menos una fila
+
+            $stmt->close();
+
+            return $deleted;
+
+        }
     }
 ?>

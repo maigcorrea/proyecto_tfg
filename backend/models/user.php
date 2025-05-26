@@ -10,19 +10,19 @@ require_once "../config/connection.php";
         }
 
         //REGISTER
-        public function userRegistration($tel,$nom,$email,$nickname, $f_nac, $pass, $img){
+        public function userRegistration($tel,$nom,$email,$nickname, $f_nac, $pass){
             $inserted=false;
 
             if(!$this->checkEmailExists($email)){
                 if(!$this->checkNicknameExists($nickname)){
                     try {
-                        $query="INSERT INTO usuario(telefono, nombre, email, nickname, nacimiento, passwrd, img) VALUES(?,?,?,?,?,?,?);";
+                        $query="INSERT INTO usuario(telefono, nombre, email, nickname, nacimiento, passwrd) VALUES(?,?,?,?,?,?);";
                         $stmt=$this->conn->getConnection()->prepare($query);
     
                         // Hashear la contraseña
                         $hash = password_hash($pass, PASSWORD_BCRYPT);
     
-                        $stmt->bind_param("issssss",$tel,$nom,$email,$nickname, $f_nac, $hash, $img);
+                        $stmt->bind_param("isssss",$tel,$nom,$email,$nickname, $f_nac, $hash);
                          //NOTA: Cuando un usuario intente iniciar sesión, puedes usar password_verify($passwordIntroducida, $hashAlmacenado) para comprobar si la contraseña coincide con el hash almacenado.
     
                         $stmt->execute();
@@ -98,6 +98,20 @@ require_once "../config/connection.php";
             }else{
                 return false;
             }
+        }
+
+        public function saveImgProfile($id, $img){
+            $query="UPDATE usuario SET img=? WHERE id=?";
+            $stmt=$this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("si", $img, $id);
+
+            if($stmt->execute()){
+                return true;
+            }else{
+                return false;
+            }
+
+            $stmt->close();
         }
 
 

@@ -16,7 +16,7 @@ const ProfileUserData = () => {
   const [toastType, setToastType] = useState(''); // success o error
 
   // Contexto para manejar la sesión del usuario
-  const { setUserSession } = useContext(UserContext);
+  const { userSession, setUserSession } = useContext(UserContext);
 
 // Mapeo de campos del formulario a los nombres que espera el backend
   const fieldMapping = {
@@ -163,7 +163,7 @@ const handleSave = async (field) => {
 
       {/* Imagen de perfil */}
       <div className='flex justify-center items-center h-screen'>
-        <img src={`../userAssets/${userData.Nickname}/${userData.ImgPerfil}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer' onClick={handleImageClick}/>
+        <img src={`../userAssets/${userSession.id}/${userData.ImgPerfil}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer' onClick={handleImageClick}/>
         <input type="file" accept="image/*" className='hidden' ref={fileInputRef} onChange={handleImgChange} />
       </div>
 
