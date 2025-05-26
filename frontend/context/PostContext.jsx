@@ -10,14 +10,15 @@ export const PostProvider = ({children}) => {
 
     const [posts, setPosts] = useState([]);
     const { userSession } = useContext(UserContext);
-
+  
     // Obtener todos los post de la bd al cargar la app o el componente
     useEffect(() => {
         const cargarPosts = async () => {
           try {
-            const response = await getAllPosts();
+            const response = await getAllPosts(); //Obtener todos los post (integrar el número total de likes de la publicación y si el usuario le ha dado like)
             if (response.success) {
               setPosts(response.posts);
+              console.log("usuario usado:", response.userId);
             } else {
               console.error("Error al cargar publicaciones:", response);
             }
@@ -26,8 +27,10 @@ export const PostProvider = ({children}) => {
           }
         };
     
-        cargarPosts();
-      }, []);
+        if (userSession.loggedIn) { // Solo cargar posts si hay sesión
+            cargarPosts();
+        }
+      }, [userSession]);
 
 
     // Crear un nuevo post y añadirlo al principio
@@ -44,6 +47,8 @@ export const PostProvider = ({children}) => {
             nickname: userSession.usuario, // Usar el nickname del usuario
             nombre: userSession.nombre,
             img: userSession.img,
+            likesCount: 0, // Nuevo post empieza con 0 likes
+            userLiked: false, // Aún no le ha dado like
           }
     
           console.log("Nuevo post completo, con el backend y la info del contexto del usuario: ", nuevoPostCompleto);
@@ -55,7 +60,7 @@ export const PostProvider = ({children}) => {
     };
   return (
     <>
-        <PostContext.Provider value={{ posts, addPost }}>
+        <PostContext.Provider value={{ posts, addPost, setPosts }}>
             {children}
         </PostContext.Provider>
     </>

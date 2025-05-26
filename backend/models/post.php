@@ -22,14 +22,22 @@ require_once "../config/connection.php";
 
 
 
-        public function getAllPosts(){
-            $query = "SELECT p.id, p.contenido, p.fecha, u.nombre, u.nickname, u.img FROM post p INNER JOIN usuario u ON p.usuario = u.id ORDER BY p.fecha DESC";
-            $stmt = $this->conn->getConnection()->prepare($query);
+        public function getAllPosts($userId){
+            $query = "SELECT p.id, p.contenido, p.fecha, u.nombre, u.nickname, u.img,
+                     (SELECT COUNT(*) FROM likes l WHERE l.post = p.id) as likesCount,
+                     EXISTS(SELECT 1 FROM likes l2 WHERE l2.post = p.id AND l2.usuario = ?) as userLiked
+              FROM post p
+              INNER JOIN usuario u ON p.usuario = u.id
+              ORDER BY p.fecha DESC";
 
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("i", $userId);
             $stmt->execute();
             $resultado =$stmt->get_result();
             $posts=[];
             while($row = $resultado->fetch_assoc()){
+                // Convertir userLiked a booleano
+                $row['userLiked'] = (bool)$row['userLiked'];
                 $posts[] = $row;
             }
 

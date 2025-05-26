@@ -7,11 +7,16 @@
 
     function getAllPosts(){
         $post = new Post();
-        $posts = $post->getAllPosts();
+       // $userId = $_SESSION['id'] ?? null;
+       $sesion= new Sesion();
+        //$currentSesion= $sesion->get_session("usu");
+        $userId = $sesion->get_session("id");
+        $posts = $post->getAllPosts($userId);
 
         echo json_encode([
             'success' => true,
             'posts' => $posts,
+            'userId' => $userId,
         ]);
     }
 ?>

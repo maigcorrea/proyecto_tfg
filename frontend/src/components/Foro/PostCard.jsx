@@ -1,20 +1,28 @@
 //REPRESENTA UN POST INDIVIDUAL EN EL FORO
-import React,{useEffect, useState} from 'react'
+import React,{useContext, useEffect, useState} from 'react'
 import CommentSection from './CommentSection';
 import { useNavigate } from 'react-router-dom';
 import { createLike } from '../../services/likeService';
 import { removeLike } from '../../services/likeService';
 import { hasUserLikedPost } from '../../services/likeService';
 import { getLikesCountByPost } from '../../services/likeService';
+import { PostContext } from '../../../context/PostContext';
 
 const PostCard = ({post}) => {
     const navigate = useNavigate();
     const [mostrarComentarios, setMostrarComentarios] = useState(false);
-    const [crear, setCrear] = useState(true); // Estado para controlar la creación de likes
-    const [color, setColor] = useState("");
-    const [likesCount, setLikesCount] = useState(0);
+    //const [crear, setCrear] = useState(!post.userLiked); // Estado para controlar la creación de likes
+    //const [color, setColor] = useState(post.userLiked ? "text-blue-500" : "text-gray-600");
+    //const [likesCount, setLikesCount] = useState(post.likesCount || 0);
+    const { setPosts } = useContext(PostContext); // <- Obtenemos setPosts del contexto
 
-    useEffect(() => {
+    // Usamos el estado inicial del post (no necesitamos setCrear, setColor ni likesCount locales)
+    const [localState, setLocalState] = useState({
+      liked: post.userLiked,
+      likes: post.likesCount || 0,
+    });
+
+   /* useEffect(() => {
       const checkLikes = async () => {
     try {
       const response = await hasUserLikedPost(post.id);
@@ -41,8 +49,8 @@ const PostCard = ({post}) => {
 
   checkLikes();
   getLikesCount();
-    }, [post.id])
-    
+    }, [post.id])*/
+
   const tiempoDesde = (fecha) => {
     const diff = Date.now() - new Date(fecha).getTime();
     const minutos = Math.floor(diff / 60000);
@@ -66,9 +74,14 @@ const PostCard = ({post}) => {
       const response = await createLike(formData);
       if(response.success){
         console.log("Like creado:", response);
-        setCrear(false) // Cambiamos a false para evitar crear más likes
-        setColor("text-blue-500"); 
-        setLikesCount(prev => prev + 1); // Incrementa el contador al instante
+        //setCrear(false) // Cambiamos a false para evitar crear más likes
+        //setColor("text-blue-500"); 
+        //setLikesCount(prev => prev + 1); // Incrementa el contador al instante
+        setLocalState({ liked: true, likes: localState.likes + 1 });
+        // 🔥 Actualizamos el contexto PostContext
+          setPosts(prev =>
+            prev.map(p => p.id === post.id ? { ...p, userLiked: true, likesCount: p.likesCount + 1 } : p)
+          );
       }else{
         console.log("Error al crear el like");
       }
@@ -85,9 +98,13 @@ const PostCard = ({post}) => {
       const response = await removeLike(formData);
       if(response.success){
         console.log("Like eliminado:", response);
-        setCrear(true);
-        setColor("text-gray-600");
-        setLikesCount(prev => Math.max(prev - 1, 0)); // Decrementa el contador, sin permitir negativos
+        //setCrear(true);
+        //setColor("text-gray-600");
+        //setLikesCount(prev => Math.max(prev - 1, 0)); // Decrementa el contador, sin permitir negativos
+        setLocalState({ liked: false, likes: Math.max(localState.likes - 1, 0) });
+        setPosts(prev =>
+          prev.map(p => p.id === post.id ? { ...p, userLiked: false, likesCount: Math.max(p.likesCount - 1, 0) } : p)
+        );
       }else{
         console.log("Error al eliminar el like");
       }
@@ -115,7 +132,7 @@ const PostCard = ({post}) => {
       <p className="mb-2 text-gray-800">{post.contenido}</p>
 
       <div className="flex space-x-6 text-sm text-gray-600">
-        <button className={`cursor-pointer hover:text-blue-500 ${color}`} onClick={crear ? handleCreateLike : handleRemoveLike}>{crear ? "🤍 Like" : "❤️ Like"} {likesCount !=0 && likesCount}</button>
+        <button className={`cursor-pointer hover:text-blue-500 ${localState.liked  ? "text-blue-500" : "text-gray-600"}`} onClick={!localState.liked ? handleCreateLike : handleRemoveLike}>{!localState.liked ? "🤍 Like" : "❤️ Like"} {localState.likes !=0 && localState.likes}</button>
         <button onClick={() => setMostrarComentarios(!mostrarComentarios)} className="cursor-pointer hover:text-blue-500">
           💬 Comentar
         </button>
