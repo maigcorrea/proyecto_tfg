@@ -15,7 +15,7 @@ export const PostProvider = ({children}) => {
     useEffect(() => {
         const cargarPosts = async () => {
           try {
-            const response = await getAllPosts(); //Obtener todos los post (integrar el número total de likes de la publicación y si el usuario le ha dado like)
+            const response = await getAllPosts(); //Obtener todos los post (integrar el número total de likes y comentarios de la publicación y si el usuario le ha dado like)
             if (response.success) {
               setPosts(response.posts);
               console.log("usuario usado:", response.userId);

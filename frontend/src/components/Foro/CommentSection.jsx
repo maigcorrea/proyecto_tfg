@@ -40,8 +40,8 @@ const CommentSection = ({postId, setCommentsCount }) => {
 
         if (response.success) {
           //Aquí se actualizaría el estado local del numero de comentarios que tiene el post
-          setCommentsCount(prev => prev + 1); 
-          
+          setCommentsCount(prev => prev + 1);
+
           // Después de crear, recargar los comentarios del backend
           const updatedCommentsResponse = await getCommentsByPost(postId);
           console.log('Comentarios actualizados:', updatedCommentsResponse.comments);
