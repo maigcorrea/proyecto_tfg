@@ -16,3 +16,13 @@ export const createComment = async (formData) => {
         throw error;
     }
 }
+
+export const getCommentsByPost = async (postId) => {
+    try {
+        const response = await axios.get(`${API_URL}comments.php?action=getCommentsByPost&postId=${postId}`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Error obteniendo comentarios:", error);
+        throw error;
+    }
+}

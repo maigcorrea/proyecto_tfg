@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-05-2025 a las 17:39:14
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 26-05-2025 a las 00:14:11
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `comentario` (
-  `id` int(11) NOT NULL,
+  `id` bigint(11) NOT NULL,
   `contenido` varchar(350) NOT NULL,
-  `usuario` bigint(9) UNSIGNED NOT NULL,
-  `post` int(11) UNSIGNED NOT NULL
+  `usuario` bigint(11) UNSIGNED NOT NULL,
+  `post` int(11) UNSIGNED NOT NULL,
+  `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `comentario`
+--
+
+INSERT INTO `comentario` (`id`, `contenido`, `usuario`, `post`, `fecha`) VALUES
+(4, 'dewSF', 1, 21, '2025-05-26 00:11:25');
 
 -- --------------------------------------------------------
 
@@ -42,7 +50,7 @@ CREATE TABLE `comentario` (
 
 CREATE TABLE `likes` (
   `id` int(11) NOT NULL,
-  `usuario` bigint(9) UNSIGNED NOT NULL,
+  `usuario` bigint(11) UNSIGNED NOT NULL,
   `post` int(11) UNSIGNED NOT NULL,
   `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -55,7 +63,7 @@ CREATE TABLE `likes` (
 
 CREATE TABLE `post` (
   `id` int(11) UNSIGNED NOT NULL,
-  `usuario` bigint(9) UNSIGNED NOT NULL,
+  `usuario` bigint(11) UNSIGNED NOT NULL,
   `contenido` varchar(500) NOT NULL,
   `fecha` datetime NOT NULL,
   `tags` varchar(500) NOT NULL
@@ -66,16 +74,17 @@ CREATE TABLE `post` (
 --
 
 INSERT INTO `post` (`id`, `usuario`, `contenido`, `fecha`, `tags`) VALUES
-(1, 675689821, 'Hola, esto es un post', '2025-05-22 15:12:45', ''),
-(2, 675689821, 'hdtyutu', '2025-05-22 15:25:06', ''),
-(3, 675689821, 'farfregfe', '2025-05-22 15:27:30', ''),
-(4, 675689821, 'fertr', '2025-05-22 15:28:54', ''),
-(5, 675689821, 'hola\r\n', '2025-05-22 15:52:23', ''),
-(6, 675689821, 'dwerf', '2025-05-22 16:47:29', ''),
-(7, 675689821, 'njbfehar', '2025-05-22 16:48:31', ''),
-(8, 675689821, 'hola', '2025-05-22 16:48:38', ''),
-(9, 675689821, 'ghfrbefb', '2025-05-22 16:51:43', ''),
-(10, 675689821, 'hbdwebad', '2025-05-22 16:52:46', '');
+(11, 2, 'hola mundo', '2025-05-25 18:19:05', ''),
+(12, 2, 'dewfnawuh', '2025-05-25 18:19:21', ''),
+(13, 2, 'dewFW', '2025-05-25 18:28:35', ''),
+(14, 2, 'vdvf', '2025-05-25 18:29:45', ''),
+(15, 2, 'vdstbst', '2025-05-25 18:37:05', ''),
+(16, 2, 'hdbashebdakwj', '2025-05-25 18:43:33', ''),
+(17, 2, 'cascd', '2025-05-25 18:47:15', ''),
+(18, 2, 'dscwsc', '2025-05-25 18:49:54', ''),
+(19, 2, 'frasgerg', '2025-05-25 19:09:26', ''),
+(20, 2, 'heyyy', '2025-05-25 19:09:33', ''),
+(21, 2, 'csr', '2025-05-25 19:10:02', '');
 
 -- --------------------------------------------------------
 
@@ -84,7 +93,8 @@ INSERT INTO `post` (`id`, `usuario`, `contenido`, `fecha`, `tags`) VALUES
 --
 
 CREATE TABLE `usuario` (
-  `telefono` bigint(9) UNSIGNED NOT NULL,
+  `id` bigint(11) UNSIGNED NOT NULL,
+  `telefono` int(9) NOT NULL,
   `email` varchar(100) NOT NULL,
   `nombre` varchar(20) NOT NULL,
   `nickname` varchar(20) NOT NULL,
@@ -100,33 +110,9 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`telefono`, `email`, `nombre`, `nickname`, `descripcion`, `nacimiento`, `passwrd`, `img`, `tags`, `tipo`) VALUES
-(67849029, 'dvf@gmail.com', 'gbs', 'easf', NULL, '2015-12-10', '$2y$10$idkBJeGp8qUClnZh9KBjB.D9F.Xnx//glt71RNELeFCOjlqUZvWjK', '682bacde3ca0c_incendioselvaamazonicaardiendoamazonas_7009552744.avif', NULL, 'usu'),
-(112376473, 'cds@gmail.com', 'scxsdc', 'hdew', NULL, '2015-12-03', '$2y$10$ib.TD3Nk88vAYQ6Umf8ySOrynQH7CU6kMzCR8psXdNygIDjunq6W.', '682b818e25c19_PokmonGo.jpg', 'Tratamientos,Apoyo emocional,Investigación', 'usu'),
-(609474290, 'maite@gmail.com', 'Maite', 'mai_gc', NULL, '2004-12-21', '$2y$10$OAdrbzCRMVStBH.kbCeSde8A1QjajMWvkiSmEUt3xNaBWnpe6lUTq', '6814f99ad1da0_The Fini Company España - marca corporativa global de Fini - The Fini Company (19.02.2025 02_36).png', NULL, 'usu'),
-(609474291, 'msaite@gmail.com', 'Maite', 'maiite_', NULL, '2015-12-03', '$2y$10$UzOP6.KdCRi690fn0HtdmuIp4Kk69Lx3ySB1BdnDvlyKww/OdBSRS', '67d4084ee597a_gato.jpg', NULL, 'usu'),
-(609474299, 'algo@gmail.com', 'vzsrdg', 'algoo', NULL, '2015-12-02', '$2y$10$cOzQuiDZMF55adfbuBT3KOB4VhwO95jh0kKSYl.UiRnGwISTtJMHC', '67d9abbc782ae_large.jpg', NULL, 'usu'),
-(609836284, 'prueba@gmail.com', 'prueba', 'pr_1', NULL, '2015-12-03', '$2y$10$kGoELAZ29Jt/FZpSj8XMGuO7RiwsmuhzDE/doGb3aviVcJqjuNnj.', NULL, NULL, 'usu'),
-(625647281, 'fran@gmail.com', 'Fran', 'fran_wordpress', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good ', '2015-12-05', '$2y$10$4isNKcL.4d1MdGboJr2EHevtokZZDWzyFPNilTaLxwqC7M1Hw5Kwi', NULL, NULL, 'usu'),
-(632123457, 'marta@gmail.com', 'marta', 'martita', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,', '2015-12-02', '$2y$10$IJ69jbVU2eIQVBGa5K1lFeX0mkUlH4pB2IC/I7BKmNlLO3p85Zzaq', '682bcb067ebd0_lindoalienigenamontandoovniespaciodibujosanimadosvectoriconoilustracioncienciatecnologiaiconoaislado_1386768224.jpg', 'Apoyo emocional,Tratamientos', 'usu'),
-(638376383, 'faer@gmail.com', 'vrv', 'esacdwdw', NULL, '2015-12-03', '$2y$10$MKx0ENJ5NHTibcTf9TvRF.DbUuwCB9a5srivuPgOJzDS83EXr8Pqq', '682bab41ac0a9_Capturadepantalla20250323001009.png', NULL, 'usu'),
-(654789009, 'carmen@gmail.com', 'Carmen', 'carmeen', NULL, '2015-12-10', '$2y$10$tlP7RHupe1jbCEclpB1m..JbfEIZmumSnU0pJEVVmEO6ieC3uOJt6', '682b7d2bbdd9d_puma4.webp', NULL, 'usu'),
-(654789012, 'lore@gmail.com', 'Lorenzo', 'loreenzo', NULL, '2015-12-04', '$2y$10$lrpDbf9/7vE2KQuAejB1judPSC6wJl9nIpa9vHvbrwYwfhf/x59Ku', '682baa45ad13e_MarioKart8Deluxe_2022_112122_004.png', NULL, 'usu'),
-(654849340, 'wed@gmail.com', 'dewd', 'dwqf', NULL, '2015-12-09', '$2y$10$DOGLC12MCvWEJZefBFiPVu/gd/K0vP90//TSXLGkOrdh6KT1ev6DC', '682baca5cb30d_Productos19.02.202502_26.png', NULL, 'usu'),
-(654987265, 'erica@gmail.com', 'Erica', 'Eri', NULL, '2015-01-14', 'erica123', NULL, NULL, 'usu'),
-(657384931, 'wii@gmail.com', 'wii', 'wii', NULL, '2015-12-22', '$2y$10$V73PnPPUSUydM8jWCVZqaurQFJUnC59nu.mefaqnB3QjdpsYo2cqW', '68211d5b3586d_0706_anhkuromihinhnenmaytinhsieudethuong.jpg', NULL, 'usu'),
-(657456322, 'prueba@gmail.com', 'prueba3', 'pr_3', NULL, '2015-12-02', '$2y$10$.smHD.IR0Rg8NMzyNjjBs.0Uncg9Hf8uFxrFmmM4bqsgHp9fTgQAu', '67d42028bef72_gato.jpg', NULL, 'usu'),
-(657843742, 'cascf@gmail.com', 'vdfavd sdsds', 'cafsrf', NULL, '2015-12-02', '$2y$10$CQ0Fmcqt02QSCgq6MVP0xetJ6ZCij64Dqa6t7xXGZ.2FbBUjsb6WK', '682c9b1eecfa6_6b2fd40127c8d48796c81a8860954bd449969559f8f36839cff91ddfbc889248._SX1080_FMjpg_.jpg', 'Dermatología,Diagnóstico,Síntomas crónicos,bhcddebc,byuefgdawoiu,peiufw', 'usu'),
-(673802937, 'kitty@gmail.com', 'Hello Kitty', 'kittyy', NULL, '2015-12-02', '$2y$10$4bky5IYxiG3EkNthJjIEkuHMfRL.RRnEj8J9Y8nBfiJ7/Q4S7BWtO', '6829ffd2eee76_IMG_20230114_203728.jpg', NULL, 'usu'),
-(673920381, 'mery@gmail.com', 'Mery', 'meryy', NULL, '2015-12-02', '$2y$10$.M0CQ3aGE7adYEuO1peu8e/hodiD0Fv5pbsVZMhbnBqrI3KWXHD8a', '6828c36c19c6e_IMG_20230828_075534.jpg', NULL, 'usu'),
-(674894564, 'getg@gmail.com', 'gvtgtrse', 'getg', NULL, '2015-12-01', '$2y$10$Yt0/VCcN.kJCqVMjUlv.mu7DOGA8q5UAgnz/qqYgWYfo2pNE1cTmu', '682ca6f160a9b_6b2fd40127c8d48796c81a8860954bd449969559f8f36839cff91ddfbc889248._SX1080_FMjpg_.jpg', 'Neurología,Genética,Síntomas crónicos,bhsdcbfas,uhscdf', 'usu'),
-(674974922, 'crw@gmail.com', 'csc', 'frw', NULL, '2015-12-03', '$2y$10$di5ofF4eRDCsHHgKNNwy/.ek3.H486AjldWct7cMQOTd9HV8AuwrG', '682baeb3782ec_PokmonGo.jpg', NULL, 'usu'),
-(675178391, 'redu@gmail.com', 'Redu', 'r_js', NULL, '1995-03-08', 'redu1234', NULL, NULL, 'usu'),
-(675689821, 'manu@gmail.com', 'Manuel', 'manuu', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,', '2015-12-10', '$2y$10$xyM6SoVc7K/wvE95X7y29.YPclQhmh6EknYJ/oXjPveVpOV74sHoW', '682c961ce3ae5_6b2fd40127c8d48796c81a8860954bd449969559f8f36839cff91ddfbc889248._SX1080_FMjpg_.jpg', 'Dermatología,Diagnóstico,Tratamientos,Investigación', 'usu'),
-(682625270, 'kitty2@gmail.com', 'hello kitty2', 'kitty2', NULL, '2015-12-05', '$2y$10$.D.USY0nTJXVx0ihyNstVeV5xKLUD8dNwACug82miA0D/gGiMMpcu', '681630de8517d_cara-hello-kitty.png', NULL, 'usu'),
-(683902847, 'claudia@gmail.com', 'Claudia', 'clauu', NULL, '2015-12-09', '$2y$10$IncXVicxCFPt9jBpm1uPLu6OgFrmQXza/GSsRR5UEpzAfG7RkG63m', '682ecd4b4053f_5046233257d33805ad4014c4c6f805c9c612f6397153d8efef64887f4ccf345d._SX1080_FMjpg_.jpg', NULL, 'usu'),
-(837634252, 'prueba@gmail.com', 'prueba2', 'pr_2', NULL, '2015-12-02', '$2y$10$eTei2cGwdZ0UDsbP5uQvyuGPln2GG842VVNlQug4dgvK0vApEkCUa', '67d41827f2ed4_gato.jpg', NULL, 'usu'),
-(2147483647, 'kuromii@gmail.com', 'Kuromi', 'kuromiii', NULL, '2015-12-10', '$2y$10$wtHtmks8oGuc47C6kWYvzue73E0Am2zcIx7P48K7EFLMnhX75J.eC', '6820c6e20c86f_0706_anhkuromihinhnenmaytinhsieudethuong.jpg', NULL, 'usu');
+INSERT INTO `usuario` (`id`, `telefono`, `email`, `nombre`, `nickname`, `descripcion`, `nacimiento`, `passwrd`, `img`, `tags`, `tipo`) VALUES
+(1, 609474291, 'maite@gmail.com', 'Maite García Correa', 'maii', NULL, '2015-12-09', '$2y$10$QLAC6M6SWzZhfx2kpXLGBOoyVbmhcnSaDhOB3aYYnAki33PEtYa.i', '68332d35ce067_carahellokitty.png', 'Genética,Síntomas crónicos,Diagnóstico,Tratamientos,Investigación', 'usu'),
+(2, 678935262, 'eri@gmail.com', 'Erica', 'Eriiiica', NULL, '2015-12-02', '$2y$10$/3pdB6n1U63uR.HC9WqVa.eVcSUnzF0NmGA6KfuidO0NpdLDmjs6e', '6833382972b1e_valorant.jpeg', 'Diagnóstico,Apoyo emocional,Investigación,Genética', 'usu');
 
 --
 -- Índices para tablas volcadas
@@ -159,7 +145,8 @@ ALTER TABLE `post`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`telefono`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `telefono` (`telefono`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -169,7 +156,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `likes`
@@ -181,7 +168,13 @@ ALTER TABLE `likes`
 -- AUTO_INCREMENT de la tabla `post`
 --
 ALTER TABLE `post`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -192,20 +185,20 @@ ALTER TABLE `post`
 --
 ALTER TABLE `comentario`
   ADD CONSTRAINT `fk_comentario_post` FOREIGN KEY (`post`) REFERENCES `post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_comentario_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`telefono`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_comentario_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `likes`
 --
 ALTER TABLE `likes`
   ADD CONSTRAINT `fk_likes_post` FOREIGN KEY (`post`) REFERENCES `post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_likes_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`telefono`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_likes_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `post`
 --
 ALTER TABLE `post`
-  ADD CONSTRAINT `fk_post_usuarios` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`telefono`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_post_usuarios` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

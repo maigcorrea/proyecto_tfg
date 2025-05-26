@@ -17,6 +17,11 @@
             require_once "../controllers/createCommentController.php";
             createComment();
         break;
+
+        case 'getCommentsByPost':
+            require_once "../controllers/getCommentsByPostController.php";
+            getCommentsByPost();
+        break;
     }
 
 ?>
