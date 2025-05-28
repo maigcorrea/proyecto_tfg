@@ -37,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
             $img= $data['ImgPerfil'];
             $nombre = $data['Nombre'];
             $nickname = $data['Nickname'];
+            $tipo = $data['Tipo'];
 
             $tagsAvailable=$user->getTags($currentSesion);
             $tags= $tagsAvailable ?? "";
@@ -48,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
                 "nombre" => $nombre,
                 "img" => $img,
                 "tags" => explode(',', $tags),
+                "tipo" => $tipo,
                 
                 // "tipo" => $_SESSION['tipo']
             ]);

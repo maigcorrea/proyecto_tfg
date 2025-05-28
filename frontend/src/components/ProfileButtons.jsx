@@ -19,9 +19,11 @@ const ProfileButtons = () => {
             console.log(response.data); // Opcional, para debug
 
             setUserSession({
+              id:response.data.id,
               loggedIn: response.data.loggedIn,
               usuario: response.data.usuario,
-              img: response.data.img
+              img: response.data.img,
+              tipo: response.data.tipo,
             });
 
             console.log('User data:', response.data.usuario);

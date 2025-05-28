@@ -11,6 +11,7 @@ export const UserProvider = ({ children }) => {
     nombre:'',
     img: '',
     tags: [],
+    tipo: "",
   });
 
   // Comprobar si hay una sesión activa al cargar el componente
@@ -25,6 +26,7 @@ export const UserProvider = ({ children }) => {
             nombre: res.data.nombre,
             img: res.data.img,
             tags: res.data.tags || [],
+            tipo: res.data.tipo,
           });
         }
       })

@@ -248,6 +248,7 @@ require_once "../config/connection.php";
                     "Teléfono" => $phone,
                     "Nacimiento" => $birth,
                     "ImgPerfil" => $img,
+                    "Tipo" => $tipo
                 ];
             }
 

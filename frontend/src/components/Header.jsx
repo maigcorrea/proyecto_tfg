@@ -7,7 +7,8 @@ const Header = () => {
     <>
       <div className='bg-emerald-100 flex w-full sticky top-0'>
         <Nav></Nav>
-        <ProfileButtons></ProfileButtons>
+        {<ProfileButtons></ProfileButtons>}
+        
 
       </div>
     </>
