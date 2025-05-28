@@ -15,6 +15,8 @@ import DescubrirUsuarios from './pages/DescubrirUsuarios'
 import UserDetails from './pages/UserDetails'
 import { PostProvider } from '../context/PostContext'
 import AdminDashBoard from './pages/AdminDashBoard'
+import PrivateAdminRoute from './components/PrivateAdminRoute'
+import Unathorized from './pages/Unathorized'
 
 function App() {
 
@@ -36,7 +38,11 @@ function App() {
                 <Route path='/register' element={<Registro></Registro>}></Route>
                 <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
                 <Route path='/tags' element={<PrivateRoute><SelectTags></SelectTags></PrivateRoute>}></Route>
-                <Route path='/dashboard' element={<PrivateRoute><AdminDashBoard></AdminDashBoard></PrivateRoute>}></Route>
+                {
+                //Proteger esta ruta para comprobar que el usuario es admin
+                }
+                <Route path='/unathorized' element={<PrivateRoute><Unathorized></Unathorized></PrivateRoute>}></Route>
+                <Route path='/dashboard' element={<PrivateRoute><PrivateAdminRoute><AdminDashBoard></AdminDashBoard></PrivateAdminRoute></PrivateRoute>}></Route>
               </Route>
             </Routes>
           </BrowserRouter>
