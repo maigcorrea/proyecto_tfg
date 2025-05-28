@@ -14,6 +14,7 @@ import SelectTags from './pages/SelectTags'
 import DescubrirUsuarios from './pages/DescubrirUsuarios'
 import UserDetails from './pages/UserDetails'
 import { PostProvider } from '../context/PostContext'
+import AdminDashBoard from './pages/AdminDashBoard'
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
                 <Route path='/register' element={<Registro></Registro>}></Route>
                 <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
                 <Route path='/tags' element={<PrivateRoute><SelectTags></SelectTags></PrivateRoute>}></Route>
+                <Route path='/dashboard' element={<PrivateRoute><AdminDashBoard></AdminDashBoard></PrivateRoute>}></Route>
               </Route>
             </Routes>
           </BrowserRouter>
