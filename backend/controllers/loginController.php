@@ -57,7 +57,7 @@ function setSessions($identificador){
     //$sesion->start_session();
     $sesion->set_session("usu", $nickname);
     $sesion->set_session("tipo", $tipo);
-     $sesion->set_session("id", $id);
+    $sesion->set_session("id", $id);
     
     $haySesion=$sesion->get_session("usu");
     
@@ -66,9 +66,9 @@ function setSessions($identificador){
     echo json_encode([
       "success" => true,
       "contenidoSesion"=>$haySesion,
-      "id" => $id,
-      "usu" =>$nickname,
-      "tipo" => $tipo
+      "id" => $sesion->get_session("id"),
+      "usu" =>$sesion->get_session("usu"),
+      "tipo" => $sesion->get_session("tipo")
       // aquí podrías devolver un token o datos del usuario
     ]);
 }

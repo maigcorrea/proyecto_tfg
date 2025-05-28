@@ -62,6 +62,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     
     break;
 
+    case "getSession":
+        $sesion= new Sesion();
+        $tipo= $sesion->get_session("tipo");
+        var_dump($_SESSION["tipo"]);
+
+        echo json_encode([
+            "tipo" => $tipo,
+        ]);
+    break;
+
     case 'login':
         if ($method === 'POST') {
             // $data = json_decode(file_get_contents("php://input"), true);

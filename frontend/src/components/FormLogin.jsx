@@ -63,8 +63,13 @@ const FormLogin = () => {
               alert(response.message);
               // Redirige o guarda el token, lo que necesites
               //Redirigir al dashboard en función del tipo de usuario
-              navigate("/");
-              setInterval(location.reload(),10000);
+              if(sesionsResponse.tipo==="usu"){
+                navigate("/");
+                setInterval(location.reload(),10000);
+              }else{
+                navigate("/dashboard");
+                setInterval(location.reload(),10000);
+              }
 
             }
         } else {

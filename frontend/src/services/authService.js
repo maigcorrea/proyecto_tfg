@@ -52,6 +52,19 @@ export const setSessions = async (FormData) => {
     }
 }
 
+
+export const getSessions = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/users.php?action=getSession`, {
+      withCredentials: true // Importante si usas cookies para la sesión
+    });
+
+    return response.data;
+  } catch (error) {
+    
+  }
+}
+
 export const closeSes = async () => {
     try {
       const response = await axios.get(`${API_URL}/users.php?action=close`, {
