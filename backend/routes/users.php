@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     case "getSession":
         $sesion= new Sesion();
         $tipo= $sesion->get_session("tipo");
-        var_dump($_SESSION["tipo"]);
+        //var_dump($_SESSION["tipo"]);
 
         echo json_encode([
             "tipo" => $tipo,
