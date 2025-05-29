@@ -17,6 +17,7 @@ import { PostProvider } from '../context/PostContext'
 import AdminDashBoard from './pages/AdminDashBoard'
 import PrivateAdminRoute from './components/PrivateAdminRoute'
 import Unathorized from './pages/Unathorized'
+import UserManagement from './pages/UserManagement'
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
                 }
                 <Route path='/unathorized' element={<PrivateRoute><Unathorized></Unathorized></PrivateRoute>}></Route>
                 <Route path='/dashboard' element={<PrivateRoute><PrivateAdminRoute><AdminDashBoard></AdminDashBoard></PrivateAdminRoute></PrivateRoute>}></Route>
+                <Route path='/admin/users' element={<PrivateRoute><PrivateAdminRoute><UserManagement></UserManagement></PrivateAdminRoute></PrivateRoute>}></Route>
               </Route>
             </Routes>
           </BrowserRouter>
