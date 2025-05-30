@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { getAllUsers } from '../services/userService';
 import { deleteUser } from '../services/userService';
 
@@ -225,7 +226,7 @@ console.log("AAAAAAAAAA",users);
             <h2 className="text-xl font-bold mb-4">Editar usuario: {editUser.nickname}</h2>
             <form>
               <div className="mb-2">
-                <img src={previewImage || `/userAssets/${editUser.id}/${editUser.img}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600'onClick={handleImageClick} />
+                <img src={previewImage || `/userAssets/${editUser.id}/${editUser.img}` ? `/userAssets/${editUser.id}/${editUser.img}` : `/userAssets/default/defaultImg.png` } alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600'onClick={handleImageClick} />
                 <input type="file" accept="image/*" className='hidden' ref={fileInputRef}  onChange={handleImgChange} />
               </div>
 
@@ -251,8 +252,8 @@ console.log("AAAAAAAAAA",users);
                 <textarea defaultValue={editUser.descripcion} className="border p-2 w-full" />
               </div>
               <div className="mb-2">
-                <label>Tags</label>
-                <input type="text" defaultValue={editUser.tags} className="border p-2 w-full" />
+                <label>Tags</label><br></br>
+                <Link to="/tags">Link</Link>
               </div>
               <div className="flex justify-end space-x-4 mt-4">
                 <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => { /* Aquí irá lógica para guardar */ }}>Guardar</button>
