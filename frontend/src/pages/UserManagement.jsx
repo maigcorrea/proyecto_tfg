@@ -96,14 +96,24 @@ console.log("AAAAAAAAAA",users);
     try {
       const response = await updateUser(formData);
       setMessage(response.message);
+      console.log("EXITO", response)
       if(response.success){
+        console.log("Se tendría que cerrar el modal no?");
         setEditUser(null); // Cierra modal
         setPreviewImage(null); // Limpiarprevisualización
-        // Recargar usuarios desde la base de datos
-        const offset = (currentPage - 1) * limit;
-        const updatedResponse = await getAllUsers(limit, offset);
-        setUsers(updatedResponse.usuarios);
-        setTotalUsers(updatedResponse.total);
+
+        setUsers(users.map(user => user.id === editUser.id 
+        ? { ...user, 
+            nickname: e.target.nickname.value,
+            nombre: e.target.nombre.value,
+            email: e.target.email.value,
+            telefono: e.target.telefono.value,
+            nacimiento: e.target.nacimiento.value,
+            descripcion: e.target.descripcion.value,
+            img: response.img ?? user.img // Usa la nueva imagen si se ha enviado, o mantiene la actual
+          } 
+        : user
+    ));
       }
     } catch (error) {
       console.log(error);

@@ -21,16 +21,27 @@ function updateUser(){
         // Se actualizan los datos en la bd con la nueva imagen
         $user = new User();
         $updated = $user->updateFullUser($id, $nickname, $nombre, $email, $telefono, $f_nac, $descripcion, $replacedImgName);
+
+        
+        if($updated){
+            echo json_encode(["success" => true, "message" => "Datos actualizados correctamente", "img" => $replacedImgName]);
+        }else {
+            echo json_encode(["success" => false, "message" => "Error al actualizar los datos"]);
+        }
     }else{
         //Se actualizan los datos en la bd con la imagen actual
         $user = new User();
         $updated = $user->updateFullUser($id, $nickname, $nombre, $email, $telefono, $f_nac, $descripcion, $oldImg);
+
+        if($updated){
+            echo json_encode(["success" => true, "message" => "Datos actualizados correctamente", "img" => $oldImg]);
+        }else {
+            echo json_encode(["success" => false, "message" => "Error al actualizar los datos"]);
+        }
     }
 
     
-    if($updated){
-        echo json_encode(["success" => true, "message" => "Datos actualizados correctamente"]);
-    }
+    
 }
 
 
