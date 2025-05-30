@@ -167,5 +167,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         deleteUser();
     break;
 
+    case 'updateUser':
+        require_once '../controllers/updateUserController.php';
+        updateUser();
+    break;
+
 }
 ?>

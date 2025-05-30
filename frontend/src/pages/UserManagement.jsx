@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { getAllUsers } from '../services/userService';
 import { deleteUser } from '../services/userService';
+import { updateUser } from '../services/userService';
 
 const UserManagement = () => {
   const [users, setUsers] = useState("");
@@ -72,6 +73,43 @@ console.log("AAAAAAAAAA",users);
     }
   }
 
+
+  const handleUpdateUser = async (e) =>{
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('id', editUser.id);
+    formData.append('nickname', e.target.nickname.value);
+    formData.append('nombre', e.target.nombre.value);
+    formData.append('email', e.target.email.value);
+    formData.append('telefono', e.target.telefono.value);
+    formData.append('f_nac', e.target.nacimiento.value);
+    formData.append('descripcion', e.target.descripcion.value);
+    formData.append('oldImg', editUser.img); // Imagen original
+
+    if (editUser.nuevaImagen) {
+      formData.append('newImg', editUser.nuevaImagen); // Solo si hay nueva imagen
+    }
+    
+    
+
+    try {
+      const response = await updateUser(formData);
+      setMessage(response.message);
+      if(response.success){
+        setEditUser(null); // Cierra modal
+        setPreviewImage(null); // Limpiarprevisualización
+        // Recargar usuarios desde la base de datos
+        const offset = (currentPage - 1) * limit;
+        const updatedResponse = await getAllUsers(limit, offset);
+        setUsers(updatedResponse.usuarios);
+        setTotalUsers(updatedResponse.total);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <table>
@@ -79,6 +117,7 @@ console.log("AAAAAAAAAA",users);
           <th></th>
           <th>Usuario</th>
           <th>Nombre</th>
+          <th>Email</th>
           <th>Nacimiento</th>
           <th>Teléfono</th>
           <th>Tags</th>
@@ -92,11 +131,12 @@ console.log("AAAAAAAAAA",users);
               <td><img src={`/userAssets/${user.id}/${user.img}`} alt={user.nickname} className='w-10 h-10 rounded-full' /></td>
               <td>{user.nickname}</td>
               <td>{user.nombre}</td>
+              <td>{user.email}</td>
               <td>{user.nacimiento}</td>
               <td>{user.telefono}</td>
               <td>{user.tags}</td>
               <td>{user.descripcion}</td>
-              <td className='flex gap-2'><button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setEditUser(user)}}>Editar</button><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(user.id)}}>Eliminar</button></td>
+              <td className='flex gap-2'><button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setEditUser(user); setPreviewImage(null);}}>Editar</button><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(user.id)}}>Eliminar</button></td>
             </tr>
           ))
         }
@@ -224,39 +264,43 @@ console.log("AAAAAAAAAA",users);
         <div className="fixed inset-0  flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-md">
             <h2 className="text-xl font-bold mb-4">Editar usuario: {editUser.nickname}</h2>
-            <form>
+            <form onSubmit={handleUpdateUser} encType="multipart/form-data" action="" method="post">
               <div className="mb-2">
-                <img src={previewImage || `/userAssets/${editUser.id}/${editUser.img}` ? `/userAssets/${editUser.id}/${editUser.img}` : `/userAssets/default/defaultImg.png` } alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600'onClick={handleImageClick} />
-                <input type="file" accept="image/*" className='hidden' ref={fileInputRef}  onChange={handleImgChange} />
+                <img src={previewImage || `/userAssets/${editUser.id}/${editUser.img}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600'onClick={handleImageClick} />
+                <input type="file" name='newImg' accept="image/*" className='hidden' ref={fileInputRef}  onChange={handleImgChange} />
               </div>
 
               <div className="mb-2">
                 <label>Nickname</label>
-                <input type="text" defaultValue={editUser.nickname} className="border p-2 w-full" />
+                <input type="text" name="nickname" defaultValue={editUser.nickname} className="border p-2 w-full" />
               </div>
 
               <div className="mb-2">
                 <label>Nombre</label>
-                <input type="text" defaultValue={editUser.nombre} className="border p-2 w-full" />
+                <input type="text" name='nombre' defaultValue={editUser.nombre} className="border p-2 w-full" />
+              </div>
+              <div className="mb-2">
+                <label>Email</label>
+                <input type="email" name='email' defaultValue={editUser.email} className="border p-2 w-full" />
               </div>
               <div className="mb-2">
                 <label>Teléfono</label>
-                <input type="text" defaultValue={editUser.telefono} className="border p-2 w-full" />
+                <input type="text" name='telefono' defaultValue={editUser.telefono} className="border p-2 w-full" />
               </div>
               <div className="mb-2">
                 <label>Nacimiento</label>
-                <input type="date" defaultValue={editUser.nacimiento} className="border p-2 w-full" />
+                <input type="date" name='nacimiento' defaultValue={editUser.nacimiento} className="border p-2 w-full" />
               </div>
               <div className="mb-2">
                 <label>Descripción</label>
-                <textarea defaultValue={editUser.descripcion} className="border p-2 w-full" />
+                <textarea name='descripcion' defaultValue={editUser.descripcion} className="border p-2 w-full" />
               </div>
               <div className="mb-2">
                 <label>Tags</label><br></br>
                 <Link to="/tags">Link</Link>
               </div>
               <div className="flex justify-end space-x-4 mt-4">
-                <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => { /* Aquí irá lógica para guardar */ }}>Guardar</button>
+                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
                 <button type="button" className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={() => setEditUser(null)}>Cancelar</button>
               </div>
             </form>

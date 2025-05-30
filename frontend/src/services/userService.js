@@ -138,3 +138,18 @@ export const deleteUser = async (userId) => {
   }
 }
 
+export const updateUser = async (formData) => {
+  try {
+    const response = await axios.post(`${API_URL}users.php?action=updateUser`, formData, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error actualizando el usuario", error);
+    throw error;
+  }
+}
+

@@ -303,6 +303,22 @@ require_once "../config/connection.php";
             }
         }
 
+        //DESDE LA PARTE DEL ADMINISTRADOR ACTUALIZAR DATOS DE 1 USUARIO
+        public function updateFullUser($id, $nickname, $nombre, $email, $telefono, $nacimiento, $descripcion, $img) {
+            $query = "UPDATE usuario SET nickname = ?, nombre = ?, email = ?, telefono = ?, nacimiento = ?, descripcion = ?, img = ? WHERE id = ?";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("sssssssi", $nickname, $nombre, $email, $telefono, $nacimiento, $descripcion, $img, $id);
+
+            $success = false;
+
+            if ($stmt->execute()) {
+                $success = true;
+            }
+
+            $stmt->close();
+            return $success;
+        }
+
 
 
 
@@ -356,7 +372,7 @@ require_once "../config/connection.php";
 
         //OBTENER TODOS LOS USUARIOS DE LA BD
         public function getAllUsers($id, $limit, $offset) {
-            $query = "SELECT id, telefono, nombre, nickname, descripcion, nacimiento, img, tags FROM usuario WHERE id!=?  LIMIT ? OFFSET ?";
+            $query = "SELECT id, telefono, nombre, email, nickname, descripcion, nacimiento, img, tags FROM usuario WHERE id!=?  LIMIT ? OFFSET ?";
             $stmt = $this->conn->getConnection()->prepare($query);
             $stmt->bind_param("iii", $id, $limit, $offset);
 
