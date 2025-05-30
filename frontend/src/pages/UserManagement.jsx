@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { getAllUsers } from '../services/userService';
 import { deleteUser } from '../services/userService';
 
@@ -9,6 +9,9 @@ const UserManagement = () => {
   const [message, setMessage] = useState("");
   const [confirmDeleteId, setConfirmDeleteId] = useState(null); // Nuevo estado para confirmar eliminación
   const [isDeleting, setIsDeleting] = useState(false); // Estado de carga para eliminación
+  const [editUser, setEditUser] = useState(null); // Nuevo estado para edición
+  const fileInputRef = useRef(null); // Referencia al input de tipo file
+  const [previewImage, setPreviewImage] = useState(null); // Nuevo estado para previsualización de imagen
   const limit = 10;
 
   useEffect(() => {
@@ -45,6 +48,29 @@ console.log("AAAAAAAAAA",users);
     }
   }
 
+
+  //Cuando le das a la imagen de perfil
+  const handleImageClick = () => { 
+    fileInputRef.current.click(); // Simula un clic en el input de tipo file
+  }
+
+  //Cuando seleccionas una nueva imagen
+  const handleImgChange = (event) => {
+    const file = event.target.files[0]; // Obtiene el archivo seleccionado
+    //Que se previsualice la imagen nueva seleccionada
+    if (file) {
+       // Crea una URL temporal para previsualizar la imagen
+        const imageUrl = URL.createObjectURL(file);
+        setPreviewImage(imageUrl);
+
+        // También puedes guardar el archivo en el estado editUser si quieres usarlo al enviar
+        setEditUser(prev => ({ // Guarda el archivo seleccionado en editUser para luego enviarlo al backend.
+            ...prev,
+            nuevaImagen: file // Guarda el archivo para después
+        }));
+    }
+  }
+
   return (
     <>
       <table>
@@ -69,7 +95,7 @@ console.log("AAAAAAAAAA",users);
               <td>{user.telefono}</td>
               <td>{user.tags}</td>
               <td>{user.descripcion}</td>
-              <td className='flex gap-2'><button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => { console.log("editar")}}>Editar</button><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(user.id)}}>Eliminar</button></td>
+              <td className='flex gap-2'><button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setEditUser(user)}}>Editar</button><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(user.id)}}>Eliminar</button></td>
             </tr>
           ))
         }
@@ -192,9 +218,52 @@ console.log("AAAAAAAAAA",users);
     </div>
       </div>*/}
 
+         {/* Modal de edición */}
+      {editUser && (
+        <div className="fixed inset-0  flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-md">
+            <h2 className="text-xl font-bold mb-4">Editar usuario: {editUser.nickname}</h2>
+            <form>
+              <div className="mb-2">
+                <img src={previewImage || `/userAssets/${editUser.id}/${editUser.img}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600'onClick={handleImageClick} />
+                <input type="file" accept="image/*" className='hidden' ref={fileInputRef}  onChange={handleImgChange} />
+              </div>
+
+              <div className="mb-2">
+                <label>Nickname</label>
+                <input type="text" defaultValue={editUser.nickname} className="border p-2 w-full" />
+              </div>
+
+              <div className="mb-2">
+                <label>Nombre</label>
+                <input type="text" defaultValue={editUser.nombre} className="border p-2 w-full" />
+              </div>
+              <div className="mb-2">
+                <label>Teléfono</label>
+                <input type="text" defaultValue={editUser.telefono} className="border p-2 w-full" />
+              </div>
+              <div className="mb-2">
+                <label>Nacimiento</label>
+                <input type="date" defaultValue={editUser.nacimiento} className="border p-2 w-full" />
+              </div>
+              <div className="mb-2">
+                <label>Descripción</label>
+                <textarea defaultValue={editUser.descripcion} className="border p-2 w-full" />
+              </div>
+              <div className="mb-2">
+                <label>Tags</label>
+                <input type="text" defaultValue={editUser.tags} className="border p-2 w-full" />
+              </div>
+              <div className="flex justify-end space-x-4 mt-4">
+                <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => { /* Aquí irá lógica para guardar */ }}>Guardar</button>
+                <button type="button" className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={() => setEditUser(null)}>Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
 
-      
     </>
   )
 }
