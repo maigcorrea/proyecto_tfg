@@ -32,7 +32,6 @@ const UserManagement = () => {
   //Paginación
   const totalPages = Math.ceil(totalUsers / limit);
 
-console.log("AAAAAAAAAA",users);
   const handleDelete = async(userId) => {
     try {
       setIsDeleting(true); // Inicia el spinner
@@ -95,10 +94,10 @@ console.log("AAAAAAAAAA",users);
 
     try {
       const response = await updateUser(formData);
-      setMessage(response.message);
       console.log("EXITO", response)
       if(response.success){
-        console.log("Se tendría que cerrar el modal no?");
+        setMessage(response.message);
+
         setEditUser(null); // Cierra modal
         setPreviewImage(null); // Limpiarprevisualización
 
@@ -113,10 +112,14 @@ console.log("AAAAAAAAAA",users);
             img: response.img ?? user.img // Usa la nueva imagen si se ha enviado, o mantiene la actual
           } 
         : user
-    ));
+        ));
+      }else {
+        // Cuando response.success es falso
+        setMessage(response.message || "Error inesperado al actualizar usuario.");
       }
     } catch (error) {
       console.log(error);
+      setMessage(`Error: ${error.message}`);
     }
   }
 
