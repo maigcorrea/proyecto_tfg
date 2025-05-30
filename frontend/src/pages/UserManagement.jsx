@@ -62,7 +62,7 @@ console.log("AAAAAAAAAA",users);
         {
           users && users.map((user) => (
             <tr>
-              <td><img src={`../../public/userAssets/${user.id}/${user.img}`} alt={user.nickname} className='w-10 h-10 rounded-full' /></td>
+              <td><img src={`/userAssets/${user.id}/${user.img}`} alt={user.nickname} className='w-10 h-10 rounded-full' /></td>
               <td>{user.nickname}</td>
               <td>{user.nombre}</td>
               <td>{user.nacimiento}</td>

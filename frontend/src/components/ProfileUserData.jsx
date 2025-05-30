@@ -163,7 +163,7 @@ const handleSave = async (field) => {
 
       {/* Imagen de perfil */}
       <div className='flex justify-center items-center h-screen'>
-        <img src={`../userAssets/${userSession.id}/${userData.ImgPerfil}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600' onClick={handleImageClick}/>
+        <img src={`/userAssets/${userSession.id}/${userData.ImgPerfil}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600' onClick={handleImageClick}/>
         <input type="file" accept="image/*" className='hidden' ref={fileInputRef} onChange={handleImgChange} />
       </div>
 
