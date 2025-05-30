@@ -9,21 +9,18 @@
 
 
     function getAllUsers() {
-        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
-        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
 
         $session= new Sesion();
         $currentUser = $session->get_session('id');
 
         $userModel = new User();
-        $usuarios = $userModel->getAllUsers($currentUser, $limit, $offset);
+        $usuarios = $userModel->getAllUsers($currentUser);
 
         
 
         echo json_encode([
             'success' => true,
-            'usuarios' => $usuarios['users'],
-            'total' => $usuarios['total']
+            'usuarios' => $usuarios
         ]);
     }
 ?>

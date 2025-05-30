@@ -78,9 +78,8 @@ export const selectUserTags = async (tags) => {
   }
 }
 
-
-
-export const getAllUsers = async () => {
+//Copia de getAllUsers por si acaso se necesita donde se muestran todos los usuarios en la parte del foro
+export const getAllUsersCopia = async () => {
   try {
     const response = await axios.get(`${API_URL}users.php?action=getAllUsers`, {
       withCredentials: true // Importante si usas cookies para la sesión
@@ -88,6 +87,21 @@ export const getAllUsers = async () => {
 
     console.log("Datos de todos:", response.data)
     return response.data.usuarios || [];
+
+  } catch (error) {
+    console.error("Error obteniendo todos los usuarios", error);
+    throw error;
+  }
+}
+
+export const getAllUsers = async (limit = 10, offset = 0) => {
+  try {
+    const response = await axios.get(`${API_URL}users.php?action=getAllUsers&limit=${limit}&offset=${offset}`, {
+      withCredentials: true // Importante si usas cookies para la sesión
+    });
+
+    //console.log("Datos de todos:", response.data)
+    return response.data
 
   } catch (error) {
     console.error("Error obteniendo todos los usuarios", error);

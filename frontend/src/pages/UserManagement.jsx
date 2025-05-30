@@ -4,19 +4,29 @@ import { deleteUser } from '../services/userService';
 
 const UserManagement = () => {
   const [users, setUsers] = useState("");
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState("");
   const [confirmDeleteId, setConfirmDeleteId] = useState(null); // Nuevo estado para confirmar eliminación
+  const limit = 10;
 
   useEffect(() => {
     const obtenerUsuarios = async () =>{
-      const response = await getAllUsers();
-      setUsers(response);
+      const offset = (currentPage - 1) * limit;
+      const response = await getAllUsers(limit, offset);
+      console.log("RESPUESTAAA",response);
+      setUsers(response.usuarios);
+      setTotalUsers(response.total);
     }
 
     obtenerUsuarios();
-  }, []);
+  }, [currentPage]);
 
 
+  //Paginación
+  const totalPages = Math.ceil(totalUsers / limit);
+
+console.log("AAAAAAAAAA",users);
   const handleDelete = async(userId) => {
     try {
       const response = await deleteUser(userId);
@@ -62,6 +72,25 @@ const UserManagement = () => {
         }
         </tbody>
       </table>
+
+      {/* Paginación */}
+    <div className="flex justify-center mt-4">
+      <button
+        disabled={currentPage === 1}
+        onClick={() => setCurrentPage(prev => prev - 1)}
+        className="px-4 py-2 bg-gray-300 rounded mx-1"
+      >
+        Anterior
+      </button>
+      <span className="px-4 py-2">Página {currentPage} de {totalPages}</span>
+      <button
+        disabled={currentPage === totalPages}
+        onClick={() => setCurrentPage(prev => prev + 1)}
+        className="px-4 py-2 bg-gray-300 rounded mx-1"
+      >
+        Siguiente
+      </button>
+    </div>
 
       <p>{message}</p>
 

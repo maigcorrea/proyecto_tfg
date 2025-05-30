@@ -335,10 +335,8 @@ require_once "../config/connection.php";
             return null;
         }
 
-
-
-        //OBTENER TODOS LOS USUARIOS DE LA BD
-        public function getAllUsers($id) {
+        //OBTENER TODOS LOS USUARIOS DE LA BD (COPIA POR SI ACASO EN LA PARTE Donde se muestran todos los usuarios)
+        public function getAllUsersCopia($id) {
             $query = "SELECT id, telefono, nombre, nickname, descripcion, nacimiento, img, tags FROM usuario WHERE id!=?";
             $stmt = $this->conn->getConnection()->prepare($query);
             $stmt->bind_param("i", $id);
@@ -352,6 +350,38 @@ require_once "../config/connection.php";
             }
 
             return $usuarios;
+        }
+
+
+
+        //OBTENER TODOS LOS USUARIOS DE LA BD
+        public function getAllUsers($id, $limit, $offset) {
+            $query = "SELECT id, telefono, nombre, nickname, descripcion, nacimiento, img, tags FROM usuario WHERE id!=?  LIMIT ? OFFSET ?";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("iii", $id, $limit, $offset);
+
+            $stmt->execute();
+            $result = $stmt->get_result(); // ← necesario para poder usar fetch_assoc()
+
+            $usuarios = [];
+            while ($row = $result->fetch_assoc()) {
+                $usuarios[] = $row;
+            }
+
+            $stmt->close();
+
+            // Obtener total de usuarios (para paginación)
+            $totalQuery = "SELECT COUNT(*) as total FROM usuario WHERE id != ?";
+            $stmtTotal = $this->conn->getConnection()->prepare($totalQuery);
+            $stmtTotal->bind_param("i", $id);
+            $stmtTotal->execute();
+
+            $totalResult = $stmtTotal->get_result();
+            $totalRow = $totalResult->fetch_assoc();
+            $total = $totalRow['total'];
+            
+
+            return ['users' => $usuarios, 'total' => $total];
         }
 
 
