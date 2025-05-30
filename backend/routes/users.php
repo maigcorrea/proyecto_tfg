@@ -1,6 +1,6 @@
 <?php
     header("Access-Control-Allow-Origin: http://localhost:5173");
-    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE");
     header("Access-Control-Allow-Headers: Content-Type");
     header("Content-Type: application/json");//Indicar que la respuesta del servidor será en formato JSON
     header("Access-Control-Allow-Credentials: true"); // Permite el uso de credenciales (como cookies)
@@ -160,6 +160,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     case 'getUserByNickname':
         require_once '../controllers/getUserByNicknameController.php';
         getUserByNickname(); // Asegúrate de que este nombre coincida
+    break;
+
+    case 'deleteUser':
+        require_once '../controllers/deleteUserController.php';
+        deleteUser();
     break;
 
 }

@@ -111,3 +111,16 @@ export const getUserByNickname = async (nickname) => {
   }
 }
 
+
+export const deleteUser = async (userId) => {
+  try {
+    const response = await axios.delete(`${API_URL}users.php?action=deleteUser&userId=${userId}`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error eliminando el usuario", error);
+    throw error;
+  }
+}
+

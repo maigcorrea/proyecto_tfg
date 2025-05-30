@@ -381,6 +381,23 @@ require_once "../config/connection.php";
             return $id;
         }
 
+
+        //ELIMINAR USUARIO
+        public function deleteUser($id) {
+            $query = "DELETE FROM usuario WHERE id = ?";
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+
+            $deleted= false;
+            if ($stmt->affected_rows){
+                $deleted = true;
+            }
+
+            $stmt->close();
+            return $deleted;
+
+        }
     }
 
 ?>
