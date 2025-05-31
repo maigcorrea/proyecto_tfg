@@ -100,3 +100,21 @@ export const closeSes = async () => {
       throw error;
     }
   }
+
+
+  export const userRegisterFromAdmin = async (FormData) =>{
+    try {
+      const response= await axios.post(`${API_URL}/users.php?action=register`,FormData, {
+        headers:{
+            'Content-Type':'multipart/form-data', //Asegura que lo lea bien el backend
+        },
+        responseType: 'json'  // Esto indica explícitamente que esperamos una respuesta JSON
+      });
+  
+      return response.data;
+  
+    } catch (error) {
+      console.error("Error enviando datos del formulario de registro:", error);
+      throw error;
+    }
+  }

@@ -10,19 +10,27 @@ require_once "../config/connection.php";
         }
 
         //REGISTER
-        public function userRegistration($tel,$nom,$email,$nickname, $f_nac, $pass){
+        public function userRegistration($tel,$nom,$email,$nickname, $f_nac, $pass, $tipo = 'usu'){
             $inserted=false;
+
+            if($this->checkEmailExists($email)){
+                return "email_taken";
+            }
+
+            if($this->checkNicknameExists($nickname)){
+                return "nickname_taken";
+            }
 
             if(!$this->checkEmailExists($email)){
                 if(!$this->checkNicknameExists($nickname)){
                     try {
-                        $query="INSERT INTO usuario(telefono, nombre, email, nickname, nacimiento, passwrd) VALUES(?,?,?,?,?,?);";
+                        $query="INSERT INTO usuario(telefono, nombre, email, nickname, nacimiento, passwrd, tipo) VALUES(?,?,?,?,?,?,?);";
                         $stmt=$this->conn->getConnection()->prepare($query);
     
                         // Hashear la contraseña
                         $hash = password_hash($pass, PASSWORD_BCRYPT);
     
-                        $stmt->bind_param("isssss",$tel,$nom,$email,$nickname, $f_nac, $hash);
+                        $stmt->bind_param("issssss",$tel,$nom,$email,$nickname, $f_nac, $hash, $tipo);
                          //NOTA: Cuando un usuario intente iniciar sesión, puedes usar password_verify($passwordIntroducida, $hashAlmacenado) para comprobar si la contraseña coincide con el hash almacenado.
     
                         $stmt->execute();
@@ -31,34 +39,7 @@ require_once "../config/connection.php";
                         $inserted=false;
                     }
     
-                }
-                
-                // if ($this->checkNicknameExists($nickname)) {
-                //     return [
-                //         "success" => false,
-                //         "message" => "Nickname ocupado, selecciona otro"
-                //     ];
-                // }
-
-
-                // try {
-                //     $query = "INSERT INTO usuario(telefono, nombre, email, nickname, nacimiento, passwrd) VALUES(?,?,?,?,?,?);";
-                //     $stmt = $this->conn->getConnection()->prepare($query);
-                //     $stmt->bind_param("isssss", $tel, $nom, $email, $nickname, $f_nac, $pass);
-            
-                //     $stmt->execute();
-            
-                //     return [
-                //         "success" => true,
-                //         "message" => "Usuario registrado correctamente"
-                //     ];
-                // } catch (\Throwable $th) {
-                //     // Aquí puedes agregar más detalles si quieres depurar
-                //     return [
-                //         "success" => false,
-                //         "message" => "Usuario ya registrado. Debe iniciar sesión"
-                //     ];
-                // }
+                }  
                 
             }else{
                 $inserted="email_taken";

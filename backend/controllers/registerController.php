@@ -16,19 +16,16 @@ function userRegistration(){
     $telefono=$_POST["telefono"];
     $nacimiento=$_POST["nacimiento"];
     $password=$_POST["password"];
-    // $perfil=$_POST["img"];
-    
-
-    // // Llamar a la función del modelo
-    // $user= new User();
-    // $inserted= $user->userRegistration($telefono,$nombre,$email,$nickname,$nacimiento,$password);
-    // echo json_encode($inserted);
+    $tipo = isset($_POST["tipo"]) ? $_POST["tipo"] : "usu"; // Valor por defecto 'usu' si no se envía
 
     // Llamar a la función del modelo
     $user= new User();
-    $inserted= $user->userRegistration($telefono,$nombre,$email,$nickname,$nacimiento,$password);
+    $inserted = $user->userRegistration($telefono, $nombre, $email, $nickname, $nacimiento, $password, $tipo);
 
-    //$inserted=saveImg($telefono,$nombre,$email,$nickname,$nacimiento,$password);
+    
+    // Si se incluye tipo explícitamente (registro desde admin)
+    
+    
 
     if ($inserted === true) {
         // Obtener id del usuario recién insertado
@@ -48,16 +45,16 @@ function userRegistration(){
                 "message" => "Usuario registrado correctamente, pero no se pudo guardar la imagen"
             ]);
         }
-    } else if ($inserted === false) {
-        echo json_encode([
-            "success" => false,
-            "message" => "Nickname ocupado, selecciona otro"
-        ]);
-    }else if ($inserted === "email_taken"){
+    } else if ($inserted === "email_taken"){
         echo json_encode([
             "success" => false,
             "message" => "Email ya registrado. debe iniciar sesión"
         ]);
+    }else if($inserted === "nickname_taken"){
+        echo json_encode([
+        "success" => false,
+        "message" => "Nickname ocupado, selecciona otro"
+    ]);
     }else{
         echo json_encode([
             "success" => false,
