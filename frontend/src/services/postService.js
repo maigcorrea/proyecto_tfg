@@ -47,3 +47,13 @@ export const getAllTotalPosts = async(limit = 10, offset = 0) => {
     throw error;
   }
 }
+
+export const deletePost = async(postId) => {
+  try{
+    const response = await axios.delete(`${API_URL}posts.php?action=deletePost&postId=${postId}`, { withCreadentials: true});
+    return response.data;
+  }catch(error){
+    console.error("Error eliminando el post:", error);
+    throw error;
+  }
+}

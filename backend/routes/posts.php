@@ -1,6 +1,6 @@
 <?php
     header("Access-Control-Allow-Origin: http://localhost:5173");
-    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type");
     header("Content-Type: application/json");//Indicar que la respuesta del servidor será en formato JSON
     header("Access-Control-Allow-Credentials: true"); // Permite el uso de credenciales (como cookies)
@@ -33,6 +33,11 @@
         case 'getAllTotalPosts':
             require_once "../controllers/getAllPostsController.php";
             getAllTotalPosts();
+        break;
+
+        case 'deletePost':
+            require_once "../controllers/deletePostController.php";
+            deletePost();
         break;
         default:
             # code...
