@@ -3,20 +3,29 @@ import { getAllTotalPosts } from '../../services/postService';
 
 const PostTable = () => {
     const [posts, setPosts] = useState([]);
+    //Paginación
+    const [totalPosts, setTotalPosts] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const limit = 10;
 
     useEffect(() => {
        const obtenerPosts = async () => {
+        const offset = (currentPage - 1) * limit;
             try {
-                const response = await getAllTotalPosts();
+                const response = await getAllTotalPosts(limit, offset);
                 console.log("RESPUESTA POST",response);
                 setPosts(response);
+                setTotalPosts(response.total);
             } catch (error) {
                 console.error("Error al obtener los posts:", error);
             }
        }
 
        obtenerPosts();
-    }, [])
+    }, [currentPage]);
+
+    //Paginación
+    const totalPages = Math.ceil(totalPosts / limit);
     
   return (
     <>
@@ -48,6 +57,26 @@ const PostTable = () => {
         }
         </tbody>
       </table>
+
+
+      {/* Paginación */}
+    <div className="flex justify-center mt-4">
+      <button
+        disabled={currentPage === 1}
+        onClick={() => setCurrentPage(prev => prev - 1)}
+        className="px-4 py-2 bg-gray-300 rounded mx-1"
+      >
+        Anterior
+      </button>
+      <span className="px-4 py-2">Página {currentPage} de {totalPages}</span>
+      <button
+        disabled={currentPage === totalPages}
+        onClick={() => setCurrentPage(prev => prev + 1)}
+        className="px-4 py-2 bg-gray-300 rounded mx-1"
+      >
+        Siguiente
+      </button>
+    </div>
     </>
   )
 }

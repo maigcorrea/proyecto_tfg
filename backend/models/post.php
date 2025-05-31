@@ -47,15 +47,23 @@ require_once "../config/connection.php";
         }
 
         //Obtener post parte administrador
-        public function getAllTotalPosts(){
+        public function getAllTotalPosts($limit, $offset){
+            // Primero, consulta el total de posts sin limitaciones
+            $totalQuery = "SELECT COUNT(*) as total FROM post";
+            $totalResult = $this->conn->getConnection()->query($totalQuery);
+            $totalRow = $totalResult->fetch_assoc();
+            $totalPosts = $totalRow['total'];
+
+            // Luego, consulta los posts paginados con sus contadores
             $query = "SELECT p.id, p.contenido, p.fecha, p.usuario, u.nombre, u.nickname, u.img,
                      (SELECT COUNT(*) FROM likes l WHERE l.post = p.id) as likesCount,
                      (SELECT COUNT(*) FROM comentario c WHERE c.post = p.id) as commentsCount
               FROM post p
               INNER JOIN usuario u ON p.usuario = u.id
-              ORDER BY p.fecha DESC";
+              ORDER BY p.fecha DESC LIMIT ? OFFSET ?";
 
             $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("ii", $limit, $offset);
             $stmt->execute();
             $resultado =$stmt->get_result();
             $posts=[];
@@ -64,7 +72,12 @@ require_once "../config/connection.php";
             }
 
             $stmt->close();
-            return $posts;
+
+            // Devuelve tanto los posts como el total
+            return [
+                'total' => $totalPosts,
+                'posts' => $posts
+            ];
         }
 
         public function deletePost($postId){

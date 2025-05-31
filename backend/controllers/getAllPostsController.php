@@ -23,12 +23,16 @@
 
 
     function getAllTotalPosts(){
+        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+
         $post = new Post();
-        $posts = $post->getAllTotalPosts();
+        $posts = $post->getAllTotalPosts($limit, $offset);
 
         echo json_encode([
             'success' => true,
-            'posts' => $posts,
+            'posts' => $posts['posts'],
+            'total' => $posts['total']
         ]);
     }
 ?>
