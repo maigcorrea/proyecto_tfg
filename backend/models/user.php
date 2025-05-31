@@ -95,7 +95,6 @@ require_once "../config/connection.php";
             $stmt->close();
         }
 
-
         //LOGIN
         public function getImg($nick){
             $query="SELECT img FROM usuario WHERE nickname=?;";
