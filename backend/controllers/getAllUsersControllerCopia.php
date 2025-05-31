@@ -14,7 +14,7 @@
         $currentUser = $session->get_session('id');
 
         $userModel = new User();
-        $usuarios = $userModel->getAllUsers($currentUser);
+        $usuarios = $userModel->getAllUsersCopia($currentUser);
 
         
 

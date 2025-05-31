@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { getAllUsers } from '../services/userService';
+import { getAllUsersCopia } from '../services/userService';
 import UserCard from '../components/UserCard';
 
 const DescubrirUsuarios = () => {
@@ -13,7 +13,7 @@ const DescubrirUsuarios = () => {
 });
 
     useEffect(() => {
-        getAllUsers().then(setUsuarios);
+        getAllUsersCopia().then(setUsuarios);
 
         return () => {
     localStorage.removeItem('visibleCount');

@@ -81,7 +81,7 @@ export const selectUserTags = async (tags) => {
 //Copia de getAllUsers por si acaso se necesita donde se muestran todos los usuarios en la parte del foro
 export const getAllUsersCopia = async () => {
   try {
-    const response = await axios.get(`${API_URL}users.php?action=getAllUsers`, {
+    const response = await axios.get(`${API_URL}users.php?action=getAllUsersCopia`, {
       withCredentials: true // Importante si usas cookies para la sesión
     });
 
