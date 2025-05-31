@@ -20,4 +20,15 @@
             'userId' => $userId,
         ]);
     }
+
+
+    function getAllTotalPosts(){
+        $post = new Post();
+        $posts = $post->getAllTotalPosts();
+
+        echo json_encode([
+            'success' => true,
+            'posts' => $posts,
+        ]);
+    }
 ?>

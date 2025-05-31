@@ -30,6 +30,10 @@
             getAllPosts();
         break;
         
+        case 'getAllTotalPosts':
+            require_once "../controllers/getAllPostsController.php";
+            getAllTotalPosts();
+        break;
         default:
             # code...
         break;

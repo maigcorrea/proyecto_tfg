@@ -25,9 +25,22 @@ export const createPost = async (formData) => {
     }
 }
 
+//Obtener todas las publicaciones desde la parte del usuario y si ha dado like para cada publicación
 export const getAllPosts = async() => {
   try{
     const response = await axios.get(`${API_URL}posts.php?action=getAllPosts`, { withCreadentials: true});
+    console.log("Todos los posts", response.data);
+    return response.data;
+  }catch(error){
+    console.error("Error obteniendo todos los post:", error);
+    throw error;
+  }
+}
+
+// Obtener todas las publicaciones desde la parte del administrador (con número total de likes y comentarios)
+export const getAllTotalPosts = async() => {
+  try{
+    const response = await axios.get(`${API_URL}posts.php?action=getAllTotalPosts`, { withCreadentials: true});
     console.log("Todos los posts", response.data);
     return response.data;
   }catch(error){

@@ -21,7 +21,7 @@ require_once "../config/connection.php";
         }
 
 
-
+        //Obtener post parte usuario
         public function getAllPosts($userId){
             $query = "SELECT p.id, p.contenido, p.fecha, u.nombre, u.nickname, u.img,
                      (SELECT COUNT(*) FROM likes l WHERE l.post = p.id) as likesCount,
@@ -46,7 +46,26 @@ require_once "../config/connection.php";
             return $posts;
         }
 
+        //Obtener post parte administrador
+        public function getAllTotalPosts(){
+            $query = "SELECT p.id, p.contenido, p.fecha, p.usuario, u.nombre, u.nickname, u.img,
+                     (SELECT COUNT(*) FROM likes l WHERE l.post = p.id) as likesCount,
+                     (SELECT COUNT(*) FROM comentario c WHERE c.post = p.id) as commentsCount
+              FROM post p
+              INNER JOIN usuario u ON p.usuario = u.id
+              ORDER BY p.fecha DESC";
 
+            $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->execute();
+            $resultado =$stmt->get_result();
+            $posts=[];
+            while($row = $resultado->fetch_assoc()){
+                $posts[] = $row;
+            }
+
+            $stmt->close();
+            return $posts;
+        }
 
         public function deletePost($postId){
             $query = "DELETE FROM post WHERE id = ?;";
