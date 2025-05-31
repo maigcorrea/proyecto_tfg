@@ -48,6 +48,16 @@ export const getAllTotalPosts = async(limit = 10, offset = 0) => {
   }
 }
 
+export const getPostData = async(postId) => {
+  try{
+    const response = await axios.get(`${API_URL}posts.php?action=getPostData&postId=${postId}`, { withCreadentials: true});
+    return response.data;
+  }catch(error){
+    console.error("Error obteniendo los datos del post:", error);
+    throw error;
+  }
+}
+
 export const deletePost = async(postId) => {
   try{
     const response = await axios.delete(`${API_URL}posts.php?action=deletePost&postId=${postId}`, { withCreadentials: true});

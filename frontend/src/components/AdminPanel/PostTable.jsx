@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { getAllTotalPosts } from '../../services/postService';
 import { deletePost } from '../../services/postService';
+import { useNavigate } from 'react-router-dom';
 
 const PostTable = () => {
+    const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [confirmDeleteId, setConfirmDeleteId] = useState(null); // Nuevo estado para confirmar eliminación
     const [isDeleting, setIsDeleting] = useState(false); // Estado de carga para eliminación
@@ -75,7 +77,7 @@ const PostTable = () => {
               <td>@{post.nickname}</td>
               <td>{post.likesCount === 0 ? '---' : post.likesCount}</td>
               <td>{post.commentsCount === 0 ? '---' : post.commentsCount}</td>
-              <td className='flex gap-2'><button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer'>Detalles</button><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(post.id)}}>Eliminar</button></td>
+              <td className='flex gap-2'><button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {navigate(`/admin/post/${post.id}`) }}>Detalles</button><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(post.id)}}>Eliminar</button></td>
             </tr>
           ))
         }

@@ -35,6 +35,11 @@
             getAllTotalPosts();
         break;
 
+        case 'getPostData':
+            require_once "../controllers/getPostDataController.php";
+            getPostData();
+        break;
+
         case 'deletePost':
             require_once "../controllers/deletePostController.php";
             deletePost();

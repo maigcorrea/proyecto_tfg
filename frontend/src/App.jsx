@@ -19,6 +19,7 @@ import PrivateAdminRoute from './components/PrivateAdminRoute'
 import Unathorized from './pages/Unathorized'
 import UserManagement from './pages/UserManagement'
 import PostManagement from './pages/PostManagement'
+import PostDetailsAdmin from './pages/PostDetailsAdmin'
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
                 <Route path='/dashboard' element={<PrivateRoute><PrivateAdminRoute><AdminDashBoard></AdminDashBoard></PrivateAdminRoute></PrivateRoute>}></Route>
                 <Route path='/admin/users' element={<PrivateRoute><PrivateAdminRoute><UserManagement></UserManagement></PrivateAdminRoute></PrivateRoute>}></Route>
                 <Route path='/admin/posts' element={<PrivateRoute><PrivateAdminRoute><PostManagement></PostManagement></PrivateAdminRoute></PrivateRoute>}></Route>
+                <Route path='/admin/post/:id' element={<PrivateRoute><PrivateAdminRoute><PostDetailsAdmin></PostDetailsAdmin></PrivateAdminRoute></PrivateRoute>}></Route>
               </Route>
             </Routes>
           </BrowserRouter>
