@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getAllComments } from '../../services/commentService';
+import DeleteCommentButton from './DeleteCommentButton';
 
 const CommentTable = () => {
     const [comments, setComments] = useState([]);
@@ -49,7 +50,7 @@ const CommentTable = () => {
               <td>{comment.contenido}</td>
               <td>{comment.fecha.split(' ')[0]}</td>
               <td>{comment.fecha.split(' ')[1]}</td>
-              <td><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(user.id)}}>Eliminar</button></td>
+              <td><DeleteCommentButton commentId={comment.id} setComments={setComments} comments={comments}/></td>
             </tr>
           ))
         }

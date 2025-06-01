@@ -1,6 +1,6 @@
 <?php
     header("Access-Control-Allow-Origin: http://localhost:5173");
-    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type");
     header("Content-Type: application/json");//Indicar que la respuesta del servidor será en formato JSON
     header("Access-Control-Allow-Credentials: true"); // Permite el uso de credenciales (como cookies)
@@ -31,6 +31,12 @@
         case 'getCommentsCountByPost':
             require_once "../controllers/getCommentsCountByPostController.php";
             getCommentsCountByPost();
+        break;
+
+        case 'deleteComment':
+            require_once "../controllers/deleteCommentController.php";
+            deleteComment();
+        break;
     }
 
 ?>

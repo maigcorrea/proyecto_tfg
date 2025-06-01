@@ -46,3 +46,13 @@ export const getCommentsCountByPost = async (postId) => {
         throw error;
     }
 }
+
+export const deleteComment = async (commentId) => {
+  try {
+      const response = await axios.delete(`${API_URL}comments.php?action=deleteComment&commentId=${commentId}`, { withCredentials: true });
+      return response.data;
+  } catch (error) {
+      console.error("Error eliminando comentario:", error);
+      throw error;
+  }
+}

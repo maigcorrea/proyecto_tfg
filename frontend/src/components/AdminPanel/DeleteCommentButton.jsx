@@ -1,40 +1,41 @@
-import React, { useState } from 'react'
-import { deletePost } from '../../services/postService';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { deleteComment } from '../../services/commentService';
 
-const DeletePostButton = ({postId}) => {
-    const navigate = useNavigate();
+const DeleteCommentButton = ({commentId, setComments, comments}) => {
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [message, setMessage] = useState("");
+    
 
     const handleDelete = async(id) => {
-            try {
-              setIsDeleting(true); // Inicia el spinner
-              console.log("SE DEBERÍA BORRAR EL POST", id);
-              const response = await deletePost(id);
-              console.log(response);
-              alert(response.message);
-              if(response.success){
-                navigate("/admin/posts");
-                //setPosts(posts.filter(post => post.id !== postId)); //Simulado localmente en vez de cargar todos los usuarios de nuevo
-              }
-        
-            } catch (error) {
-              console.log(error);
-            }finally {
-              setIsDeleting(false); // Finaliza el spinner
-              setConfirmDeleteId(null); // Cierra el modal después de eliminar
+        try {
+            setIsDeleting(true); // Inicia el spinner
+            console.log("SE DEBERÍA BORRAR EL POST", id);
+            const response = await deleteComment(id);
+            console.log(response);
+            setMessage(response.message);
+            
+            if(response.success){
+                setComments(comments.filter(comment => comment.id !== id)); //Simulado localmente en vez de cargar todos los comentarios de nuevo
             }
-          }
+
+        } catch (error) {
+            console.log(error);
+        }finally {
+            setIsDeleting(false); // Finaliza el spinner
+            setConfirmDeleteId(null); // Cierra el modal después de eliminar
+        }
+    }
+
   return (
     <>
-        <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(postId)}}>Eliminar publicación</button>
-    
+        <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(commentId)}}>Eliminar</button>
+
         {/* Modal de confirmación */}
         {confirmDeleteId !== null && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded shadow-md text-center">
-                <p>¿Estás seguro de que quieres eliminar esta publicación?</p>
+                <p>¿Estás seguro de que quieres eliminar este comentario?</p>
                 <div className="mt-4 flex justify-center space-x-4">
                 <button
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center"
@@ -54,6 +55,7 @@ const DeletePostButton = ({postId}) => {
             </div>
         )}
 
+        <p>{message}</p>
 
         {/* Spinner de carga */}
         {isDeleting && (
@@ -68,4 +70,4 @@ const DeletePostButton = ({postId}) => {
   )
 }
 
-export default DeletePostButton
+export default DeleteCommentButton
