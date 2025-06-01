@@ -63,6 +63,7 @@ const SelectTags = () => {
       selectUserTags(selectedTags)
       .then(res => {
         console.log('Respuesta del frontend:', res);
+        console.log("TAGS PARA GUARDAR EN EL CONTEXTO", res.tags);
         if (res?.success) {
           // Actualizar contexto
           setUserSession(prev => ({

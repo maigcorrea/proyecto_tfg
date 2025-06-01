@@ -12,7 +12,7 @@ const UserCard = ({user}) => {
     const { userSession } = useContext(UserContext);
 
     React.useEffect(() => {
-  console.log('Contexto del usuario:', userSession);
+  console.log('Contexto del usuarioOOO:', userSession);
 }, [userSession]);
 
     const calcularCoincidencias = (tagsDelOtroUsuario) => {
@@ -23,7 +23,7 @@ const UserCard = ({user}) => {
         }
 
         const propias = userSession?.tags || [];
-        const otras = tagsDelOtroUsuario?.split(',').map(tag => tag.trim()) || [];
+        const otras = tagsDelOtroUsuario || [];
 
         console.log('Mis tags:', userSession.tags);
         console.log('Tags del otro usuario:', otras);
@@ -54,7 +54,7 @@ const UserCard = ({user}) => {
     <>
           <div className="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300 cursor-pointer" onClick={() => navigate(`/userDetail/${user.nickname}`)}>
               <img
-                  src={`../../public/userAssets/${user.id}/${user.img}` || '/default-avatar.png'}
+                  src={user.img ? `/userAssets/${user.id}/${user.img}` : '/userAssets/default/defaultImg.png'}
                   alt={user.nickname}
                   className="w-20 h-20 mx-auto rounded-full mb-3 object-cover border"
               />

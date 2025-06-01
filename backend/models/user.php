@@ -381,27 +381,40 @@ require_once "../config/connection.php";
 
         //OBTENER TAGS DE UN USUARIO
         public function getTags($id) {
-            $query = "SELECT tags FROM usuario WHERE id=?";
-            $stmt = $this->conn->getConnection()->prepare($query);
-            $stmt->bind_param("i", $id);
-            
+             $conn = $this->conn->getConnection();
 
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if ($row = $result->fetch_assoc()) {
-                return $row['tags']; // Devuelve string tipo: "Genética,Diagnóstico"
-            }
-            return null;
+    $query = "SELECT t.nombre FROM tag t
+              INNER JOIN tag_usuario tu ON t.id = tu.id_tag
+              WHERE tu.id_usu = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $tags = [];
+    while ($row = $result->fetch_assoc()) {
+        $tags[] = $row['nombre'];
+    }
+    $stmt->close();
+
+    return $tags; // Devuelve un array como ["Genética", "Diagnóstico"]
         }
 
         //OBTENER TODOS LOS USUARIOS DE LA BD (COPIA POR SI ACASO EN LA PARTE Donde se muestran todos los usuarios)
         public function getAllUsersCopia($id) {
-            $query = "SELECT id, telefono, nombre, nickname, descripcion, nacimiento, img, tags FROM usuario WHERE id!=?";
+            $query = "SELECT u.id, u.telefono, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img,
+                     GROUP_CONCAT(t.nombre SEPARATOR ', ') AS tags
+              FROM usuario u
+              LEFT JOIN tag_usuario tu ON u.id = tu.id_usu
+              LEFT JOIN tag t ON tu.id_tag = t.id
+              WHERE u.id != ?
+              GROUP BY u.id, u.telefono, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img";
+
             $stmt = $this->conn->getConnection()->prepare($query);
             $stmt->bind_param("i", $id);
 
             $stmt->execute();
-            $result = $stmt->get_result(); // ← necesario para poder usar fetch_assoc()
+            $result = $stmt->get_result();
 
             $usuarios = [];
             while ($row = $result->fetch_assoc()) {
@@ -446,12 +459,41 @@ require_once "../config/connection.php";
 
         //OBTENER TODOS LOS DATOS DE UN USUARIO EN BASE A SU NICKNAME
         public function getUserByNickname($nickname) {
-            $query = "SELECT * FROM usuario WHERE nickname = ?";
-            $stmt = $this->conn->getConnection()->prepare($query);
-            $stmt->bind_param("s", $nickname);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            return $result->fetch_assoc();
+            $conn = $this->conn->getConnection();
+
+            // Consulta para obtener los datos básicos del usuario
+            $queryUser = "SELECT * FROM usuario WHERE nickname = ?";
+            $stmtUser = $conn->prepare($queryUser);
+            $stmtUser->bind_param("s", $nickname);
+            $stmtUser->execute();
+            $resultUser = $stmtUser->get_result();
+            $user = $resultUser->fetch_assoc();
+            $stmtUser->close();
+
+            if (!$user) {
+                return null; // Usuario no encontrado
+            }
+
+            // Consulta para obtener las tags asociadas
+            $queryTags = "SELECT t.nombre FROM tag t 
+                        INNER JOIN tag_usuario tu ON t.id = tu.id_tag 
+                        INNER JOIN usuario u ON tu.id_usu = u.id
+                        WHERE u.nickname = ?";
+            $stmtTags = $conn->prepare($queryTags);
+            $stmtTags->bind_param("s", $nickname);
+            $stmtTags->execute();
+            $resultTags = $stmtTags->get_result();
+
+            $tags = [];
+            while ($row = $resultTags->fetch_assoc()) {
+                $tags[] = $row['nombre'];
+            }
+            $stmtTags->close();
+
+            // Añadimos las tags al array del usuario
+            $user['tagsUser'] = $tags;
+
+            return $user;
         }
 
 

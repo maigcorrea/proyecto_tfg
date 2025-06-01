@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
                 "usuario" => $nickname,
                 "nombre" => $nombre,
                 "img" => $img,
-                "tags" => explode(',', $tags),
+                "tags" => $tags,
                 "tipo" => $tipo,
                 
                 // "tipo" => $_SESSION['tipo']
@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
     case 'getUserByNickname':
         require_once '../controllers/getUserByNicknameController.php';
-        getUserByNickname(); // Asegúrate de que este nombre coincida
+        getUserByNickname(); 
     break;
 
     case 'deleteUser':

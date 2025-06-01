@@ -17,7 +17,7 @@ const UserDetails = () => {
       .catch(err => console.error('Error al cargar usuario:', err));
   }, [nickname]);
 
-
+  console.log("USUARIOOOOOOOOOOO",user);
   //Calcular edad del usuario
   const calcularEdad = (fechaNacimiento) => {
   if (!fechaNacimiento) return null;
@@ -39,7 +39,7 @@ const UserDetails = () => {
 
   // Comparar tags
   const propias = userSession?.tags || [];
-  const otras = user.tags?.split(',').map(t => t.trim()) || [];
+  const otras = user.tagsUser?.map(t => t.trim()) || [];
 
   return (
     <>
@@ -64,7 +64,7 @@ const UserDetails = () => {
 
             <h2 className="font-bold">Intereses</h2>
             <div className="flex flex-wrap gap-2 mt-2 justify-center">
-                {!user.tags && "Este usuario no ha añadido ningún interés de momento"}
+                {!user.tagsUser && "Este usuario no ha añadido ningún interés de momento"}
                  {otras.map((tag, index) => {
             const enComun = propias.includes(tag);
             return (
