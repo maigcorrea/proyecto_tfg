@@ -24,7 +24,7 @@
         break;
 
         case 'getAllComments':
-            require_once "../controllers/getAllCommentsController.php";
+            require_once "../controllers/getAllCommentsControlLer.php";
             getAllComments();
         break;
 

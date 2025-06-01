@@ -46,13 +46,20 @@
 
 
 
-        public function getAllComments(){
+        public function getAllComments($limit, $offset){
+            // Primero, consulta el total de posts sin limitaciones
+            $totalQuery = "SELECT COUNT(*) as total FROM comentario";
+            $totalResult = $this->conn->getConnection()->query($totalQuery);
+            $totalRow = $totalResult->fetch_assoc();
+            $totalComments = $totalRow['total'];
+
             $query = "SELECT c.id, c.contenido, c.fecha, u.nombre AS usuario_nombre, p.contenido AS post_contenido 
                       FROM comentario c 
                       JOIN usuario u ON c.usuario = u.id 
                       JOIN post p ON c.post = p.id 
-                      ORDER BY c.fecha DESC;";
+                      ORDER BY c.fecha DESC LIMIT ? OFFSET ?;";
             $stmt = $this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("ii", $limit, $offset);
             $stmt->execute();
             $result = $stmt->get_result();
 
@@ -62,7 +69,10 @@
             }
 
             $stmt->close();
-            return $comments;
+            return [
+                'total' => $totalComments,
+                'comentarios' => $comments
+            ];
         }
 
 

@@ -44,7 +44,7 @@ const AdminSidebar = () => {
             <Link to="/admin/posts" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
              Posts
             </Link>
-            <Link to="/admin/comentarios" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
+            <Link to="/admin/comments" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
              Comentarios
             </Link>
             <Link to="/admin/reportes" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">

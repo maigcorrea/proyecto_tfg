@@ -6,12 +6,16 @@
     include_once '../models/comment.php';
 
     function getAllComments() {
+        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+
         $comment = new Comment();
-        $comments = $comment->getAllComments();
+        $comments = $comment->getAllComments($limit, $offset);
 
         echo json_encode([
             'success' => true,
-            'comments' => $comments,
+            'comments' => $comments['comentarios'],
+            'total' => $comments['total']
         ]);
     }
 ?>

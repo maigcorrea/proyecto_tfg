@@ -27,9 +27,9 @@ export const getCommentsByPost = async (postId) => {
     }
 }
 
-export const getAllComments = async () => {
+export const getAllComments = async (limit = 10, offset = 0) => {
   try {
-      const response = await axios.get(`${API_URL}comments.php?action=getAllComments`, { withCredentials: true });
+      const response = await axios.get(`${API_URL}comments.php?action=getAllComments&limit=${limit}&offset=${offset}`, { withCredentials: true });
       return response.data;
   } catch (error) {
       console.error("Error obteniendo todos loa comentarios:", error);
