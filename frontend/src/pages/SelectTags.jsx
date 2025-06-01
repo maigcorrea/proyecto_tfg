@@ -59,7 +59,6 @@ const SelectTags = () => {
     };
 
     const handleContinue = async() =>{
-
       //Lógica para meter las tags en la bd
       selectUserTags(selectedTags)
       .then(res => {

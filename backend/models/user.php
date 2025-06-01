@@ -304,7 +304,7 @@ require_once "../config/connection.php";
 
 
         //METER TAGAS EN LA BD DESPUÉS DEL REGISTRO
-        public function selectTags($nickname, $tagsString) {
+        /*public function selectTags($nickname, $tagsString) {
             $query = "UPDATE usuario SET tags= ? WHERE nickname= ?";
             $stmt = $this->conn->getConnection()->prepare($query);
             $stmt->bind_param("ss", $tagsString, $nickname);
@@ -314,7 +314,70 @@ require_once "../config/connection.php";
 
             $stmt -> close();
             return $success;
-        }
+        }*/
+
+        public function selectTags($nickname, $tagsArray) {
+            $conn = $this->conn->getConnection();
+            $conn->begin_transaction(); // Iniciamos una transacción
+
+            try {
+                // 1️⃣ Obtener el userId a partir del nickname
+                $queryUser = "SELECT id FROM usuario WHERE nickname = ?";
+                $stmtUser = $conn->prepare($queryUser);
+                $stmtUser->bind_param("s", $nickname);
+                $stmtUser->execute();
+                $result = $stmtUser->get_result();
+                $user = $result->fetch_assoc();
+                $stmtUser->close();
+
+                if (!$user) {
+                    $conn->rollback();
+                    return false; // Usuario no encontrado
+                }
+
+                $userId = $user['id'];
+
+                // 2️⃣ Procesar cada tag
+                foreach ($tagsArray as $tagName) {
+                    $tagName = trim($tagName); // Asegurarse que no haya espacios
+
+                    // 2.1 Verificar si la tag ya existe
+                    $queryCheckTag = "SELECT id FROM tag WHERE nombre = ?";
+                    $stmtCheck = $conn->prepare($queryCheckTag);
+                    $stmtCheck->bind_param("s", $tagName);
+                    $stmtCheck->execute();
+                    $resultCheck = $stmtCheck->get_result();
+                    $tag = $resultCheck->fetch_assoc();
+                    $stmtCheck->close();
+
+                    if (!$tag) {
+                        // 2.2 Si no existe, insertarla
+                        $queryInsertTag = "INSERT INTO tag (nombre) VALUES (?)";
+                        $stmtInsert = $conn->prepare($queryInsertTag);
+                        $stmtInsert->bind_param("s", $tagName);
+                        $stmtInsert->execute();
+                        $tagId = $stmtInsert->insert_id;
+                        $stmtInsert->close();
+                    } else {
+                        $tagId = $tag['id'];
+                    }
+
+                    // 3️⃣ Insertar relación en tag_usuario si no existe
+                    $queryInsertRelation = "INSERT IGNORE INTO tag_usuario (id_usu, id_tag) VALUES (?, ?)";
+                    $stmtRelation = $conn->prepare($queryInsertRelation);
+                    $stmtRelation->bind_param("ii", $userId, $tagId);
+                    $stmtRelation->execute();
+                    $stmtRelation->close();
+                }
+
+                $conn->commit(); // Confirmar transacción
+                return true;
+            } catch (Exception $e) {
+                $conn->rollback(); // Si hay error, deshacer cambios
+                error_log("Error en selectTags: " . $e->getMessage());
+                return false;
+            }
+    }
 
         //OBTENER TAGS DE UN USUARIO
         public function getTags($id) {
