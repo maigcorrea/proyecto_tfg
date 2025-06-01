@@ -4,6 +4,7 @@ import { sendUpdateData } from '../services/userService';
 import { sendUpdateImg } from '../services/userService';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserrContext';
+import ProfileUserDataExtended from './ProfileUserDataExtended';
 
 const ProfileUserData = () => {
   const [userData, setUserData] = useState(null);
@@ -220,6 +221,11 @@ const handleSave = async (field) => {
             </div>
           ))}
       </form>
+
+
+
+
+      <ProfileUserDataExtended></ProfileUserDataExtended>
     </>
   )
 }
