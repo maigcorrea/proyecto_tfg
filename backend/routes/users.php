@@ -177,5 +177,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         updateUser();
     break;
 
+    case 'getExtendedDataUser':
+        require_once '../controllers/getExtendedDataUserController.php';
+        getExtendedDataUser();
+    break;
+
 }
 ?>

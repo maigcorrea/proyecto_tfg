@@ -142,7 +142,7 @@ const UserTable = () => {
           users && users.map((user) => (
             <tr>
               <td><img src={`/userAssets/${user.id}/${user.img}`} alt={user.nickname} className='w-10 h-10 rounded-full' /></td>
-              <td><a href="" className='hover:text-blue-500'>{user.nickname}</a></td>
+              <td><a href={`/admin/user/${user.id}`} className='hover:text-blue-500'>{user.nickname}</a></td>
               <td>{user.nombre}</td>
               <td>{user.email}</td>
               <td>{user.nacimiento}</td>

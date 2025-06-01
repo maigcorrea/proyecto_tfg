@@ -21,6 +21,7 @@ import UserManagement from './pages/UserManagement'
 import PostManagement from './pages/PostManagement'
 import PostDetailsAdmin from './pages/PostDetailsAdmin'
 import CommentsManagement from './pages/CommentsManagement'
+import UserDetailsAdmin from './pages/UserDetailsAdmin'
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
                 <Route path='/unathorized' element={<PrivateRoute><Unathorized></Unathorized></PrivateRoute>}></Route>
                 <Route path='/dashboard' element={<PrivateRoute><PrivateAdminRoute><AdminDashBoard></AdminDashBoard></PrivateAdminRoute></PrivateRoute>}></Route>
                 <Route path='/admin/users' element={<PrivateRoute><PrivateAdminRoute><UserManagement></UserManagement></PrivateAdminRoute></PrivateRoute>}></Route>
+                <Route path='/admin/user/:id' element={<PrivateRoute><PrivateAdminRoute><UserDetailsAdmin></UserDetailsAdmin></PrivateAdminRoute></PrivateRoute>}></Route>
                 <Route path='/admin/posts' element={<PrivateRoute><PrivateAdminRoute><PostManagement></PostManagement></PrivateAdminRoute></PrivateRoute>}></Route>
                 <Route path='/admin/post/:id' element={<PrivateRoute><PrivateAdminRoute><PostDetailsAdmin></PostDetailsAdmin></PrivateAdminRoute></PrivateRoute>}></Route>
                 <Route path='/admin/comments' element={<PrivateRoute><PrivateAdminRoute><CommentsManagement></CommentsManagement></PrivateAdminRoute></PrivateRoute>}></Route>

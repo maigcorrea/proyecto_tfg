@@ -424,6 +424,98 @@ require_once "../config/connection.php";
             return $deleted;
 
         }
+
+
+        //OBTENER TODOS LOS DATOS EXTENDIDOS DE UN USUARIO
+        public function getExtendedDataUser($userId) {
+            $conn = $this->conn->getConnection();
+
+            // 1️⃣ Datos básicos del usuario
+            $queryUser = "SELECT id, nickname, nombre, img, email, nacimiento, telefono, descripcion, tags 
+                        FROM usuario WHERE id = ?";
+            $stmt = $conn->prepare($queryUser);
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $user = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if (!$user) {
+                return null; // Si no existe, devuelve null
+            }
+
+            // 2️⃣ Posts a los que ha dado like (detalle de post)
+            $queryLikedPosts = "SELECT p.id, p.contenido, p.fecha, p.usuario AS autor_id, u.nickname AS autor_nickname
+                                FROM likes l
+                                INNER JOIN post p ON l.post = p.id
+                                INNER JOIN usuario u ON p.usuario = u.id
+                                WHERE l.usuario = ?";
+            $stmt = $conn->prepare($queryLikedPosts);
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $likedPosts = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+
+            // 3️⃣ Total de likes dados
+            $queryTotalLikes = "SELECT COUNT(*) as total_likes FROM likes WHERE usuario = ?";
+            $stmt = $conn->prepare($queryTotalLikes);
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $totalLikes = $stmt->get_result()->fetch_assoc()['total_likes'];
+            $stmt->close();
+
+            // 4️⃣ Posts en los que ha comentado (detalle de post)
+            $queryCommentedPosts = "SELECT DISTINCT p.id, p.contenido, p.fecha, p.usuario AS autor_id, u.nickname AS autor_nickname
+                                    FROM comentario c
+                                    INNER JOIN post p ON c.post = p.id
+                                    INNER JOIN usuario u ON p.usuario = u.id
+                                    WHERE c.usuario = ?";
+            $stmt = $conn->prepare($queryCommentedPosts);
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $commentedPosts = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+
+            // 5️⃣ Total de comentarios (sin importar post)
+            $queryTotalComments = "SELECT COUNT(*) as total_comments FROM comentario WHERE usuario = ?";
+            $stmt = $conn->prepare($queryTotalComments);
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $totalComments = $stmt->get_result()->fetch_assoc()['total_comments'];
+            $stmt->close();
+
+            // 6️⃣ Comentarios completos hechos por el usuario
+            $queryUserComments = "SELECT c.id, c.contenido, c.fecha, p.id AS post_id, p.contenido AS post_contenido
+                                FROM comentario c
+                                INNER JOIN post p ON c.post = p.id
+                                WHERE c.usuario = ?
+                                ORDER BY c.fecha DESC";
+            $stmt = $conn->prepare($queryUserComments);
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $userComments = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+
+            // 7️⃣ Posts creados por el usuario
+            $queryCreatedPosts = "SELECT id, contenido, fecha FROM post WHERE usuario = ? ORDER BY fecha DESC";
+            $stmt = $conn->prepare($queryCreatedPosts);
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $createdPosts = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+
+            // 🔹 Construir la respuesta final
+            return [
+                'user' => $user,
+                'liked_posts' => $likedPosts,
+                'total_likes' => $totalLikes,
+                'commented_posts' => $commentedPosts,
+                'total_comments' => $totalComments,
+                'user_comments' => $userComments,
+                'created_posts' => $createdPosts
+            ];
+        }
     }
+
+    
 
 ?>

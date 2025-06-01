@@ -3,8 +3,12 @@ import css from './FormLogin.module.css';
 import { sendLoginData } from "../services/authService";
 import { setSessions } from "../services/authService";
 import { useNavigate } from "react-router";
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserrContext';
 
 const FormLogin = () => {
+
+    const { setUserSession } = useContext(UserContext);
     const navigate= useNavigate();
 
     //Importar dinámicamente el link de icons de Google
@@ -60,6 +64,15 @@ const FormLogin = () => {
             if(sesionsResponse.success){
               const tipo=sesionsResponse.type;
               console.log("Sesiones:",sesionsResponse.success);
+              //Actualizar el contexto del usuario
+              setUserSession({
+                 id: sesionsResponse.id,
+                 usuario: sesionsResponse.usu,
+                 tipo: sesionsResponse.tipo,
+              });
+
+              //console.log("Datos dentro del contexto", userSession);
+              
               alert(response.message);
               // Redirige o guarda el token, lo que necesites
               //Redirigir al dashboard en función del tipo de usuario
