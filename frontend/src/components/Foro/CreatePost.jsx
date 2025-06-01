@@ -25,7 +25,7 @@ const CreatePost = ({onCreate}) => {
         onClick={() => setMostrarModal(true)}
       >
         <img
-          src={`/userAssets/${userSession.usuario}/${userSession.img}`}
+          src={`/userAssets/${userSession.id}/${userSession.img}`}
           alt="perfil"
           className="w-10 h-10 rounded-full object-cover"
         />

@@ -23,7 +23,7 @@ require_once "../config/connection.php";
 
         //Obtener post parte usuario
         public function getAllPosts($userId){
-            $query = "SELECT p.id, p.contenido, p.fecha, u.nombre, u.nickname, u.img,
+            $query = "SELECT p.id, p.contenido, p.fecha, u.nombre, u.nickname, u.id as user_id, u.img,
                      (SELECT COUNT(*) FROM likes l WHERE l.post = p.id) as likesCount,
                      EXISTS(SELECT 1 FROM likes l2 WHERE l2.post = p.id AND l2.usuario = ?) as userLiked,
                      (SELECT COUNT(*) FROM comentario c WHERE c.post = p.id) as commentsCount

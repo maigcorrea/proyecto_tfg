@@ -139,7 +139,7 @@ const PostCard = ({post}) => {
         <div className="bg-white p-4 rounded shadow mb-4">
       <div className="flex items-center space-x-3 mb-2 cursor-pointer" onClick={handleNavigate}>
         <img
-          src={`/userAssets/${post.nickname}/${post.img}`}
+          src={`/userAssets/${post.user_id}/${post.img}`}
           alt={post.nickname}
           className="w-10 h-10 rounded-full object-cover"
         />
