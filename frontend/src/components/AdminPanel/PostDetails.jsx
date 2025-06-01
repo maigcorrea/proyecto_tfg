@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { getPostData } from '../../services/postService';
+import DeleteCommentButton from './DeleteCommentButton';
 
 const PostDetails = () => {
     const { id } = useParams(); // Obtenemos el id del post desde la URL
@@ -96,7 +97,7 @@ const PostDetails = () => {
                         </div>
                         <div className='w-full flex justify-between items-center'>
                             <p className="mb-2 text-gray-800">{comment.contenido}</p>
-                            <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer'>Eliminar</button>
+                            <DeleteCommentButton commentId={comment.id} setComments={setCommentsDetails} comments={commentsDetails}></DeleteCommentButton>
                         </div>
                     </div>
                 ))}

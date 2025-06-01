@@ -55,6 +55,7 @@ const DeleteCommentButton = ({commentId, setComments, comments}) => {
             </div>
         )}
 
+        {/* Toast en el futuro */}
         <p>{message}</p>
 
         {/* Spinner de carga */}
