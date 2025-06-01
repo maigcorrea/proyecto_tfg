@@ -45,7 +45,7 @@ const UserDataDetails = () => {
       <button onClick={() => navigate('/admin/users') } className='cursor-pointer text-2xl mx-4'>Volver</button>
     </div>
 
-      <PostMadeByUser postCreated={postCreated}/>
+      <PostMadeByUser postCreated={postCreated} idUsuario={id}/>
       <LikedPostByUser postLiked={postLiked}/>
       <CommentedPostByUser postCommented={postCommented}/>
       <CommentsMadeByUser comments={comments}/>

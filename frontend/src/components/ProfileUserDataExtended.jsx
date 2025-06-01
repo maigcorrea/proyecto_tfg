@@ -40,7 +40,7 @@ const ProfileUserDataExtended = () => {
   return (
     <>
 
-      <PostMadeByUser postCreated={postCreated}/>
+      <PostMadeByUser postCreated={postCreated} idUsuario={userSession.id} setPostCreated={setPostCreated}/>
       <LikedPostByUser postLiked={postLiked}/>
       <CommentedPostByUser postCommented={postCommented}/>
       <CommentsMadeByUser comments={comments}/>

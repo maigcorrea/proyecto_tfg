@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { deletePost } from '../../services/postService';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../../context/UserrContext';
 
-const DeletePostButton = ({postId}) => {
+const DeletePostButton = ({postId, setPostCreated, postCreated}) => {
+  const { userSession } = useContext(UserContext);
     const navigate = useNavigate();
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -15,8 +17,11 @@ const DeletePostButton = ({postId}) => {
               console.log(response);
               alert(response.message);
               if(response.success){
-                navigate("/admin/posts");
-                //setPosts(posts.filter(post => post.id !== postId)); //Simulado localmente en vez de cargar todos los usuarios de nuevo
+                if(userSession.tipo === "admin"){
+                  navigate("/admin/posts");
+                }else{
+                  setPostCreated(postCreated.filter(post => post.id !== postId)); //Simulado localmente en vez de cargar todos los usuarios de nuevo
+                }
               }
         
             } catch (error) {
