@@ -230,7 +230,7 @@ require_once "../config/connection.php";
                 $tagsArray = $tags ? explode(',', $tags) : []; // Convertir a array
 
                 $dataList=[
-                    "Sobre mí" => $desc,
+                    "Descripcion" => $desc,
                     "Nombre" => $name,
                     "Nickname" => $nick,
                     "Email" => $mail,

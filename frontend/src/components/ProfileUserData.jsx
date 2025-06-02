@@ -27,7 +27,8 @@ const ProfileUserData = () => {
   Email: "email",
   Telefono: "telefono",
   Nacimiento: "nacimiento",
-  Nickname: "nickname"
+  Nickname: "nickname",
+  Descripcion: "descripcion",
 };
 
 // Mapeo de campos del contexto a los nombres que se mostrarán en el formulario
@@ -176,7 +177,7 @@ const handleSave = async (field) => {
           .filter(([clave]) => clave !== 'ImgPerfil' && clave !== 'Tags') // Filtar los campos que no quieres mostrar
           .map(([clave, valor]) => (
             <div className='flex flex-col gap-2' key={clave}>
-              <label htmlFor={clave}>{clave}</label>
+              <label htmlFor={clave}>{clave === "Descripción" ? "Sobre mí:" : `${clave}:`}</label>
               <div className='flex gap-2'>
                 <input
                   type={clave != "Nacimiento" ? "text" : "date"}
