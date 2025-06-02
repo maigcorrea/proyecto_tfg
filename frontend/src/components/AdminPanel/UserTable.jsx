@@ -5,7 +5,7 @@ import { deleteUser } from '../../services/userService';
 import { updateUser } from '../../services/userService';
 
 const UserTable = () => {
-  const [users, setUsers] = useState("");
+  const [users, setUsers] = useState([]);
   const [tagsArray, setTagsArray] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,12 +17,17 @@ const UserTable = () => {
   const [previewImage, setPreviewImage] = useState(null); // Nuevo estado para previsualización de imagen
   const limit = 10;
 
+  //Búsqueda
+  const [search, setSearch] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
   useEffect(() => {
     const obtenerUsuarios = async () =>{
       const offset = (currentPage - 1) * limit;
       const response = await getAllUsers(limit, offset);
       console.log("RESPUESTAAA",response);
       setUsers(response.usuarios);
+      setFilteredUsers(response.usuarios);
       setTotalUsers(response.total);
     }
 
@@ -33,6 +38,13 @@ const UserTable = () => {
   //Paginación
   const totalPages = Math.ceil(totalUsers / limit);
 
+  //Filtrado por nickname
+  useEffect(() => {
+    // Filtro local por nickname
+    const filtered = users.filter(user => user.nickname.toLowerCase().includes(search.toLowerCase()));
+    setFilteredUsers(filtered);
+  }, [search, users]);
+
   const handleDelete = async(userId) => {
     try {
       setIsDeleting(true); // Inicia el spinner
@@ -40,6 +52,7 @@ const UserTable = () => {
       setMessage(response.message);
       if(response.success){
         setUsers(users.filter(user => user.id !== userId)); //Simulado localmente en vez de cargar todos los usuarios de nuevo
+        setFilteredUsers(filteredUsers.filter(user => user.id !== userId)); // También actualiza filtrados
       }
 
     } catch (error) {
@@ -126,6 +139,13 @@ const UserTable = () => {
 
   return (
     <>
+      <input 
+        type="text" 
+        placeholder="Buscar nickname..." 
+        value={search} 
+        onChange={(e) => setSearch(e.target.value)} 
+        className="border p-2 my-2 w-full" 
+      />
       <table>
         <thead>
           <th></th>
@@ -139,7 +159,7 @@ const UserTable = () => {
         </thead>
         <tbody>
         {
-          users && users.map((user) => (
+          users && filteredUsers.map((user) => (
             <tr>
               <td><img src={`/userAssets/${user.id}/${user.img}`} alt={user.nickname} className='w-10 h-10 rounded-full' /></td>
               <td><a href={`/admin/user/${user.id}`} className='hover:text-blue-500'>{user.nickname}</a></td>

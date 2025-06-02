@@ -9,6 +9,10 @@ const CommentTable = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const limit = 10;
 
+    //Búsqueda
+      const [search, setSearch] = useState('');
+      const [filteredComments, setFilteredComments] = useState([]);
+
     useEffect(() => {
       const getComments = async () => {
         const offset = (currentPage - 1) * limit;
@@ -18,6 +22,7 @@ const CommentTable = () => {
             const response = await getAllComments(limit, offset);
             console.log("COMENTARIOS",response);
             setComments(response.comments);
+            setFilteredComments(response.comments);
             setTotalComments(response.total);
           } catch (error) {
             console.error('Error al obtener los comentarios:', error);
@@ -29,9 +34,24 @@ const CommentTable = () => {
 
     //Paginación
     const totalPages = Math.ceil(totalComments / limit);
+
+    //Filtrado por contenido
+      useEffect(() => {
+        // Filtro local por contenido
+        const filtered = comments.filter(comment => comment.contenido.toLowerCase().includes(search.toLowerCase()));
+        setFilteredComments(filtered);
+      }, [search, comments]);
     
   return (
     <>
+        <input 
+          type="text" 
+          placeholder="Buscar comentario..." 
+          value={search} 
+          onChange={(e) => setSearch(e.target.value)} 
+          className="border p-2 my-2 w-full" 
+        />
+
         <table className='text-center w-full'>
         <thead>
           <th>Usuario</th>
@@ -43,14 +63,14 @@ const CommentTable = () => {
         </thead>
         <tbody>
         {
-          comments && comments.map((comment) => (
+          comments && filteredComments.map((comment) => (
             <tr>
               <td><a href="" className='hover:text-blue-500'>{comment.usuario_nombre}</a></td>
               <td>{comment.post_contenido}</td>
               <td>{comment.contenido}</td>
               <td>{comment.fecha.split(' ')[0]}</td>
               <td>{comment.fecha.split(' ')[1]}</td>
-              <td><DeleteCommentButton commentId={comment.id} setComments={setComments} comments={comments}/></td>
+              <td><DeleteCommentButton commentId={comment.id} setComments={setComments} comments={comments} setFilteredComments={setFilteredComments} filteredComments={filteredComments}/></td>
             </tr>
           ))
         }

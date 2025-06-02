@@ -7,6 +7,8 @@ const TagTable = () => {
     const [confirmDeleteId, setConfirmDeleteId] = useState(null); // Nuevo estado para confirmar eliminación
     const [isDeleting, setIsDeleting] = useState(false); // Estado de carga para eliminación
     const [message, setMessage] = useState("");
+    const [search, setSearch] = useState('');
+    const [filteredTags, setFilteredTags] = useState([]);
     //Paginación
     const limit = 10;
     const [totalTags, setTotalTags] = useState(0);
@@ -20,6 +22,7 @@ const TagTable = () => {
             console.log("TODAS LAS TAGS",response);
             setTags(response.tags);
             setTotalTags(response.total);
+            setFilteredTags(response.tags); // Inicialmente muestra todos
         } catch (error) {
             console.log("Error obteniendo todas las tags", error);
         }
@@ -31,6 +34,13 @@ const TagTable = () => {
     //Paginación
     const totalPages = Math.ceil(totalTags / limit);
 
+    //Filtrado por nombre
+     useEffect(() => {
+        // Filtro local por nombre
+        const filtered = tags.filter(tag => tag.nombre.toLowerCase().includes(search.toLowerCase()));
+        setFilteredTags(filtered);
+    }, [search, tags]);
+
     const handleDelete = async(tagId) => {
         try {
             setIsDeleting(true); // Inicia el spinner
@@ -39,6 +49,7 @@ const TagTable = () => {
             setMessage(response.message);
             if(response.success){
                 setTags(tags.filter(tag => tag.id !== tagId)); //Simulado localmente en vez de cargar todos los usuarios de nuevo
+                setFilteredTags(filteredTags.filter(tag => tag.id !== tagId)); // También actualiza filtrados
             }
 
         } catch (error) {
@@ -52,6 +63,13 @@ const TagTable = () => {
   return (
     <>
         <h2>Todas las tags</h2>
+         <input 
+            type="text" 
+            placeholder="Buscar tags..." 
+            value={search} 
+            onChange={(e) => setSearch(e.target.value)} 
+            className="border p-2 my-2 w-full" 
+        />
         <table className='w-full text-center'>
         <thead>
           <th>Nombre</th>
@@ -59,12 +77,12 @@ const TagTable = () => {
         </thead>
         <tbody>
         {
-          tags && tags.map((tag) => (
-            <tr>
-              <td>{tag.nombre}</td>
-              <td><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(tag.id)}}>Eliminar</button></td>
-            </tr>
-          ))
+            filteredTags.map(tag => (
+                <tr key={tag.id}>
+                    <td>{tag.nombre}</td>
+                    <td><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => setConfirmDeleteId(tag.id)}>Eliminar</button></td>
+                </tr>
+            ))
         }
         </tbody>
       </table>

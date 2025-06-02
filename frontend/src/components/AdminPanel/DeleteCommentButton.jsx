@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { deleteComment } from '../../services/commentService';
 
-const DeleteCommentButton = ({commentId, setComments, comments}) => {
+const DeleteCommentButton = ({commentId, setComments, comments, setFilteredComments, filteredComments}) => {
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const [message, setMessage] = useState("");
@@ -17,6 +17,7 @@ const DeleteCommentButton = ({commentId, setComments, comments}) => {
             
             if(response.success){
                 setComments(comments.filter(comment => comment.id !== id)); //Simulado localmente en vez de cargar todos los comentarios de nuevo
+                setFilteredComments(filteredComments.filter(comment => comment.id !== id)); // También actualiza filtrados
             }
 
         } catch (error) {
