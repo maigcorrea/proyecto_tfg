@@ -182,5 +182,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         getExtendedDataUser();
     break;
 
+    case 'getUserTags':
+        require_once '../controllers/getUserTagsController.php';
+        getUserTags();
+    break;
+
 }
 ?>

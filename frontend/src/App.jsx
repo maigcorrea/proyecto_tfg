@@ -22,6 +22,7 @@ import PostManagement from './pages/PostManagement'
 import PostDetailsAdmin from './pages/PostDetailsAdmin'
 import CommentsManagement from './pages/CommentsManagement'
 import UserDetailsAdmin from './pages/UserDetailsAdmin'
+import TagsEdition from './pages/TagsEdition'
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
                 <Route path='/register' element={<Registro></Registro>}></Route>
                 <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
                 <Route path='/tags' element={<PrivateRoute><SelectTags></SelectTags></PrivateRoute>}></Route>
+                <Route path='/edit-tags/:id' element={<PrivateRoute><TagsEdition></TagsEdition></PrivateRoute>}></Route>
                 {
                 //Proteger esta ruta para comprobar que el usuario es admin
                 }

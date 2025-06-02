@@ -212,14 +212,23 @@ require_once "../config/connection.php";
 
         //OBTENER TODOS LOS DATOS DEL USUARIO LOGGEADO
         public function getDataUser($identifier){
-            $query="SELECT telefono, email, nombre, nickname, descripcion, nacimiento, img, tipo FROM usuario WHERE id=?;";
+            $query = "SELECT u.telefono, u.email, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img, u.tipo,
+                     GROUP_CONCAT(t.nombre SEPARATOR ',') AS tags
+              FROM usuario u
+              LEFT JOIN tag_usuario tu ON u.id = tu.id_usu
+              LEFT JOIN tag t ON tu.id_tag = t.id
+              WHERE u.id = ?
+              GROUP BY u.id, u.telefono, u.email, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img, u.tipo;";
+
             $stmt=$this->conn->getConnection()->prepare($query);
             $stmt->bind_param("i", $identifier);
             $stmt->execute();
-            $stmt->bind_result($phone, $mail, $name, $nick, $desc, $birth, $img, $tipo);
+            $stmt->bind_result($phone, $mail, $name, $nick, $desc, $birth, $img, $tipo, $tags);
 
             $dataList=[];
             while($stmt->fetch()){
+                $tagsArray = $tags ? explode(',', $tags) : []; // Convertir a array
+
                 $dataList=[
                     "Sobre mí" => $desc,
                     "Nombre" => $name,
@@ -228,7 +237,8 @@ require_once "../config/connection.php";
                     "Teléfono" => $phone,
                     "Nacimiento" => $birth,
                     "ImgPerfil" => $img,
-                    "Tipo" => $tipo
+                    "Tipo" => $tipo,
+                    "Tags" => $tagsArray
                 ];
             }
 

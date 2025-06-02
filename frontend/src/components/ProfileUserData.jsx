@@ -5,8 +5,10 @@ import { sendUpdateImg } from '../services/userService';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserrContext';
 import ProfileUserDataExtended from './ProfileUserDataExtended';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileUserData = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const fileInputRef = useRef(null); // Referencia al input de tipo file
   const [editingField, setEditingField] = useState({});
@@ -171,7 +173,7 @@ const handleSave = async (field) => {
       <form action="" className='flex flex-col gap-4 w-fit'>
         <h1 className='text-3xl'>Datos de usuario</h1>
         {Object.entries(userData)
-          .filter(([clave]) => clave !== 'ImgPerfil') // Filtar los campos que no quieres mostrar
+          .filter(([clave]) => clave !== 'ImgPerfil' && clave !== 'Tags') // Filtar los campos que no quieres mostrar
           .map(([clave, valor]) => (
             <div className='flex flex-col gap-2' key={clave}>
               <label htmlFor={clave}>{clave}</label>
@@ -191,6 +193,7 @@ const handleSave = async (field) => {
                   min={clave === "Nacimiento" ? "1927-01-01" : undefined}
                   max={clave === "Nacimiento" ? limitYear : undefined}
                 ></input>
+
                 {!editingField[clave] ? (
                   <button
                     type="button"
@@ -220,6 +223,19 @@ const handleSave = async (field) => {
               </div>
             </div>
           ))}
+
+          <div>
+            <label htmlFor="Tags">Tags</label>
+            <div className='flex gap-2'>
+              {userData.Tags.map((tag, index) => (
+                <div key={index} className='flex gap-2 rounded-3xl bg-cyan-300 p-3'>
+                  <p>{tag}</p>
+                </div>
+              ))}
+              <button onClick={() => navigate(`/edit-tags/${userSession.id}`)} className='rounded-3xl bg-cyan-700 p-3 cursor-pointer hover:bg-blue-600'>Editar</button>
+            </div>
+            
+          </div>
       </form>
 
 

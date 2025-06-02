@@ -166,3 +166,15 @@ export const getExtendedDataUser = async(userId) => {
   }
 }
 
+export const getUserTags = async(userId) => {
+  try {
+    const response = await axios.get(`${API_URL}users.php?action=getUserTags&userId=${userId}`, {
+      withCredentials: true
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error obteniendo las etiquetas del usuario", error);
+    throw error;
+  }
+}
+
