@@ -43,7 +43,7 @@ const ProfileUserDataExtended = () => {
       <PostMadeByUser postCreated={postCreated} idUsuario={userSession.id} setPostCreated={setPostCreated}/>
       <LikedPostByUser postLiked={postLiked}/>
       <CommentedPostByUser postCommented={postCommented}/>
-      <CommentsMadeByUser comments={comments}/>
+      <CommentsMadeByUser comments={comments} idUsuario={userSession.id} setComments={setComments}/>
     
     </>
   )
