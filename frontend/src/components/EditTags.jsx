@@ -150,7 +150,7 @@ const EditTags = () => {
           }else{
             navigate('/admin/users');
           }
-        }} disabled={loading}>Saltar</button>
+        }} disabled={loading}>Volver</button>
         <button
           className={`px-6 py-2 rounded-full text-white cursor-pointer transition ${
             selectedTags.length < 12 && !loading

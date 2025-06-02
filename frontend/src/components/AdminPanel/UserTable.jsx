@@ -6,6 +6,7 @@ import { updateUser } from '../../services/userService';
 
 const UserTable = () => {
   const [users, setUsers] = useState("");
+  const [tagsArray, setTagsArray] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState("");
@@ -133,7 +134,6 @@ const UserTable = () => {
           <th>Email</th>
           <th>Nacimiento</th>
           <th>Teléfono</th>
-          <th>Tags</th>
           <th>Descripción</th>
           <th>Acciones</th>
         </thead>
@@ -147,7 +147,6 @@ const UserTable = () => {
               <td>{user.email}</td>
               <td>{user.nacimiento}</td>
               <td>{user.telefono}</td>
-              <td>{user.tags}</td>
               <td>{user.descripcion}</td>
               <td className='flex gap-2'><button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setEditUser(user); setPreviewImage(null);}}>Editar</button><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(user.id)}}>Eliminar</button></td>
             </tr>
@@ -310,7 +309,16 @@ const UserTable = () => {
               </div>
               <div className="mb-2">
                 <label>Tags</label><br></br>
-                <Link to={`/edit-tags/${editUser.id}`}>Link</Link>
+                {users && users.map((user) => (
+                  <div className='flex flex-wrap space-between'>
+                    {user.tags && user.tags.split(', ').map((tag, index) => (
+                      <span key={index} className="display-inline bg-blue-200 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                ))}
+                <Link to={`/edit-tags/${editUser.id}`} className='inline p-2 bg-blue-500 text-white'>Pincha aquí para editar tags</Link>
               </div>
               <div className="flex justify-end space-x-4 mt-4">
                 <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
