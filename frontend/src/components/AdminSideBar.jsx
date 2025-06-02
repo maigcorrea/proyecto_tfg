@@ -42,13 +42,13 @@ const AdminSidebar = () => {
              Usuarios
             </Link>
             <Link to="/admin/posts" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
-             Posts
+             Publicaciones
             </Link>
             <Link to="/admin/comments" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
              Comentarios
             </Link>
-            <Link to="/admin/reportes" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
-             Reportes
+            <Link to="/admin/tags" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
+             Etiquetas
             </Link>
             <Link to="/my-profile" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
              Perfil

@@ -23,6 +23,7 @@ import PostDetailsAdmin from './pages/PostDetailsAdmin'
 import CommentsManagement from './pages/CommentsManagement'
 import UserDetailsAdmin from './pages/UserDetailsAdmin'
 import TagsEdition from './pages/TagsEdition'
+import TagsManagement from './pages/TagsManagement'
 
 function App() {
 
@@ -55,6 +56,7 @@ function App() {
                 <Route path='/admin/posts' element={<PrivateRoute><PrivateAdminRoute><PostManagement></PostManagement></PrivateAdminRoute></PrivateRoute>}></Route>
                 <Route path='/admin/post/:id' element={<PrivateRoute><PrivateAdminRoute><PostDetailsAdmin></PostDetailsAdmin></PrivateAdminRoute></PrivateRoute>}></Route>
                 <Route path='/admin/comments' element={<PrivateRoute><PrivateAdminRoute><CommentsManagement></CommentsManagement></PrivateAdminRoute></PrivateRoute>}></Route>
+                <Route path='/admin/tags' element={<PrivateRoute><PrivateAdminRoute><TagsManagement></TagsManagement></PrivateAdminRoute></PrivateRoute>}></Route>
               </Route>
             </Routes>
           </BrowserRouter>
