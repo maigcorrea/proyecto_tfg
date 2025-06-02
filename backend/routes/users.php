@@ -187,5 +187,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         getUserTags();
     break;
 
+    case 'updateTags':
+        require_once '../controllers/updateTagsController.php';
+        updateTags();
+    break;
+
 }
 ?>

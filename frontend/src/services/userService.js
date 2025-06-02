@@ -178,3 +178,18 @@ export const getUserTags = async(userId) => {
   }
 }
 
+
+export const updateTags = async (userId, tags) => {
+  try {
+    const response = await axios.post(`${API_URL}users.php?action=updateTags&userId=${userId}`, { tags }, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error actualizando las etiquetas del usuario", error);
+    throw error;
+  }
+}

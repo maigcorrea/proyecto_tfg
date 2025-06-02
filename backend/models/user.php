@@ -391,23 +391,76 @@ require_once "../config/connection.php";
 
         //OBTENER TAGS DE UN USUARIO
         public function getTags($id) {
-             $conn = $this->conn->getConnection();
+            $conn = $this->conn->getConnection();
 
-    $query = "SELECT t.nombre FROM tag t
-              INNER JOIN tag_usuario tu ON t.id = tu.id_tag
-              WHERE tu.id_usu = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+            $query = "SELECT t.nombre FROM tag t
+                    INNER JOIN tag_usuario tu ON t.id = tu.id_tag
+                    WHERE tu.id_usu = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-    $tags = [];
-    while ($row = $result->fetch_assoc()) {
-        $tags[] = $row['nombre'];
-    }
-    $stmt->close();
+            $tags = [];
+            while ($row = $result->fetch_assoc()) {
+                $tags[] = $row['nombre'];
+            }
+            $stmt->close();
 
-    return $tags; // Devuelve un array como ["Genética", "Diagnóstico"]
+            return $tags; // Devuelve un array como ["Genética", "Diagnóstico"]
+        }
+
+
+        //ACTUALIZAR TAGS DE UN USUARIO
+        public function updateTags($userId, $tags) {
+            $conn = $this->conn->getConnection();
+            $conn->begin_transaction(); // Iniciar transacción
+
+            try {
+                // 1️⃣ Eliminar todas las relaciones actuales
+                $stmtDelete = $conn->prepare("DELETE FROM tag_usuario WHERE id_usu = ?");
+                $stmtDelete->bind_param("i", $userId);
+                $stmtDelete->execute();
+                $stmtDelete->close();
+
+                // 2️⃣ Para cada tag, asegurar existencia y obtener su id
+                $tagIds = [];
+                foreach ($tags as $tag) {
+                    $tag = trim($tag);
+                    if (empty($tag)) continue;
+
+                    // Intentar obtener el id del tag
+                    $stmtSelect = $conn->prepare("SELECT id FROM tag WHERE nombre = ?");
+                    $stmtSelect->bind_param("s", $tag);
+                    $stmtSelect->execute();
+                    $stmtSelect->bind_result($tagId);
+                    if ($stmtSelect->fetch()) {
+                        $tagIds[] = $tagId;
+                    } else {
+                        // Si no existe, insertarlo
+                        $stmtInsertTag = $conn->prepare("INSERT INTO tag (nombre) VALUES (?)");
+                        $stmtInsertTag->bind_param("s", $tag);
+                        $stmtInsertTag->execute();
+                        $tagIds[] = $conn->insert_id;
+                        $stmtInsertTag->close();
+                    }
+                    $stmtSelect->close();
+                }
+
+                // 3️⃣ Insertar nuevas relaciones
+                foreach ($tagIds as $tagId) {
+                    $stmtInsertRel = $conn->prepare("INSERT INTO tag_usuario (id_usu, id_tag) VALUES (?, ?)");
+                    $stmtInsertRel->bind_param("ii", $userId, $tagId);
+                    $stmtInsertRel->execute();
+                    $stmtInsertRel->close();
+                }
+
+                $conn->commit(); // Confirmar transacción
+                return ['success' => true, 'message' => 'Tags actualizadas correctamente'];
+            } catch (Exception $e) {
+                $conn->rollback(); // Revertir cambios en caso de error
+                return ['success' => false, 'message' => 'Error al actualizar tags: ' . $e->getMessage()];
+            }
         }
 
         //OBTENER TODOS LOS USUARIOS DE LA BD (COPIA POR SI ACASO EN LA PARTE Donde se muestran todos los usuarios)

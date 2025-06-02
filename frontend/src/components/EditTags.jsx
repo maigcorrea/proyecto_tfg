@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { getUserTags } from '../services/userService';
+import { updateTags } from '../services/userService';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserrContext';
 
 const EditTags = () => {
+    const navigate = useNavigate();
+    const { userSession, setUserSession } = useContext(UserContext);
     const { id } = useParams();
 
     const predefinedTags = [
@@ -16,6 +22,7 @@ const EditTags = () => {
     const [customTag, setCustomTag] = useState('');
     const [message, setMessage] = useState("");
     const [cont, setCont] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     // Obtener tags actuales del usuario al cargar
     useEffect(() => {
@@ -61,6 +68,33 @@ const EditTags = () => {
             addCustomTag();
         }
     };
+
+
+    const handleContinue = async() =>{
+      setLoading(true); // Mostrar spinner y desactivar botones
+
+      try {
+        const response = await updateTags(id, selectedTags);
+        console.log('Tags actualizados del usuario:', response);
+        setMessage(response.message);
+
+        if(response.success){
+          if(userSession.tipo === "usu"){
+            //Actualizar contexto del usuario con los nuevos tags
+            setUserSession(prev => ( {...prev, tags:selectedTags} ));
+            navigate('/my-profile');
+          }else{
+            navigate('/admin/users');
+          }
+        }
+      } catch (error) {
+        console.error('Error al actualizar los tags del usuario:', error);
+      }finally {
+        setLoading(false); // Ocultar spinner y reactivar botones
+    }
+      
+    }
+
   return (
     <>
         <>
@@ -100,16 +134,27 @@ const EditTags = () => {
       </div>
 
       <div className="flex justify-between mt-10 max-w-3xl mx-auto w-full">
-        <button className="text-sm text-gray-600 hover:underline">Saltar</button>
+        <button className="text-sm text-gray-600 hover:underline" onClick={() => {
+          if(userSession.tipo === "usu"){
+            navigate('/my-profile');       
+          }else{
+            navigate('/admin/users');
+          }
+        }} disabled={loading}>Saltar</button>
         <button
-          className={`px-6 py-2 rounded-full text-white transition ${
-            selectedTags.length < 12
+          className={`px-6 py-2 rounded-full text-white cursor-pointer transition ${
+            selectedTags.length < 12 && !loading
               ? 'bg-blue-600 hover:bg-blue-700'
               : 'bg-gray-400 cursor-not-allowed'
           }`}
-          disabled={selectedTags.length === 12}
+          disabled={selectedTags.length === 12 || loading}
+          onClick={handleContinue}
         >
-          Continuar
+          {loading ? (
+              <span className="loader">Cargando...</span> // O un spinner personalizado
+          ) : (
+              'Continuar'
+          )}
         </button>
       </div>
     </div>
