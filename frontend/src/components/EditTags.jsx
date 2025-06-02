@@ -24,6 +24,16 @@ const EditTags = () => {
     const [cont, setCont] = useState(0);
     const [loading, setLoading] = useState(false);
 
+    // Control de acceso para que solo los admin puedan acceder a /edit-tags/:id de otros usuarios y los usu solo puedan acceder a su propio /edit-tags/:id
+    useEffect(() => {
+      if (!userSession) return; // Si no hay sesión (opcional, depende del flujo)
+      if (userSession.tipo === "usu" && userSession.id.toString() !== id) {
+        // Redirige a unauthorized o home si es un usuario normal que intenta editar otro perfil
+        navigate('/unathorized');
+        console.log("DIFERENCIAAA: USUARIO EN CONTEXTO", userSession.id, "ID QUE LLEGA POR PARÁMETRO" , id);
+      }
+    }, [userSession, id, navigate]);
+
     // Obtener tags actuales del usuario al cargar
     useEffect(() => {
         const getTags = async () => {
