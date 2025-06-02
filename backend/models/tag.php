@@ -37,5 +37,23 @@ require_once "../config/connection.php";
                 'total' => $total
             ];
         }
+
+        public function deleteTag($id) {
+            $conn = $this->conn->getConnection();
+            $query = "DELETE FROM tag WHERE id = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("i", $id);
+
+            $stmt->execute();
+
+            $deleted = false; 
+            if($stmt->affected_rows > 0) {
+                $deleted = true;
+            }
+
+            $stmt->close();
+
+            return $deleted;
+        }
     }
 ?>

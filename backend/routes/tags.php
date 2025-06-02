@@ -24,5 +24,10 @@
             require_once '../controllers/getAllTagsController.php';
             getAllTags();
         break;
+
+        case 'deleteTag':
+            require_once '../controllers/deleteTagController.php';
+            deleteTag();
+        break;
     }
 ?>

@@ -12,3 +12,13 @@ export const getAllTags = async (limit = 10, offset = 0) => {
         throw error;
     }
 };
+
+export const deleteTag = async(tagId) => {
+    try {
+        const response = await axios.delete(`${API_URL}tags.php?action=deleteTag&tagId=${tagId}`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting tag:", error);
+        throw error;
+    }
+}
