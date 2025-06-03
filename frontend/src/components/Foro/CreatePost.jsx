@@ -48,7 +48,7 @@ const CreatePost = ({onCreate}) => {
 
             <div className="flex items-center mb-4 space-x-3">
               <img
-                src={`/userAssets/${userSession.usuario}/${userSession.img}`}
+                src={userSession.img ? `/userAssets/${userSession.id}/${userSession.img}` : `/userAssets/default/defaultImg.png`}
                 alt="perfil"
                 className="w-10 h-10 rounded-full object-cover"
               />
