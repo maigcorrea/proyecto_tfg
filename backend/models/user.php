@@ -483,7 +483,7 @@ require_once "../config/connection.php";
 
         //OBTENER TODOS LOS USUARIOS DE LA BD (COPIA POR SI ACASO EN LA PARTE Donde se muestran todos los usuarios)
         public function getAllUsersCopia($id) {
-            $query = "SELECT u.id, u.telefono, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img,
+            $query = "SELECT u.id, u.telefono, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img, u.permiso, u.email,
                      GROUP_CONCAT(t.nombre SEPARATOR ', ') AS tags
               FROM usuario u
               LEFT JOIN tag_usuario tu ON u.id = tu.id_usu

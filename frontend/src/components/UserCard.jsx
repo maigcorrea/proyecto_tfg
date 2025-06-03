@@ -50,9 +50,19 @@ const UserCard = ({user}) => {
   return edad;
 };
 
+const handleClickDiv = (e, nickname) => {
+  e.stopPropagation();
+  navigate(`/userDetail/${nickname}`);
+};
+
+const handleClickBoton = (e) => {
+  e.stopPropagation();
+  navigate(`/`);
+};
+
   return (
     <>
-          <div className="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300 cursor-pointer" onClick={() => navigate(`/userDetail/${user.nickname}`)}>
+          <div className="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300 cursor-pointer" onClick={(e) => handleClickDiv(e,user.nickname)}>
               <img
                   src={user.img ? `/userAssets/${user.id}/${user.img}` : '/userAssets/default/defaultImg.png'}
                   alt={user.nickname}
@@ -69,6 +79,10 @@ const UserCard = ({user}) => {
                   <div className="mt-2 text-xs text-blue-600">
                       <span className="font-medium">Tags:</span> {user.tags}
                   </div>
+              )}
+
+              {user.permiso == 1 && (
+                <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 cursor-pointer" onClick={handleClickBoton}>Contactar</button>
               )}
           </div>
     </>
