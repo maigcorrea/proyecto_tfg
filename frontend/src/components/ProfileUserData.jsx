@@ -8,6 +8,7 @@ import ProfileUserDataExtended from './ProfileUserDataExtended';
 import { useNavigate } from 'react-router-dom';
 import { updatePermission } from '../services/userService';
 import { verifyPassword } from '../services/authService';
+import { changePassword } from '../services/authService';
 
 const ProfileUserData = () => {
   const navigate = useNavigate();
@@ -191,7 +192,7 @@ const handleSave = async (field) => {
 
   //Para modificar la contraseña
   const handleVerify = async() => {
-  // Aquí deberías llamar a un servicio para verificar la contraseña actual
+
   try {
     const response = await verifyPassword(currentPassword);
     console.log(response);
@@ -203,18 +204,39 @@ const handleSave = async (field) => {
       setError('Contraseña incorrecta');
     }
   } catch (error) {
-    
+    console.error("Error verificando la contraseña", error);
   }
 };
 
-const handlePasswordChange = () => {
+const handlePasswordChange = async() => {
   if (newPassword !== confirmPassword) {
     setError('Las contraseñas no coinciden');
     return;
+  }else if(confirmPassword.trim().length === 0){
+    setError('Las contraseñas no pueden estar vacias');
+    return;
   }
-  // Aquí puedes llamar al servicio de cambio de contraseña
-  setSuccessMessage('Contraseña cambiada exitosamente');
-  setModifyPassword(false);
+
+  try {
+    const response = await changePassword(newPassword);
+    console.log(response);
+    if(response.success){
+      setSuccessMessage('Contraseña cambiada exitosamente');
+      // Limpiar el formulario
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+      
+      //Cerrar el modal
+      setModifyPassword(false);
+      //Volver al paso 1
+      setStep(1);
+    }else{
+      setError(response.message);
+    }
+  } catch (error) {
+    console.error("Error cambiando la contraseña", error);
+  }
 };
 
   return (
@@ -382,10 +404,10 @@ const handlePasswordChange = () => {
               Guardar contraseña
             </button>
           </div>
+          {successMessage && <p className="text-green-600 mt-2">{successMessage}</p>}
         </>
       )}
 
-      {successMessage && <p className="text-green-600 mt-2">{successMessage}</p>}
     </div>
   </div>
 )}

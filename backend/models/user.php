@@ -313,6 +313,29 @@ require_once "../config/connection.php";
 
 
         //ACTUALIZAR CONTRASEÑA
+        public function changePassword($id, $password){
+            $query="UPDATE usuario SET passwrd=? WHERE id=?";
+            $stmt=$this->conn->getConnection()->prepare($query);
+
+            // Hashear la contraseña
+            $hash = password_hash($password, PASSWORD_BCRYPT);
+
+            $stmt->bind_param("si", $hash, $id);
+            $stmt->execute();
+
+
+            try {
+                if($stmt->affected_rows == 1){
+                    return true;
+                }else{
+                    return false;
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+            }finally {
+                $stmt->close();
+            }           
+        }
        
 
         //DESDE LA PARTE DEL ADMINISTRADOR ACTUALIZAR DATOS DE 1 USUARIO

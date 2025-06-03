@@ -204,5 +204,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         verifyPassword();
     break;
 
+    case 'changePassword':
+        require_once '../controllers/changePasswordController.php';
+        changePassword();
+    break;
+
 }
 ?>
