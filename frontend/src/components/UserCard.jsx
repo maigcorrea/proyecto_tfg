@@ -51,13 +51,19 @@ const UserCard = ({user}) => {
 };
 
 const handleClickDiv = (e, nickname) => {
-  e.stopPropagation();
   navigate(`/userDetail/${nickname}`);
 };
 
-const handleClickBoton = (e) => {
-  e.stopPropagation();
-  navigate(`/`);
+const handleClickBoton = (e, email) => {
+  e.stopPropagation(); //Evita la propagación del evento al padre (div)
+  console.log("Email: ", email);
+  /*const mailToUrl = `mailto:${email}`; //mailto es para abrir cualquier cliente configurado como predeterminado.
+  console.log("mailToUrl: ", mailToUrl);
+  window.location.href = mailToUrl;*/
+
+  // Abre Gmail con el campo 'Para' ya rellenado
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`; //Abrir gmail en una pestaña del navagador
+  window.open(gmailUrl, '_blank');
 };
 
   return (
@@ -82,7 +88,7 @@ const handleClickBoton = (e) => {
               )}
 
               {user.permiso == 1 && (
-                <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 cursor-pointer" onClick={handleClickBoton}>Contactar</button>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 cursor-pointer" onClick={(e) => handleClickBoton(e,user.email)}>Contactar</button>
               )}
           </div>
     </>
