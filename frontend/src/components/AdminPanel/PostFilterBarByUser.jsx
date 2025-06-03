@@ -10,7 +10,9 @@ const PostFilterBarByUser = ({onUserChange}) => {
         const getUsers = async () => {
             try {
                const response = await getAllUsersCopia();
-               setFormattedUsers(response.map(user => ({ value: user.id, label: user.nickname })));
+               
+               // Ordena el nickname de los usuarios por orden alfabético y los guarda en el estado con el formato value-label (sólo con su id y nickname asociado, no hacen falta todos los datos)
+               setFormattedUsers(response.sort((a, b) => a.nickname.localeCompare(b.nickname)).map(user => ({ value: user.id, label: user.nickname })));
             } catch (error) {
                 console.error("Error obteniendo todos los usuarios", error);
             }  
