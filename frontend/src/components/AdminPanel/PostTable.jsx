@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const PostTable = ({selectedUserId, currentPage, setCurrentPage}) => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [confirmDeleteId, setConfirmDeleteId] = useState(null); // Nuevo estado para confirmar eliminación
     const [isDeleting, setIsDeleting] = useState(false); // Estado de carga para eliminación
     const [message, setMessage] = useState("");
@@ -17,6 +18,7 @@ const PostTable = ({selectedUserId, currentPage, setCurrentPage}) => {
     useEffect(() => {
        const obtenerPosts = async () => {
         const offset = (currentPage - 1) * limit;
+        setIsLoading(true); //Sale el mensaje de carga
             try {
                 const response = await getAllTotalPosts(limit, offset, selectedUserId);
                 console.log("RESPUESTA POST",response.posts);
@@ -24,12 +26,14 @@ const PostTable = ({selectedUserId, currentPage, setCurrentPage}) => {
                 setTotalPosts(response.total);
 
                 // Si estamos en una página que ya no existe después del filtro, volvemos a la 1
-                const totalPagesAfterChange = Math.ceil(totalPosts / limit);
+                const totalPagesAfterChange = Math.ceil(response.total / limit);
                 if (currentPage > totalPagesAfterChange) {
                   setCurrentPage(1);
                 }
             } catch (error) {
                 console.error("Error al obtener los posts:", error);
+            }finally {
+              setIsLoading(false);
             }
        }
 
@@ -61,7 +65,12 @@ const PostTable = ({selectedUserId, currentPage, setCurrentPage}) => {
     
   return (
     <>
-        {posts.length === 0 ? (
+    {isLoading ? (
+      <div className="text-center p-4">
+        <p className="text-gray-600">Cargando publicaciones...</p>
+      </div>
+    ) : 
+        posts.length === 0 ? (
   <div className="text-center p-4">
     <p className="text-gray-600">No hay publicaciones para mostrar para el usuario seleccionado.</p>
   </div>
@@ -108,6 +117,7 @@ const PostTable = ({selectedUserId, currentPage, setCurrentPage}) => {
         ))}
       </tbody>
     </table>
+
 
     {/* Paginación */}
     <div className="flex justify-center mt-4">
