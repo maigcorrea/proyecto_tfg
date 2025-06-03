@@ -250,7 +250,7 @@ const handlePasswordChange = async() => {
 
       {/* Imagen de perfil */}
       <div className='flex justify-center items-center h-screen'>
-        <img src={`/userAssets/${userSession.id}/${userData.ImgPerfil}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600' onClick={handleImageClick}/>
+        <img src={userData.ImgPerfil ? `/userAssets/${userSession.id}/${userData.ImgPerfil}` : `/userAssets/default/defaultImg.png`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600' onClick={handleImageClick}/>
         <input type="file" accept="image/*" className='hidden' ref={fileInputRef} onChange={handleImgChange} />
       </div>
 
