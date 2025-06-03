@@ -12,6 +12,7 @@ export const UserProvider = ({ children }) => {
     img: '',
     tags: [],
     tipo: "",
+    permiso: "",
   });
 
   // Comprobar si hay una sesión activa al cargar el componente
@@ -19,6 +20,8 @@ export const UserProvider = ({ children }) => {
     checkSession()
       .then(res => {
         if (res.data.loggedIn) {
+          
+
           setUserSession({
             loggedIn: true,
             id: res.data.id,
@@ -27,6 +30,7 @@ export const UserProvider = ({ children }) => {
             img: res.data.img,
             tags: res.data.tags || [],
             tipo: res.data.tipo,
+            permiso: res.data.permiso
           });
         }
       })

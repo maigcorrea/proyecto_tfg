@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
             $nombre = $data['Nombre'];
             $nickname = $data['Nickname'];
             $tipo = $data['Tipo'];
+            $permiso = $data['Permiso'];
 
             $tagsAvailable=$user->getTags($currentSesion);
             $tags= $tagsAvailable ?? "";
@@ -50,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
                 "img" => $img,
                 "tags" => $tags,
                 "tipo" => $tipo,
+                "permiso" => $permiso
                 
                 // "tipo" => $_SESSION['tipo']
             ]);
@@ -145,6 +147,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         require_once '../controllers/updateProfileDataController.php';
         updateUserImg();
     }
+    break;
+
+    case 'updatePermission':
+        require_once '../controllers/updateProfileDataController.php';
+        updatePermission();
     break;
 
     case 'selectUserTags':

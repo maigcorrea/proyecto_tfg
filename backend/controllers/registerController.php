@@ -17,10 +17,14 @@ function userRegistration(){
     $nacimiento=$_POST["nacimiento"];
     $password=$_POST["password"];
     $tipo = isset($_POST["tipo"]) ? $_POST["tipo"] : "usu"; // Valor por defecto 'usu' si no se envía
+    $permiso = isset($_POST["permiso"]) ? $_POST['permiso'] : "false"; //Por defecto false
+
+    // Convertir de string a int (1 o 0)
+    $permiso = ($permiso === "true") ? 1 : 0;
 
     // Llamar a la función del modelo
     $user= new User();
-    $inserted = $user->userRegistration($telefono, $nombre, $email, $nickname, $nacimiento, $password, $tipo);
+    $inserted = $user->userRegistration($telefono, $nombre, $email, $nickname, $nacimiento, $password, $tipo, $permiso);
 
     
     // Si se incluye tipo explícitamente (registro desde admin)

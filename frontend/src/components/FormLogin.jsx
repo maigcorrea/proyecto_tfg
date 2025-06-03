@@ -58,7 +58,7 @@ const FormLogin = () => {
             const sesionsResponse= await setSessions(formData);
             console.log("Sesiones:",sesionsResponse.success);
             console.log("Sesiones:",sesionsResponse);
-            console.log("Datos que supuestamente están guardados en las sesiones:",sesionsResponse.usu," ",sesionsResponse.tipo, " ", sesionsResponse.id);
+            console.log("Datos que supuestamente están guardados en las sesiones:",sesionsResponse.usu," ",sesionsResponse.tipo, " ", sesionsResponse.id, " ", sesionsResponse.permiso);
             console.log("Hay sesión:",sesionsResponse.contenidoSesion);
 
             if(sesionsResponse.success){
@@ -69,6 +69,7 @@ const FormLogin = () => {
                  id: sesionsResponse.id,
                  usuario: sesionsResponse.usu,
                  tipo: sesionsResponse.tipo,
+                 permiso: sesionsResponse.permiso
               });
 
               //console.log("Datos dentro del contexto", userSession);

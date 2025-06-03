@@ -30,6 +30,7 @@ const RegisterForm = () => {
       const [repPass, setRepPass] = useState("");
       const [nac, setNac] = useState("");
       const [perfil, setPerfil] = useState(null);
+      const [permiso, setPermiso] = useState("");
       const [error, setError] = useState('');
       const [success, setSuccess] = useState('');
 
@@ -54,6 +55,7 @@ const RegisterForm = () => {
         formData.append("password", password);
         formData.append("nacimiento", nac);
         formData.append("img", perfil);
+        formData.append("permiso", permiso);
 
         try{
             const response= await sendRegisterData(formData);
@@ -120,6 +122,9 @@ const RegisterForm = () => {
                         <label htmlFor="imgPerfil">Imagen:</label><br></br>
                         <input type="file" name="img" onChange={(e) => setPerfil(e.target.files[0])}
                         accept="image/*" id="" className='cursor-pointer' /><br></br>
+
+                        
+                        <input type="checkbox" name="permiso" value={permiso} onChange={(e) => setPermiso(e.target.checked)} id="" className='cursor-pointer' />Doy permiso para que otros usuarios me contacten a través de correo electrónico<br></br>
 
                         {error && <p className="text-red-500">{error}</p>}
                         {success && <p className="text-green-500">{success}</p>}

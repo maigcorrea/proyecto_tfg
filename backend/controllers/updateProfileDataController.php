@@ -94,4 +94,27 @@ function updateUserProfile() {
         echo json_encode(["success" => false, "message" => "Error al actualizar el campo"]);
     }
 }
+
+
+function updatePermission(){
+    $sesion = new Sesion();
+    $currentSesion = $sesion->get_session("id");
+
+    if (!$currentSesion) {
+        echo json_encode(["success" => false, "message" => "Sesión no iniciada"]);
+        return;
+    }
+
+    $permiso = $_GET['permission'];
+
+    $user = new User();
+    $result = $user->updatePermission($currentSesion, $permiso);
+
+    if($result){
+        echo json_encode(["success" => true, "message" => "Actualización correcta"]);
+    }else{
+        echo json_encode(["success" => false, "message" => "Error al actualizar el campo"]);
+    }
+    
+}
 ?>

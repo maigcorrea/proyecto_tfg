@@ -193,3 +193,17 @@ export const updateTags = async (userId, tags) => {
     throw error;
   }
 }
+
+
+export const updatePermission = async (permission) => {
+  try {
+    const response = await axios.post(`${API_URL}users.php?action=updatePermission&permission=${permission}`, null, {
+      withCredentials: true,
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error("Error actualizando el permiso del usuario", error);
+    throw error;
+  }
+}

@@ -6,6 +6,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../context/UserrContext';
 import ProfileUserDataExtended from './ProfileUserDataExtended';
 import { useNavigate } from 'react-router-dom';
+import { updatePermission } from '../services/userService';
 
 const ProfileUserData = () => {
   const navigate = useNavigate();
@@ -29,12 +30,14 @@ const ProfileUserData = () => {
   Nacimiento: "nacimiento",
   Nickname: "nickname",
   Descripcion: "descripcion",
+  Permiso: "permiso",
 };
 
 // Mapeo de campos del contexto a los nombres que se mostrarán en el formulario
 const contextFieldMapping = {
   Nombre: "nombre",
   Nickname: "usuario",
+  Permiso: "permiso",
   // Si quieres guardar email o telefono en el contexto, añádelos aquí
 };
 
@@ -83,6 +86,22 @@ if (!userData) return <p>Cargando datos...</p>;
       .catch(error => {
         console.error("Error al actualizar la imagen", error);
       });
+    }
+  }
+
+
+  //Al cambiar el checkbox de permiso
+  const handlePermissionChange = async(checkValue) => {
+    try {
+      const response = await updatePermission(checkValue);
+      console.log(response);
+
+      if(response.success) {
+        //Actualizar contexto del usuario con el nuevo permiso
+        setUserSession(prev => ({ ...prev, permiso: checkValue })); 
+      }
+    } catch (error) {
+      console.error("Error actualizando el permiso del usuario", error);
     }
   }
 
@@ -156,6 +175,7 @@ const handleSave = async (field) => {
     }));
   }
     
+  console.log("QUE HAY AQUÍ JODER",userSession);
   return (
     <>
       {toastMessage && (
@@ -171,10 +191,22 @@ const handleSave = async (field) => {
         <input type="file" accept="image/*" className='hidden' ref={fileInputRef} onChange={handleImgChange} />
       </div>
 
+      {/* Permiso */}
+      <div>
+          <input
+            type="checkbox"
+            checked={userSession.permiso === 1 || userSession.permiso === "1"}
+            onChange={(e) => handlePermissionChange(e.target.checked ? 1 : 0)}
+          /> Doy permiso para que me contacten por email
+        </div>
+
+
+      {/* Datos de usuario */}
       <form action="" className='flex flex-col gap-4 w-fit'>
         <h1 className='text-3xl'>Datos de usuario</h1>
+                
         {Object.entries(userData)
-          .filter(([clave]) => clave !== 'ImgPerfil' && clave !== 'Tags') // Filtar los campos que no quieres mostrar
+          .filter(([clave]) => clave !== 'ImgPerfil' && clave !== 'Tags' && clave !== 'Permiso' ) // Filtar los campos que no quieres mostrar
           .map(([clave, valor]) => (
             <div className='flex flex-col gap-2' key={clave}>
               <label htmlFor={clave}>{clave === "Descripción" ? "Sobre mí:" : `${clave}:`}</label>
@@ -194,6 +226,7 @@ const handleSave = async (field) => {
                   min={clave === "Nacimiento" ? "1927-01-01" : undefined}
                   max={clave === "Nacimiento" ? limitYear : undefined}
                 ></input>
+
 
                 {!editingField[clave] ? (
                   <button

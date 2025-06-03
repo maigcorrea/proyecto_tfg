@@ -10,7 +10,7 @@ require_once "../config/connection.php";
         }
 
         //REGISTER
-        public function userRegistration($tel,$nom,$email,$nickname, $f_nac, $pass, $tipo = 'usu'){
+        public function userRegistration($tel,$nom,$email,$nickname, $f_nac, $pass, $tipo = 'usu', $permiso = 0){
             $inserted=false;
 
             if($this->checkEmailExists($email)){
@@ -24,13 +24,13 @@ require_once "../config/connection.php";
             if(!$this->checkEmailExists($email)){
                 if(!$this->checkNicknameExists($nickname)){
                     try {
-                        $query="INSERT INTO usuario(telefono, nombre, email, nickname, nacimiento, passwrd, tipo) VALUES(?,?,?,?,?,?,?);";
+                        $query="INSERT INTO usuario(telefono, nombre, email, nickname, nacimiento, passwrd, tipo, permiso) VALUES(?,?,?,?,?,?,?,?);";
                         $stmt=$this->conn->getConnection()->prepare($query);
     
                         // Hashear la contraseña
                         $hash = password_hash($pass, PASSWORD_BCRYPT);
     
-                        $stmt->bind_param("issssss",$tel,$nom,$email,$nickname, $f_nac, $hash, $tipo);
+                        $stmt->bind_param("issssssi",$tel,$nom,$email,$nickname, $f_nac, $hash, $tipo, $permiso);
                          //NOTA: Cuando un usuario intente iniciar sesión, puedes usar password_verify($passwordIntroducida, $hashAlmacenado) para comprobar si la contraseña coincide con el hash almacenado.
     
                         $stmt->execute();
@@ -110,10 +110,10 @@ require_once "../config/connection.php";
         }
 
         public function getIdTypeAndNick($nom){
-            $query="SELECT id, tipo, nickname FROM usuario WHERE email=? OR nickname=?";
+            $query="SELECT id, tipo, nickname, permiso FROM usuario WHERE email=? OR nickname=?";
             $stmt=$this->conn->getConnection()->prepare($query);
             $stmt->bind_param("ss", $nom, $nom);
-            $stmt->bind_result($id, $tipo, $nickname);
+            $stmt->bind_result($id, $tipo, $nickname, $permiso);
 
             $data=[];
             $stmt->execute();
@@ -121,7 +121,8 @@ require_once "../config/connection.php";
                 $data=[
                     "id" => $id,
                     "tipo" => $tipo,
-                    "nickname" => $nickname
+                    "nickname" => $nickname,
+                    "permiso" => $permiso
                 ];
             }
 
@@ -212,7 +213,7 @@ require_once "../config/connection.php";
 
         //OBTENER TODOS LOS DATOS DEL USUARIO LOGGEADO
         public function getDataUser($identifier){
-            $query = "SELECT u.telefono, u.email, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img, u.tipo,
+            $query = "SELECT u.telefono, u.email, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img, u.tipo, u.permiso,
                      GROUP_CONCAT(t.nombre SEPARATOR ',') AS tags
               FROM usuario u
               LEFT JOIN tag_usuario tu ON u.id = tu.id_usu
@@ -223,7 +224,7 @@ require_once "../config/connection.php";
             $stmt=$this->conn->getConnection()->prepare($query);
             $stmt->bind_param("i", $identifier);
             $stmt->execute();
-            $stmt->bind_result($phone, $mail, $name, $nick, $desc, $birth, $img, $tipo, $tags);
+            $stmt->bind_result($phone, $mail, $name, $nick, $desc, $birth, $img, $tipo, $permiso, $tags);
 
             $dataList=[];
             while($stmt->fetch()){
@@ -238,6 +239,7 @@ require_once "../config/connection.php";
                     "Nacimiento" => $birth,
                     "ImgPerfil" => $img,
                     "Tipo" => $tipo,
+                    "Permiso" => $permiso,
                     "Tags" => $tagsArray
                 ];
             }
@@ -248,6 +250,22 @@ require_once "../config/connection.php";
 
 
         //ACTUALIZAR DATOS DEL USUARIO
+
+        public function updatePermission($id, $permiso){
+            $query="UPDATE usuario SET permiso=? WHERE id=?";
+            $stmt=$this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("ii", $permiso, $id);
+
+            $updated=false;
+
+            $stmt->execute();
+            if($stmt->affected_rows == 1){
+                $updated=true;
+            }
+
+            $stmt->close();
+            return $updated;
+        }
 
         public function updateImgProfile($id, $img){
             $query="UPDATE usuario SET img=? WHERE id=?";

@@ -52,6 +52,12 @@ function setSessions($identificador){
     $id=$data['id'];
     $tipo=$data['tipo'];
     $nickname=$data['nickname'];
+    $permiso=$data['permiso'];
+    if($permiso==0){
+      $permiso="false";
+    }else{
+      $permiso="true";
+    }
   
     $sesion=new Sesion();
     //$sesion->start_session();
@@ -68,7 +74,8 @@ function setSessions($identificador){
       "contenidoSesion"=>$haySesion,
       "id" => $sesion->get_session("id"),
       "usu" =>$sesion->get_session("usu"),
-      "tipo" => $sesion->get_session("tipo")
+      "tipo" => $sesion->get_session("tipo"),
+      "permiso" => $permiso
       // aquí podrías devolver un token o datos del usuario
     ]);
 }
