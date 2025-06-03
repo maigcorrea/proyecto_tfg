@@ -7,6 +7,7 @@ import { UserContext } from '../../context/UserrContext';
 import ProfileUserDataExtended from './ProfileUserDataExtended';
 import { useNavigate } from 'react-router-dom';
 import { updatePermission } from '../services/userService';
+import { verifyPassword } from '../services/authService';
 
 const ProfileUserData = () => {
   const navigate = useNavigate();
@@ -15,6 +16,16 @@ const ProfileUserData = () => {
   const [editingField, setEditingField] = useState({});
   const date = new Date();
   const limitYear = (date.getFullYear()-10)+"-12-31"; //Año actual - 10 años para el límite del campo de nacimiento
+
+  //Modificar contraseña
+  const [modifyPassword, setModifyPassword] = useState(false);
+  const [step, setStep] = useState(1); //1 verificación, 2 cambiar contraseña
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
   //Toast de verificación de que se ha actualizado el campo
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState(''); // success o error
@@ -176,6 +187,36 @@ const handleSave = async (field) => {
   }
     
   console.log("QUE HAY AQUÍ JODER",userSession);
+
+
+  //Para modificar la contraseña
+  const handleVerify = async() => {
+  // Aquí deberías llamar a un servicio para verificar la contraseña actual
+  try {
+    const response = await verifyPassword(currentPassword);
+    console.log(response);
+
+    if(response.success){
+      setStep(2);
+      setError('');
+    }else{
+      setError('Contraseña incorrecta');
+    }
+  } catch (error) {
+    
+  }
+};
+
+const handlePasswordChange = () => {
+  if (newPassword !== confirmPassword) {
+    setError('Las contraseñas no coinciden');
+    return;
+  }
+  // Aquí puedes llamar al servicio de cambio de contraseña
+  setSuccessMessage('Contraseña cambiada exitosamente');
+  setModifyPassword(false);
+};
+
   return (
     <>
       {toastMessage && (
@@ -268,10 +309,86 @@ const handleSave = async (field) => {
               ))}
               <button onClick={() => navigate(`/edit-tags/${userSession.id}`)} className='rounded-3xl bg-cyan-700 p-3 cursor-pointer hover:bg-blue-600'>Editar</button>
             </div>
-            
           </div>
       </form>
 
+      {/* Botón para abrir el modal de cambiar contraseña */}
+      <div>
+        <button onClick={() => setModifyPassword(true)} className="rounded-3xl bg-yellow-500 p-3 cursor-pointer hover:bg-yellow-600">
+          Cambiar contraseña
+        </button>
+      </div>
+
+
+{/* Modal con steps */}
+{modifyPassword && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white rounded-lg p-6 shadow-lg w-96 relative">
+      <h2 className="text-xl font-semibold mb-4">Cambiar contraseña</h2>
+
+      {/* Steps */}
+      {step === 1 && (
+        <>
+          <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">
+            Contraseña actual:
+          </label>
+          <input
+            type="password"
+            id="currentPassword"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 w-full mb-4"
+          />
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <div className="flex justify-end gap-2">
+            <button onClick={() => setModifyPassword(false)} className="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded">
+              Cancelar
+            </button>
+            <button onClick={handleVerify} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+              Verificar
+            </button>
+          </div>
+        </>
+      )}
+
+      {step === 2 && (
+        <>
+          <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">
+            Nueva contraseña:
+          </label>
+          <input
+            type="password"
+            id="newPassword"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 w-full mb-4"
+          />
+          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+            Confirmar nueva contraseña:
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 w-full mb-4"
+          />
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <div className="flex justify-end gap-2">
+            <button onClick={() => setModifyPassword(false)} className="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded">
+              Cancelar
+            </button>
+            <button onClick={handlePasswordChange} className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
+              Guardar contraseña
+            </button>
+          </div>
+        </>
+      )}
+
+      {successMessage && <p className="text-green-600 mt-2">{successMessage}</p>}
+    </div>
+  </div>
+)}
 
 
 

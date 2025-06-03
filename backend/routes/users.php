@@ -199,5 +199,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         updateTags();
     break;
 
+    case 'verifyPassword':
+        require_once '../controllers/verifyPasswordController.php';
+        verifyPassword();
+    break;
+
 }
 ?>

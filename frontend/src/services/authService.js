@@ -118,3 +118,23 @@ export const closeSes = async () => {
       throw error;
     }
   }
+
+
+  export const verifyPassword = async(password) =>{
+    try {
+      const response= await axios.post(`${API_URL}/users.php?action=verifyPassword`,{password}, 
+        {
+          withCredentials: true,
+          headers:{
+            'Content-Type':'application/json', //Asegura que lo lea bien el backend
+          },
+          response: 'json',
+        },
+      );
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error enviando datos del formulario de registro:", error);
+      throw error;
+    }
+  }

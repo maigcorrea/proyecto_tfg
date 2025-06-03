@@ -311,6 +311,10 @@ require_once "../config/connection.php";
             }
         }
 
+
+        //ACTUALIZAR CONTRASEÑA
+       
+
         //DESDE LA PARTE DEL ADMINISTRADOR ACTUALIZAR DATOS DE 1 USUARIO
         public function updateFullUser($id, $nickname, $nombre, $email, $telefono, $nacimiento, $descripcion, $img) {
             $query = "UPDATE usuario SET nickname = ?, nombre = ?, email = ?, telefono = ?, nacimiento = ?, descripcion = ?, img = ? WHERE id = ?";
