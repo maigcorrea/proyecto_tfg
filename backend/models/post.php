@@ -47,23 +47,54 @@ require_once "../config/connection.php";
         }
 
         //Obtener post parte administrador
-        public function getAllTotalPosts($limit, $offset){
-            // Primero, consulta el total de posts sin limitaciones
-            $totalQuery = "SELECT COUNT(*) as total FROM post";
-            $totalResult = $this->conn->getConnection()->query($totalQuery);
+        public function getAllTotalPosts($limit, $offset, $selectedUserId = null){
+            $conn = $this->conn->getConnection();
+
+            // Si se ha seleccionado un usuario, filtramos por su ID
+    if ($selectedUserId !== null) {
+        //Consultar el total de posts para el usuario seleccionado
+        $totalQuery = "SELECT COUNT(*) as total FROM post WHERE usuario = ?";
+        $stmtTotal = $conn->prepare($totalQuery);
+        $stmtTotal->bind_param("i", $selectedUserId);
+        $stmtTotal->execute();
+        $resultTotal = $stmtTotal->get_result();
+        $totalRow = $resultTotal->fetch_assoc();
+        $totalPosts = $totalRow['total'];
+        $stmtTotal->close();
+
+
+         // Consulta paginada filtrada
+        $query = "SELECT p.id, p.contenido, p.fecha, p.usuario, u.nombre, u.nickname, u.img,
+                    (SELECT COUNT(*) FROM likes l WHERE l.post = p.id) as likesCount,
+                    (SELECT COUNT(*) FROM comentario c WHERE c.post = p.id) as commentsCount
+                FROM post p
+                INNER JOIN usuario u ON p.usuario = u.id
+                WHERE p.usuario = ?
+                ORDER BY p.fecha DESC
+                LIMIT ? OFFSET ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("iii", $selectedUserId, $limit, $offset);
+    }else{
+        // Primero, consulta el total de posts sin limitaciones
+            $totalQuery = "SELECT COUNT(*) as total FROM post";  
+            $totalResult = $conn->query($totalQuery);
             $totalRow = $totalResult->fetch_assoc();
             $totalPosts = $totalRow['total'];
 
-            // Luego, consulta los posts paginados con sus contadores
-            $query = "SELECT p.id, p.contenido, p.fecha, p.usuario, u.nombre, u.nickname, u.img,
-                     (SELECT COUNT(*) FROM likes l WHERE l.post = p.id) as likesCount,
-                     (SELECT COUNT(*) FROM comentario c WHERE c.post = p.id) as commentsCount
-              FROM post p
-              INNER JOIN usuario u ON p.usuario = u.id
-              ORDER BY p.fecha DESC LIMIT ? OFFSET ?";
+        // Luego, consulta los posts paginados con sus contadores. Consulta paginada sin filtro
+        $query = "SELECT p.id, p.contenido, p.fecha, p.usuario, u.nombre, u.nickname, u.img,
+                    (SELECT COUNT(*) FROM likes l WHERE l.post = p.id) as likesCount,
+                    (SELECT COUNT(*) FROM comentario c WHERE c.post = p.id) as commentsCount
+                FROM post p
+                INNER JOIN usuario u ON p.usuario = u.id
+                ORDER BY p.fecha DESC
+                LIMIT ? OFFSET ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ii", $limit, $offset);
+    }
+            
 
-            $stmt = $this->conn->getConnection()->prepare($query);
-            $stmt->bind_param("ii", $limit, $offset);
+            
             $stmt->execute();
             $resultado =$stmt->get_result();
             $posts=[];

@@ -38,9 +38,16 @@ export const getAllPosts = async() => {
 }
 
 // Obtener todas las publicaciones desde la parte del administrador (con número total de likes y comentarios)
-export const getAllTotalPosts = async(limit = 10, offset = 0) => {
+export const getAllTotalPosts = async(limit = 10, offset = 0, selectedUserId = null) => {
+
   try{
-    const response = await axios.get(`${API_URL}posts.php?action=getAllTotalPosts&limit=${limit}&offset=${offset}`, { withCreadentials: true});
+    const params = new URLSearchParams({ limit, offset });
+    if (selectedUserId !== null) {
+      params.append("selectedUserId", selectedUserId);
+    }
+
+    const response = await axios.get(`${API_URL}posts.php?action=getAllTotalPosts&${params.toString()}`, { withCredentials: true});
+    
     return response.data;
   }catch(error){
     console.error("Error obteniendo todos los post:", error);

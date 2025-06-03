@@ -3,7 +3,7 @@ import { getAllTotalPosts } from '../../services/postService';
 import { deletePost } from '../../services/postService';
 import { useNavigate } from 'react-router-dom';
 
-const PostTable = () => {
+const PostTable = ({selectedUserId, currentPage, setCurrentPage}) => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [confirmDeleteId, setConfirmDeleteId] = useState(null); // Nuevo estado para confirmar eliminación
@@ -11,24 +11,30 @@ const PostTable = () => {
     const [message, setMessage] = useState("");
     //Paginación
     const [totalPosts, setTotalPosts] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
+    //const [currentPage, setCurrentPage] = useState(1);
     const limit = 10;
 
     useEffect(() => {
        const obtenerPosts = async () => {
         const offset = (currentPage - 1) * limit;
             try {
-                const response = await getAllTotalPosts(limit, offset);
+                const response = await getAllTotalPosts(limit, offset, selectedUserId);
                 console.log("RESPUESTA POST",response.posts);
                 setPosts(response.posts);
                 setTotalPosts(response.total);
+
+                // Si estamos en una página que ya no existe después del filtro, volvemos a la 1
+                const totalPagesAfterChange = Math.ceil(totalPosts / limit);
+                if (currentPage > totalPagesAfterChange) {
+                  setCurrentPage(1);
+                }
             } catch (error) {
                 console.error("Error al obtener los posts:", error);
             }
        }
 
        obtenerPosts();
-    }, [currentPage]);
+    }, [currentPage, selectedUserId]); //Vuelve a buscar si cambia el usuario del filtro
 
     //Paginación
     const totalPages = Math.ceil(totalPosts / limit);
@@ -55,8 +61,15 @@ const PostTable = () => {
     
   return (
     <>
-        <table className='text-center'>
-        <thead>
+        {posts.length === 0 ? (
+  <div className="text-center p-4">
+    <p className="text-gray-600">No hay publicaciones para mostrar para el usuario seleccionado.</p>
+  </div>
+) : (
+  <>
+    <table className='text-center'>
+      <thead>
+        <tr>
           <th>#id</th>
           <th>Contenido</th>
           <th>Fecha creación</th>
@@ -65,27 +78,38 @@ const PostTable = () => {
           <th>Total likes</th>
           <th>Total comentarios</th>
           <th>Acciones</th>
-        </thead>
-        <tbody>
-        {
-          posts && posts.map((post) => (
-            <tr>
-              <td><a href="" className='hover:text-blue-500'>{post.id}</a></td>
-              <td>{post.contenido}</td>
-              <td>{post.fecha.split(' ')[0]}</td>
-              <td>{post.fecha.split(' ')[1]}</td>
-              <td>@{post.nickname}</td>
-              <td>{post.likesCount === 0 ? '---' : post.likesCount}</td>
-              <td>{post.commentsCount === 0 ? '---' : post.commentsCount}</td>
-              <td className='flex gap-2'><button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {navigate(`/admin/post/${post.id}`) }}>Detalles</button><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(post.id)}}>Eliminar</button></td>
-            </tr>
-          ))
-        }
-        </tbody>
-      </table>
+        </tr>
+      </thead>
+      <tbody>
+        {posts.map((post) => (
+          <tr key={post.id}>
+            <td><a href="" className='hover:text-blue-500'>{post.id}</a></td>
+            <td>{post.contenido}</td>
+            <td>{post.fecha.split(' ')[0]}</td>
+            <td>{post.fecha.split(' ')[1]}</td>
+            <td>@{post.nickname}</td>
+            <td>{post.likesCount === 0 ? '---' : post.likesCount}</td>
+            <td>{post.commentsCount === 0 ? '---' : post.commentsCount}</td>
+            <td className='flex gap-2'>
+              <button
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer'
+                onClick={() => navigate(`/admin/post/${post.id}`)}
+              >
+                Detalles
+              </button>
+              <button
+                className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer'
+                onClick={() => setConfirmDeleteId(post.id)}
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
 
-
-      {/* Paginación */}
+    {/* Paginación */}
     <div className="flex justify-center mt-4">
       <button
         disabled={currentPage === 1}
@@ -103,6 +127,8 @@ const PostTable = () => {
         Siguiente
       </button>
     </div>
+  </>
+)}
 
     <p>{message}</p>
 

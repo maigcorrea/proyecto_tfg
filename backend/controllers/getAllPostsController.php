@@ -24,9 +24,11 @@
     function getAllTotalPosts(){
         $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
         $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+        $selectedUserId = isset($_GET['selectedUserId']) && $_GET['selectedUserId'] !== '' ? intval($_GET['selectedUserId']) : null;
+
 
         $post = new Post();
-        $posts = $post->getAllTotalPosts($limit, $offset);
+        $posts = $post->getAllTotalPosts($limit, $offset, $selectedUserId);
 
         echo json_encode([
             'success' => true,
