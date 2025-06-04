@@ -35,7 +35,7 @@ const RegisterForm = () => {
       const [success, setSuccess] = useState('');
 
       const date = new Date();
-      const limitYear = (date.getFullYear()-10)+"-12-31";
+      const limitYear = (date.getFullYear()-18)+"-12-31";
 
       const handleSubmit = async (e) => {
         e.preventDefault();
