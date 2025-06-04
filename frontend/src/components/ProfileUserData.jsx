@@ -269,7 +269,7 @@ const handlePasswordChange = async() => {
         <h1 className='text-3xl'>Datos de usuario</h1>
                 
         {Object.entries(userData)
-          .filter(([clave]) => clave !== 'ImgPerfil' && clave !== 'Tags' && clave !== 'Permiso' ) // Filtar los campos que no quieres mostrar
+          .filter(([clave]) => clave !== 'ImgPerfil' && clave !== 'Tags' && clave !== 'Permiso' && clave !== 'Tipo' ) // Filtar los campos que no quieres mostrar
           .map(([clave, valor]) => (
             <div className='flex flex-col gap-2' key={clave}>
               <label htmlFor={clave}>{clave === "Descripción" ? "Sobre mí:" : `${clave}:`}</label>
