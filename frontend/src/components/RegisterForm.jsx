@@ -46,6 +46,12 @@ const RegisterForm = () => {
             return;
         }
 
+        //Validación del campo teléfono
+        if (telefono.length < 9 || telefono.length > 9) {
+            setError('El tеléfono debe tener 9 dígitos');
+            return;
+        }
+
         // Crear el objeto FormData para enviar el archivo junto a otros campos
         const formData=new FormData();
         formData.append("nombre", nombre);
@@ -95,7 +101,7 @@ const RegisterForm = () => {
 
                         {/* Comprobar que el número es válido (Se le puede enviar un sms) */}
                         <label htmlFor="tel">Teléfono:</label><br></br>
-                        <input type="number" name="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} className='border outline-none' id="" /><br></br>
+                        <input type="number" name="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} className='border outline-none' id="" required /><br></br>
 
                         {/* Controlar que el usuario sea mayor de edad */}
                         <label htmlFor="nickname">Nacimiento:</label><br></br>
