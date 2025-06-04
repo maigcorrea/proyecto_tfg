@@ -13,6 +13,8 @@ const CreateNewUserButton = () => {
     const [perfil, setPerfil] = useState(null);
     const [tipo, setTipo] = useState("usu"); // Valor por defecto
     const [error, setError] = useState('');
+    const date = new Date();
+    const limitYear = (date.getFullYear()-18)+"-12-31";
     //const navigate = useNavigate();
 
     const handleCloseModal = () => {
@@ -23,6 +25,14 @@ const CreateNewUserButton = () => {
     const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("ENTRANDO AL HANDLE SUBMIT");
+
+    //Validación del campo teléfono
+    if (telefono.length < 9 || telefono.length > 9) {
+        setError('El tеléfono debe tener 9 dígitos');
+        return;
+    }
+
+    //Validación de que las contraseñas coinciden
     if (password !== repPassword) {
       setError("Las contraseñas no coinciden");
       return;
@@ -109,7 +119,7 @@ const CreateNewUserButton = () => {
               <div className='mb-2'>
                 {/* Controlar que el usuario sea mayor de edad */}
                 <label htmlFor="nickname">Nacimiento:</label>
-                <input type="date" name="nacimiento" onChange={(e) => setNacimiento(e.target.value)} className="border p-2 w-full"></input>
+                <input type="date" name="nacimiento" onChange={(e) => setNacimiento(e.target.value)} min="1927-01-01" max={limitYear} className="border p-2 w-full"></input>
               </div>
               
 
