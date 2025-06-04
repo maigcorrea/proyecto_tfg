@@ -21,6 +21,11 @@ require_once "../config/connection.php";
                 return "nickname_taken";
             }
 
+
+            if($this->checkPhoneExits($tel)){
+                return "phone_taken";
+            }
+
             if(!$this->checkEmailExists($email)){
                 if(!$this->checkNicknameExists($nickname)){
                     try {
@@ -69,6 +74,22 @@ require_once "../config/connection.php";
             $query="SELECT COUNT(email) FROM usuario WHERE email=?";
             $stmt=$this->conn->getConnection()->prepare($query);
             $stmt->bind_param("s",$email);
+            $stmt->bind_result($exists);
+
+            $stmt->execute();
+            $stmt->fetch();
+
+            if($exists==1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function checkPhoneExits($phone){
+            $query="SELECT count(telefono) FROM usuario WHERE telefono=?;";
+            $stmt=$this->conn->getConnection()->prepare($query);
+            $stmt->bind_param("s",$phone);
             $stmt->bind_result($exists);
 
             $stmt->execute();

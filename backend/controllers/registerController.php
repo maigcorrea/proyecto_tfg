@@ -83,6 +83,11 @@ function userRegistration(){
         "success" => false,
         "message" => "Nickname ocupado, selecciona otro"
     ]);
+    }else if($inserted === "phone_taken"){
+        echo json_encode([
+            "success" => false,
+            "message" => "Teléfono ocupado, selecciona otro"
+        ]);
     }else{
         echo json_encode([
             "success" => false,
