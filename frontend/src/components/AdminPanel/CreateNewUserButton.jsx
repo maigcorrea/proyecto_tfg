@@ -26,6 +26,15 @@ const CreateNewUserButton = () => {
     e.preventDefault();
     console.log("ENTRANDO AL HANDLE SUBMIT");
 
+    //Validación del email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    /* This code checks if the input email matches a basic email format using a regular expression (emailRegex). If the email is invalid, it sets an error message ('Email no valido') and stops the function execution. */
+    if (!emailRegex.test(email)) {
+        setError('Email no valido');
+        return;
+    }
+
     //Validación del campo teléfono
     if (telefono.length < 9 || telefono.length > 9) {
         setError('El tеléfono debe tener 9 dígitos');

@@ -40,6 +40,15 @@ const RegisterForm = () => {
       const handleSubmit = async (e) => {
         e.preventDefault();
 
+        //Validación del email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        /* This code checks if the input email matches a basic email format using a regular expression (emailRegex). If the email is invalid, it sets an error message ('Email no valido') and stops the function execution. */
+        if (!emailRegex.test(email)) {
+            setError('Email no valido');
+            return;
+        }
+
         //Comprobación de que las contraseñas coinciden
         if (password !== repPass) {
             setError('Las contraseñas no coinciden');
