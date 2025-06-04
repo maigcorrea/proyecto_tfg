@@ -655,7 +655,7 @@ require_once "../config/connection.php";
             $conn = $this->conn->getConnection();
 
             // 1️⃣ Datos básicos del usuario
-            $queryUser = "SELECT id, nickname, nombre, img, email, nacimiento, telefono, descripcion, tags 
+            $queryUser = "SELECT id, nickname, nombre, img, email, nacimiento, telefono, descripcion
                         FROM usuario WHERE id = ?";
             $stmt = $conn->prepare($queryUser);
             $stmt->bind_param("i", $userId);
