@@ -66,6 +66,7 @@ const usuariosFiltrados = usuarios.filter((user) => { // Filtramos los usuarios
   return true; //En cualquier otro caso, mete al usuario en el filter
 });
 
+
 //Ver los filtros recibidos
 useEffect(() => {
   console.log("Filtros aplicados:", filters);
