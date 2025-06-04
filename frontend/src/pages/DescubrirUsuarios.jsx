@@ -21,6 +21,7 @@ const DescubrirUsuarios = () => {
   const [filters, setFilters] = useState({
     soloConTagsEnComun: false,
     soloConDescripcion: false,
+    soloConPermiteContacto: false, // 1. Actualiza el estado filters para incluir el nuevo filtro
   });
 
     useEffect(() => {
@@ -60,6 +61,11 @@ const usuariosFiltrados = usuarios.filter((user) => { // Filtramos los usuarios
 
   // Si el filtro de descripción está activado, descarta a los usuarios sin descripción (vacía o nula)
   if (filters.soloConDescripcion && (!user.descripcion || user.descripcion.trim() === '')) {
+    return false;
+  }
+
+  // 3. Aplica el filtro en usuariosFiltrados
+  if (filters.soloConPermiteContacto && user.permiso !== 1) {
     return false;
   }
 
