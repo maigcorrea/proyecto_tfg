@@ -51,6 +51,7 @@ function userRegistration(){
     $inserted = $user->userRegistration($telefono, $nombre, $email, $nickname, $nacimiento, $password, $tipo, $permiso);
 
     
+    
     // Si se incluye tipo explícitamente (registro desde admin)
     
     
