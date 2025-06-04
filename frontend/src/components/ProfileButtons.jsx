@@ -5,6 +5,7 @@ import { closeSes } from '../services/authService';
 import { useNavigate } from "react-router";
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserrContext';
+import {  FaSignOutAlt } from 'react-icons/fa';
 
 const ProfileButtons = () => {
   const { userSession, setUserSession } = useContext(UserContext); // Contexto para manejar la sesión del usuario
@@ -53,10 +54,10 @@ const ProfileButtons = () => {
   return (
     <>
      <div className='flex justify-items-end w-[50%]'>
-            <ul className='flex gap-4'>
+            <ul className='flex gap-4 items-center'>
                 {/* Una vez que el usuario se ha autenticado estos link desaparecerán y se verá una foto de perfil del usuario */}
                 {/* Botón de cerrar sesión */}
-                {userSession.loggedIn ? <button onClick={cerrarSesion}>Cerrar Sesión</button> : <Link to='/login'>Iniciar Sesión</Link>}
+                {userSession.loggedIn ? <button onClick={cerrarSesion} ><FaSignOutAlt className=' text-gray-800 ml-2.5 cursor-pointer '/></button> : <Link to='/login'>Iniciar Sesión</Link>}
                 {/* <Link to='/login'>Iniciar Sesión</Link> */}
                 {/* Foto del usuario y desplegable con opciones al hacer hover sobre la foto*/}
                 {userSession.loggedIn ? userSession.img!=null ? <Link to="/my-profile"><img src={`/userAssets/${userSession.id}/${userSession.img}`} className="w-10 h-10 rounded-full object-cover cursor-pointer"/></Link> : <Link to={"/my-profile"}><img src={`/userAssets/default/defaultImg.png`} className="w-10 h-10 rounded-full object-cover cursor-pointer"/></Link> : <Link to='/register'>Registrarse</Link>}

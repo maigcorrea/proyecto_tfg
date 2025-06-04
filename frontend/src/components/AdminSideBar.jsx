@@ -1,71 +1,91 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ProfileButtons from './ProfileButtons';
+import { FaUsers, FaHome, FaComment, FaQuestion, FaCog, FaLock, FaSignOutAlt, FaBlogger, FaTags } from 'react-icons/fa';
+
+const menuItems = [
+  { label: 'Dashboard', icon: <FaHome />, to: '/dashboard' },
+  { label: 'Usuarios', icon: <FaUsers />, to: '/admin/users' },
+  { label: 'Publicaciones', icon: <FaBlogger />, to: '/admin/posts' },
+  { label: 'Comentarios', icon: <FaComment />, to: '/admin/comments' },
+  { label: 'Etiquetas', icon: <FaTags />, to: '/admin/tags' }
+  
+];
 
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
+
 
   return (
-    <>
-      {/* Botón de hamburguesa para abrir el sidebar */}
+     <>
+      {/* Botón hamburguesa */}
       <button
-        className="fixed top-4 left-4 z-50 p-2 rounded-md bg-gray-800 text-white focus:outline-none"
+        className="fixed top-4 left-4 z-50 p-2 rounded-md text-white focus:outline-none"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {/* Icono de tres rayas */}
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-md transition-transform transform ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        } z-40`}
+        className={`fixed top-0 left-0 h-full bg-[#4c7389]  z-40 transition-all duration-300 flex flex-col ${
+          isOpen ? 'w-64' : 'w-16'
+        }`}
       >
-        <div className="p-4">
-          <div className="flex items-center justify-between">
-            <span className="text-xl font-bold">Admin Panel</span>
+        <div className="flex items-center justify-between p-4">
+          {isOpen ? (
+            null
+          ) : (
+            <span className="text-xl font-bold mb-6"> </span> // compacto
+          )}
+          {isOpen && (
             <button
               onClick={() => setIsOpen(false)}
-              className="text-gray-600 hover:text-gray-900 focus:outline-none"
+              className="text-gray-500 hover:text-gray-700 mb-6"
             >
-              ✕
+              
             </button>
-          </div>
-          <nav className="mt-8 flex flex-col space-y-4">
-            <Link to="/dashboard" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
-             Dashboard
-            </Link>
-            <Link to="/admin/users" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
-             Usuarios
-            </Link>
-            <Link to="/admin/posts" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
-             Publicaciones
-            </Link>
-            <Link to="/admin/comments" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
-             Comentarios
-            </Link>
-            <Link to="/admin/tags" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
-             Etiquetas
-            </Link>
-            <Link to="/my-profile" className="text-gray-700 hover:bg-yellow-400 px-4 py-2 rounded">
-             Perfil
-            </Link>
-            
-            <ProfileButtons></ProfileButtons>
-          </nav>
+          )}
         </div>
+
+        <nav className="flex-1 flex flex-col space-y-1 pl-2 mt-2">
+          {menuItems.map((item, idx) => {
+            const active = isActive(item.to);
+            return (
+              <Link
+                key={idx}
+                to={item.to}
+                className={`relative flex items-center gap-4 transition-all duration-300 ease-in-out
+                  ${isOpen ? 'px-4 py-2' : 'p-3 justify-center'}
+                  ${active ? 'text-black bg-white' : 'text-gray-800 hover:bg-gray-200'}
+                  ${isOpen && active ? 'rounded-l-full' : 'rounded-l-full'}
+                `}
+              >
+                <div className="text-xl">{item.icon}</div>
+                {isOpen && <span className="text-sm">{item.label}</span>}
+              </Link>
+            );
+          })}
+
+          <div className="mt-4 px-2">
+            <ProfileButtons />
+          </div>
+        </nav>
       </div>
 
-      {/* Sombra de fondo al abrir */}
-      {isOpen && (
+      {/* Overlay */}
+      {/*isOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-50 z-30"
+          className="fixed inset-0 bg-black/10 backdrop-blur-sm z-30"
           onClick={() => setIsOpen(false)}
         />
-      )}
+      )*/}
+      
     </>
   );
 };
