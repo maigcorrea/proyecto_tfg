@@ -531,12 +531,12 @@ require_once "../config/connection.php";
 
         //OBTENER TODOS LOS USUARIOS DE LA BD (COPIA POR SI ACASO EN LA PARTE Donde se muestran todos los usuarios)
         public function getAllUsersCopia($id) {
-            $query = "SELECT u.id, u.telefono, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img, u.permiso, u.email,
+            $query = "SELECT u.id, u.telefono, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img, u.permiso, u.email, u.tipo,
                      GROUP_CONCAT(t.nombre SEPARATOR ', ') AS tags
               FROM usuario u
               LEFT JOIN tag_usuario tu ON u.id = tu.id_usu
               LEFT JOIN tag t ON tu.id_tag = t.id
-              WHERE u.id != ?
+              WHERE u.id != ? AND u.tipo != 'admin'
               GROUP BY u.id, u.telefono, u.nombre, u.nickname, u.descripcion, u.nacimiento, u.img";
 
             $stmt = $this->conn->getConnection()->prepare($query);
