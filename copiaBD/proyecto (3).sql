@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2025 a las 02:07:20
+-- Tiempo de generación: 03-06-2025 a las 02:32:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -48,17 +48,13 @@ INSERT INTO `comentario` (`id`, `contenido`, `usuario`, `post`, `fecha`) VALUES
 (15, 'cadecf', 1, 21, '2025-05-26 11:56:13'),
 (16, 'cvsfvsfr', 1, 21, '2025-05-26 11:57:09'),
 (17, 'nuevo comentario', 1, 21, '2025-05-26 11:59:25'),
-(18, 'getg', 1, 21, '2025-05-26 12:09:03'),
 (19, 'csdacfa', 1, 21, '2025-05-26 12:13:08'),
-(20, 'dWF', 1, 21, '2025-05-26 12:14:12'),
 (21, 'fwegt', 1, 21, '2025-05-26 12:17:09'),
 (22, 'aerf', 1, 21, '2025-05-26 12:17:11'),
 (23, 'refwer', 1, 20, '2025-05-26 12:17:46'),
 (24, 'ced', 1, 20, '2025-05-26 12:17:49'),
 (25, 'hyhuhbe', 1, 21, '2025-05-26 12:55:16'),
-(26, 'cfraf', 1, 21, '2025-05-26 16:12:08'),
-(34, 'vdgst', 1, 21, '2025-06-01 18:43:02'),
-(35, 'holi', 1, 29, '2025-06-01 18:49:09');
+(26, 'cfraf', 1, 21, '2025-05-26 16:12:08');
 
 -- --------------------------------------------------------
 
@@ -126,6 +122,7 @@ CREATE TABLE `tag` (
 
 INSERT INTO `tag` (`id`, `nombre`) VALUES
 (9, 'Apoyo emocional'),
+(14, 'Asociación'),
 (4, 'Autoinmunes'),
 (3, 'Dermatología'),
 (8, 'Diagnóstico'),
@@ -156,23 +153,9 @@ CREATE TABLE `tag_usuario` (
 --
 
 INSERT INTO `tag_usuario` (`id`, `id_tag`, `id_usu`) VALUES
-(1, 1, 25),
-(2, 2, 25),
-(3, 8, 25),
-(4, 12, 25),
-(5, 5, 26),
-(6, 13, 26),
-(7, 2, 26),
-(8, 10, 27),
-(9, 13, 27),
-(10, 1, 27),
-(11, 13, 28),
-(12, 10, 28),
-(13, 1, 28),
-(14, 1, 29),
-(15, 13, 29),
-(16, 5, 29),
-(17, 6, 29);
+(108, 1, 1),
+(109, 3, 1),
+(110, 11, 18);
 
 -- --------------------------------------------------------
 
@@ -191,34 +174,38 @@ CREATE TABLE `usuario` (
   `passwrd` varchar(80) NOT NULL,
   `img` varchar(200) DEFAULT NULL,
   `tags` varchar(400) DEFAULT NULL,
-  `tipo` varchar(5) NOT NULL DEFAULT 'usu'
+  `tipo` varchar(5) NOT NULL DEFAULT 'usu',
+  `permiso` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `telefono`, `email`, `nombre`, `nickname`, `descripcion`, `nacimiento`, `passwrd`, `img`, `tags`, `tipo`) VALUES
-(1, 609474291, 'maite@gmail.com', 'Maite García Correa', 'maii', 'lorem ipsum JAJAJAJAJA', '2015-12-09', '$2y$10$QLAC6M6SWzZhfx2kpXLGBOoyVbmhcnSaDhOB3aYYnAki33PEtYa.i', '683a247862c33_PokmonGo.jpg', 'Genética,Síntomas crónicos,Diagnóstico,Tratamientos,Investigación', 'usu'),
-(2, 678935262, 'erica@gmail.com', 'Erica Palomino', 'Eriiiica', 'Hola Mundo, me gusta PHP', '2015-12-02', '$2y$10$/3pdB6n1U63uR.HC9WqVa.eVcSUnzF0NmGA6KfuidO0NpdLDmjs6e', '683a272e3d912_ovninaveespacialextraterrestredibujosanimadosnavecosmicaformaplatillo_18473379.avif', 'Diagnóstico,Apoyo emocional,Investigación,Genética', 'usu'),
-(3, 678987654, 'prueb1a@gmail.com', 'prueba', 'prueba202020202', '', '2015-12-17', '$2y$10$Wi7yMmeKJ0AQjCAqDMAksO/8fxZHCcmghUri6m8iSyW/uIKZNJfMy', '683a24d5badfc_MarioKart8Deluxe_2022_112122_004.png', 'Neurología,Genética', 'usu'),
-(9, 654321122, 'admin@gmail.com', 'admin', 'admin', NULL, '2015-12-03', '$2y$10$M/pOPA2s72xAxruHWaCce.44kVTGzdc5kQEPW9PdgRmr6Luv1pgEm', '6839845e9ae1a_managermessagingiconcartoonstylevector.jpg', NULL, 'admin'),
-(10, 666555522, 'u1@gmail.com', 'u1', 'u1', 'fearsgfreg', '2015-12-01', '$2y$10$KP38T4zcqJWjlMAgr5SUoeV0InfX5vylA5IzpyzwHwMia8Kv8RC4O', '683a5702bbd34_persona.jpg', 'Neurología,Genética', 'usu'),
-(11, 611111111, 'u2@gmail.com', 'u2', 'u2', '', '2015-12-02', '$2y$10$XKWHtJftwJhsSbKzAuZXw.4WUMoX//e6ChzqeiXdqEGi0kl/X2HmW', 'null', NULL, 'usu'),
-(12, 622222222, 'u3@gmail.com', 'u3', 'u3', NULL, '2015-12-02', '$2y$10$q/WgoP6FiWbSQJt.DWw3/.FlU/3haU2YD7EYLQEPYIGQUL4s7DY6a', NULL, NULL, 'usu'),
-(13, 633333333, 'u4@gmail.com', 'u4', 'u4', NULL, '2015-12-03', '$2y$10$I87cFb3Wg.RLjPsH2/QSluuYMpoxgtQ/6oYwwRG4ppyhpGQ6xhvO6', NULL, NULL, 'usu'),
-(15, 655555555, 'u6@gmail.com', 'u6', 'u6', NULL, '2000-12-09', '$2y$10$FdBTkpM.ThY9NVKaf7dzNONLgOFCvWjqRpKQ6ByWBc8bvj03qPBla', NULL, NULL, 'usu'),
-(18, 677656553, 'vvvd@gmail.com', 'vfdv', 'sdfwes', NULL, '1998-02-03', '$2y$10$L8b1GCsVRK1LHz/hhzbpMuiq2kXArIirp2G6I.mD.afivpvHBZf7G', '683a661f81ed9_carahellokitty.png', NULL, 'usu'),
-(19, 677656552, 'evie@gmail.com', 'evie', 'eviee', NULL, '1998-02-03', '$2y$10$zJ1KcWWFXZYFdEnJAKJZwex9YPscjlB97q2FFFRoW4FJCaHLWyI02', '683a668f09c14_incendioselvaamazonicaardiendoamazonas_7009552744.avif', NULL, 'usu'),
-(21, 653423121, 'fref@gmail.com', 'fregef', 'dew', NULL, '1982-03-05', '$2y$10$ClQ1xy5b0e8hpymp5DOGTeW.jS5kw8xUPE0V7i/k0mfHDnMHfk2.K', '683a6f3533f11_image.png', NULL, 'usu'),
-(22, 676545633, 'dewdde@gmail.com', 'dewd', 'dedede', NULL, '2004-02-05', '$2y$10$qXbWu6YSU12Rb417n3G6QOEMXAQQOTZ6yU21zBTpZEnV0FrY85X4m', '683a6ffa84181_1975.36_pinturatresmanchasno196.jpg', NULL, 'admin'),
-(23, 677797058, 'deijdeui@gmail.com', 'wiwiwiwiw', 'dewfrwwwwww', 'dewfdew', '2002-02-14', '$2y$10$cSLwhmJ4nNMgdWCj9b/15.SL268/QAZcASFeYxoMWpjz3VhI/AB4K', '683a707fe0eb8_mod.jpg', NULL, 'admin'),
-(24, 66909873, 'usu10@gmail.com', 'usu10', 'usu10', NULL, '2015-12-03', '$2y$10$ktywvztozQVb9PuVM32bQ.JTxkxiWnlitGU/H5AEUnChAlYajBkQe', '683a71305bb2a_TheFiniCompanyEspaamarcacorporativaglobaldeFiniTheFiniCompany19.02.202502_36.png', 'Dermatología,Diagnóstico', 'usu'),
-(25, 690987893, 'gegrg@gmail.com', 'ProbarTags', 'gegrg', NULL, '2015-12-01', '$2y$10$UUTYP8AH.fuM34kwxe.4p.DqIjN3/VCf7dm.QB3338f4E/ftWchx.', '683c94be62d2a_hero_2.jpg', NULL, 'usu'),
-(26, 674839373, 'grtgre@gmail.com', 'hrthgrt', 'kfmr', NULL, '2015-12-09', '$2y$10$64GjB6q4bApqM3yL7COBo.RFQgJPqsc/y5cYkqCbc9WxrGUPKbWCO', '683c97cd4ec52_img_6.jpg', NULL, 'usu'),
-(27, 675654543, 'gtrgrt@gmail.com', ' xcgbnfh', 'h6y5hy', NULL, '2015-12-08', '$2y$10$XbTAF6aexsLiwIHx0azLD.iSasTXpXF2toZMJy5QbG24IhEIT90Me', '683cb64995618_img_4.jpg', NULL, 'usu'),
-(28, 654567625, 'aaawa@gmail.com', 'aaaaa', 'awa', NULL, '2015-12-01', '$2y$10$J6xRLJne7rTt3WgJZ6ZtJOMqzLzaW.128fE8KHwdrk0u54u18PITy', NULL, NULL, 'usu'),
-(29, 654332123, 'aadew@gmail.com', 'holaaa', 'h1', NULL, '2015-12-09', '$2y$10$HcwG2kY0/HREP5uf0w3J.uoobe6bJmAPW/5aq3VrGiamHPBg4K7LO', '683cbeec03dc3_img_1.jpg', NULL, 'usu');
+INSERT INTO `usuario` (`id`, `telefono`, `email`, `nombre`, `nickname`, `descripcion`, `nacimiento`, `passwrd`, `img`, `tags`, `tipo`, `permiso`) VALUES
+(1, 609474291, 'maite@gmail.com', 'Maite García Correa', 'maiite', 'lorem ipsum JAJAJAJAJA', '2015-12-09', '$2y$10$QLAC6M6SWzZhfx2kpXLGBOoyVbmhcnSaDhOB3aYYnAki33PEtYa.i', '683cf15d1c820_brie3.png', 'Genética,Síntomas crónicos,Diagnóstico,Tratamientos,Investigación', 'usu', 0),
+(2, 678935262, 'erica@gmail.com', 'Erica Palomino', 'Eriiiica', 'Hola Mundo, me gusta PHP', '2015-12-02', '$2y$10$/3pdB6n1U63uR.HC9WqVa.eVcSUnzF0NmGA6KfuidO0NpdLDmjs6e', '683a272e3d912_ovninaveespacialextraterrestredibujosanimadosnavecosmicaformaplatillo_18473379.avif', 'Diagnóstico,Apoyo emocional,Investigación,Genética', 'usu', 0),
+(3, 678987654, 'prueb1a@gmail.com', 'prueba', 'prueba202020202', '', '2015-12-17', '$2y$10$Wi7yMmeKJ0AQjCAqDMAksO/8fxZHCcmghUri6m8iSyW/uIKZNJfMy', '683a24d5badfc_MarioKart8Deluxe_2022_112122_004.png', 'Neurología,Genética', 'usu', 0),
+(9, 654321122, 'admin@gmail.com', 'admin', 'admin', 'A mi me vacilan', '2015-12-03', '$2y$10$M/pOPA2s72xAxruHWaCce.44kVTGzdc5kQEPW9PdgRmr6Luv1pgEm', '6839845e9ae1a_managermessagingiconcartoonstylevector.jpg', NULL, 'admin', 0),
+(10, 666555522, 'u1@gmail.com', 'u1', 'u1', 'fearsgfreg', '2015-12-01', '$2y$10$KP38T4zcqJWjlMAgr5SUoeV0InfX5vylA5IzpyzwHwMia8Kv8RC4O', '683a5702bbd34_persona.jpg', 'Neurología,Genética', 'usu', 0),
+(11, 611111111, 'u2@gmail.com', 'u2', 'u2', '', '2015-12-02', '$2y$10$XKWHtJftwJhsSbKzAuZXw.4WUMoX//e6ChzqeiXdqEGi0kl/X2HmW', 'null', NULL, 'usu', 0),
+(12, 622222222, 'u3@gmail.com', 'u3', 'u3', NULL, '2015-12-02', '$2y$10$q/WgoP6FiWbSQJt.DWw3/.FlU/3haU2YD7EYLQEPYIGQUL4s7DY6a', NULL, NULL, 'usu', 0),
+(13, 633333333, 'u4@gmail.com', 'u4', 'u4', NULL, '2015-12-03', '$2y$10$I87cFb3Wg.RLjPsH2/QSluuYMpoxgtQ/6oYwwRG4ppyhpGQ6xhvO6', NULL, NULL, 'usu', 0),
+(15, 655555555, 'u6@gmail.com', 'u6', 'u6', NULL, '2000-12-09', '$2y$10$FdBTkpM.ThY9NVKaf7dzNONLgOFCvWjqRpKQ6ByWBc8bvj03qPBla', NULL, NULL, 'usu', 0),
+(18, 677656553, 'vvvd@gmail.com', 'vfdv', 'sdfwes', NULL, '1998-02-03', '$2y$10$L8b1GCsVRK1LHz/hhzbpMuiq2kXArIirp2G6I.mD.afivpvHBZf7G', '683a661f81ed9_carahellokitty.png', NULL, 'usu', 0),
+(19, 677656552, 'evie@gmail.com', 'evie', 'eviee', NULL, '1998-02-03', '$2y$10$zJ1KcWWFXZYFdEnJAKJZwex9YPscjlB97q2FFFRoW4FJCaHLWyI02', '683a668f09c14_incendioselvaamazonicaardiendoamazonas_7009552744.avif', NULL, 'usu', 0),
+(21, 653423121, 'fref@gmail.com', 'fregef', 'dew', NULL, '1982-03-05', '$2y$10$ClQ1xy5b0e8hpymp5DOGTeW.jS5kw8xUPE0V7i/k0mfHDnMHfk2.K', '683a6f3533f11_image.png', NULL, 'usu', 0),
+(22, 676545633, 'dewdde@gmail.com', 'dewd', 'dedede', NULL, '2004-02-05', '$2y$10$qXbWu6YSU12Rb417n3G6QOEMXAQQOTZ6yU21zBTpZEnV0FrY85X4m', '683a6ffa84181_1975.36_pinturatresmanchasno196.jpg', NULL, 'admin', 0),
+(23, 677797058, 'deijdeui@gmail.com', 'wiwiwiwiw', 'dewfrwwwwww', 'dewfdew', '2002-02-14', '$2y$10$cSLwhmJ4nNMgdWCj9b/15.SL268/QAZcASFeYxoMWpjz3VhI/AB4K', '683a707fe0eb8_mod.jpg', NULL, 'admin', 0),
+(24, 66909873, 'usu10@gmail.com', 'usu10', 'usu10', NULL, '2015-12-03', '$2y$10$ktywvztozQVb9PuVM32bQ.JTxkxiWnlitGU/H5AEUnChAlYajBkQe', '683a71305bb2a_TheFiniCompanyEspaamarcacorporativaglobaldeFiniTheFiniCompany19.02.202502_36.png', 'Dermatología,Diagnóstico', 'usu', 0),
+(25, 690987893, 'gegrg@gmail.com', 'ProbarTags', 'gegrg', NULL, '2015-12-01', '$2y$10$UUTYP8AH.fuM34kwxe.4p.DqIjN3/VCf7dm.QB3338f4E/ftWchx.', '683c94be62d2a_hero_2.jpg', NULL, 'usu', 0),
+(26, 674839373, 'grtgre@gmail.com', 'hrthgrt', 'kfmr', NULL, '2015-12-09', '$2y$10$64GjB6q4bApqM3yL7COBo.RFQgJPqsc/y5cYkqCbc9WxrGUPKbWCO', '683c97cd4ec52_img_6.jpg', NULL, 'usu', 0),
+(27, 675654543, 'gtrgrt@gmail.com', ' xcgbnfh', 'h6y5hy', NULL, '2015-12-08', '$2y$10$XbTAF6aexsLiwIHx0azLD.iSasTXpXF2toZMJy5QbG24IhEIT90Me', '683cb64995618_img_4.jpg', NULL, 'usu', 0),
+(28, 654567625, 'aaawa@gmail.com', 'aaaaa', 'awa', NULL, '2015-12-01', '$2y$10$J6xRLJne7rTt3WgJZ6ZtJOMqzLzaW.128fE8KHwdrk0u54u18PITy', NULL, NULL, 'usu', 0),
+(29, 654332123, 'aadew@gmail.com', 'holaaa', 'h1', NULL, '2015-12-09', '$2y$10$HcwG2kY0/HREP5uf0w3J.uoobe6bJmAPW/5aq3VrGiamHPBg4K7LO', '683cbeec03dc3_img_1.jpg', NULL, 'usu', 0),
+(30, 666544436, 'fergccaec@gmail.com', 'vfdsvs', 'edwed', NULL, '2015-12-08', '$2y$10$Z8HRioD4DyoJqqrDkbvNaOdGCPA9YYHQEQ/YMJWzjqLzSiEt.omUK', '683e1be9b3de8_managermessagingiconcartoonstylevector.jpg', NULL, 'usu', 0),
+(31, 662323332, 'sii@gmail.com', 'Sipermisoo', 'si', NULL, '2015-12-03', '$2y$10$id2GZSpTVQ5AB2IPlYE56OQLwP6TXgvXxDF3gBo02QnfrL/kTrvQW', '683e200f891e8_descarga.jpeg', NULL, 'usu', 0),
+(32, 677654433, 'noo@gmail.com', 'noPermiso', 'noo', NULL, '2015-12-02', '$2y$10$TrFg9nTkB08K/QmKToNRd.XEDxS9O5O2UY4RJ6VtsSwNhRuK3VqlK', NULL, NULL, 'usu', 0);
 
 --
 -- Índices para tablas volcadas
@@ -295,19 +282,19 @@ ALTER TABLE `post`
 -- AUTO_INCREMENT de la tabla `tag`
 --
 ALTER TABLE `tag`
-  MODIFY `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `tag_usuario`
 --
 ALTER TABLE `tag_usuario`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Restricciones para tablas volcadas
