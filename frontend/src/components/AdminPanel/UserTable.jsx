@@ -186,7 +186,7 @@ const UserTable = () => {
                   {/* Datos del usuario - responsive */}
                   <div className="px-4 py-3 col-span-2">
                     <div className="text-sm font-medium text-gray-900">
-                      <Link to={`/admin/user/${user.id}`} className="text-[#4c7389] hover:text-[#3a5a6d]">
+                      <Link to={`/admin/user/${user.id}`} className="text-[#0086d3] hover:text-[#3a5a6d]">
                         {user.nickname}
                       </Link>
                     </div>
