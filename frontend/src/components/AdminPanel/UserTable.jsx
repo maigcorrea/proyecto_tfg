@@ -193,6 +193,12 @@ const UserTable = () => {
                     <div className="md:hidden text-sm text-gray-500">
                       {user.email}
                     </div>
+                    <div className="md:hidden text-sm text-gray-500">
+                      {user.telefono}
+                    </div>
+                    <div className="md:hidden text-sm text-gray-500">
+                      Nacimiento: {user.nacimiento}
+                    </div>
                   </div>
 
                   <div className="hidden md:block px-4 py-3 col-span-1">
