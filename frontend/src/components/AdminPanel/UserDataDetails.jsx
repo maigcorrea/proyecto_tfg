@@ -40,16 +40,25 @@ const UserDataDetails = () => {
     }, [])
     
   return (
-    <>
-    <div className='flex justify-end'>
-      <button onClick={() => navigate('/admin/users') } className='cursor-pointer text-2xl mx-4'>Volver</button>
-    </div>
+    <div className="w-full px-4 py-6">
+      <div className="max-w-full mx-auto">
+        <div className="flex justify-end mb-6">
+          <button 
+            onClick={() => navigate('/admin/users')} 
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+          >
+            Volver a la lista de usuarios
+          </button>
+        </div>
 
-      <PostMadeByUser postCreated={postCreated} idUsuario={id}/>
-      <LikedPostByUser postLiked={postLiked}/>
-      <CommentedPostByUser postCommented={postCommented}/>
-      <CommentsMadeByUser comments={comments}/>
-    </>
+        <div className="space-y-6 w-full">
+          <PostMadeByUser postCreated={postCreated} idUsuario={id} setPostCreated={setPostCreated} />
+          <LikedPostByUser postLiked={postLiked} />
+          <CommentedPostByUser postCommented={postCommented} />
+          <CommentsMadeByUser comments={comments} idUsuario={id} setComments={setComments} />
+        </div>
+      </div>
+    </div>
   )
 }
 
