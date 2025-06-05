@@ -87,106 +87,103 @@ const CreateNewUserButton = () => {
           </div>
 
           {/* Modal para crear un nuevo usuario */}
-          {createUser && 
-            <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-            <div className='flex'>
-                <h2 className="text-xl font-bold mb-4">Crear nuevo usuario</h2>
-                <button type="button" onClick={handleCloseModal} class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer" data-modal-toggle="edit-user-modal">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
-                </button>
-            </div>
+          {/* Modal para crear un nuevo usuario */}
+{createUser && 
+  <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md border border-gray-200">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold text-gray-800">Crear nuevo usuario</h2>
+        <button
+          type="button"
+          onClick={handleCloseModal}
+          className="text-gray-500 hover:text-gray-800"
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fillRule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 
+              8.586l4.293-4.293a1 1 0 
+              111.414 1.414L11.414 10l4.293 
+              4.293a1 1 0 01-1.414 
+              1.414L10 11.414l-4.293 
+              4.293a1 1 0 
+              01-1.414-1.414L8.586 10 4.293 
+              5.707a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
 
-            <form action="" method="post" encType='multipart/form-data' onSubmit={handleSubmit}>
-              <div className="mb-2">
-                <label htmlFor='nombre'>Nombre</label>
-                <input type="text" name='nombre' value={nombre} onChange={(e) => setNombre(e.target.value)} className="border p-2 w-full" placeholder="Nombre" />
-              </div>
-
-              <div className="mb-2">
-                <label htmlFor='email'>Email</label>
-                <input type="email" name='email' value={email} onChange={(e) => setEmail(e.target.value)} className="border p-2 w-full" placeholder="Email" />
-              </div>
-
-              {/* Comprobar si el nickname ya está pillado */}
-              <div className="mb-2">
-                <label htmlFor="nickname">Nickname:</label>
-                <input type="text" name="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} className="border p-2 w-full" placeholder='Nickname'></input>
-              </div>
-
-              <div className='mb-2'>
-                {/* Comprobar que el número es válido (Se le puede enviar un sms) */}
-                <label htmlFor="tel">Teléfono:</label>
-                <input type="number" name="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="border p-2 w-full" placeholder='xxx xxx xxx'></input>
-              </div>
-
-              <div className='mb-2'>
-                {/* Controlar que el usuario sea mayor de edad */}
-                <label htmlFor="nickname">Nacimiento:</label>
-                <input type="date" name="nacimiento" onChange={(e) => setNacimiento(e.target.value)} min="1927-01-01" max={limitYear} className="border p-2 w-full"></input>
-              </div>
-              
-
-              <div className="mb-2">
-                <label htmlFor='contr'>Contraseña</label>
-                <input type="password" name="contr" value={password} onChange={(e) => setPassword(e.target.value)} className="border p-2 w-full" placeholder="Contraseña" />
-              </div>
-
-              <div className="mb-2">
-                <label htmlFor='repContr'>Repetir contraseña</label>
-                <input type="password" name="repContr" value={repPassword} onChange={(e) => setRepPassword(e.target.value)} className="border p-2 w-full" placeholder="Repetir contraseña" />
-              </div>
-
-              <div className='mb-2'>
-                <label htmlFor="imgPerfil">Imagen:</label>
-                <input type="file" name="img" onChange={(e) => setPerfil(e.target.files[0])}accept="image/*" className='cursor-pointer' />
-              </div>
-
-            <div className='mb-2'>
-                <label htmlFor="tipo">Tipo:</label>
-                <div className="flex space-x-2">
-                    <label className="flex items-center space-x-2 bg-gray-200 rounded-full py-2 px-4 cursor-pointer hover:bg-gray-300">
-                        <input
-                            type="radio"
-                            id="admin"
-                            name="tipo"
-                            value="admin"
-                            checked={tipo === "admin"}
-                            onChange={(e) => setTipo(e.target.value)}
-                            className="accent-green-500" // Puedes quitar hidden y estilizar con accent-color
-                        />
-                        <span>Administrador</span>
-                    </label>
-                    <label className="flex items-center space-x-2 bg-gray-200 rounded-full py-2 px-4 cursor-pointer hover:bg-gray-300">
-                        <input
-                            type="radio"
-                            id="usu"
-                            name="tipo"
-                            value="usu"
-                            checked={tipo === "usu"}
-                            onChange={(e) => setTipo(e.target.value)}
-                            className="accent-green-500"
-                        />
-                        <span>Usuario</span>
-                    </label>
-                </div>
-
-                {error && <p className="text-red-500">{error}</p>}
-            </div>
-
-            
-              {/* Puedes añadir más campos si quieres */}
-              <div className="flex justify-end space-x-2 mt-4">
-                <input
-                  type="submit"
-                  value={"Registrar"}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
-                />
-              </div>
-            </form>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+        {[
+          { label: 'Nombre', type: 'text', value: nombre, onChange: setNombre, name: 'nombre' },
+          { label: 'Email', type: 'email', value: email, onChange: setEmail, name: 'email' },
+          { label: 'Nickname', type: 'text', value: nickname, onChange: setNickname, name: 'nickname' },
+          { label: 'Teléfono', type: 'number', value: telefono, onChange: setTelefono, name: 'tel' },
+          { label: 'Nacimiento', type: 'date', value: nacimiento, onChange: setNacimiento, name: 'nacimiento', extraProps: { min: "1927-01-01", max: limitYear } },
+          { label: 'Contraseña', type: 'password', value: password, onChange: setPassword, name: 'contr' },
+          { label: 'Repetir contraseña', type: 'password', value: repPassword, onChange: setRepPassword, name: 'repContr' },
+        ].map(({ label, type, value, onChange, name, extraProps = {} }) => (
+          <div key={name} className="mb-3">
+            <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+            <input
+              type={type}
+              name={name}
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-800"
+              {...extraProps}
+            />
           </div>
+        ))}
+
+        <div className="mb-3">
+          <label htmlFor="imgPerfil" className="block text-sm font-medium text-gray-700 mb-1">Imagen:</label>
+          <input
+            type="file"
+            name="img"
+            accept="image/*"
+            onChange={(e) => setPerfil(e.target.files[0])}
+            className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
+          />
         </div>
-        }
+
+        <div className="mb-3">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Tipo:</label>
+          <div className="flex gap-4">
+            {['admin', 'usu'].map((option) => (
+              <label
+                key={option}
+                className="flex items-center gap-2 bg-gray-200 px-3 py-2 rounded-full hover:bg-gray-300 cursor-pointer"
+              >
+                <input
+                  type="radio"
+                  name="tipo"
+                  value={option}
+                  checked={tipo === option}
+                  onChange={(e) => setTipo(e.target.value)}
+                  className="accent-gray-500"
+                />
+                <span className="capitalize">{option === 'usu' ? 'Usuario' : 'Administrador'}</span>
+              </label>
+            ))}
+          </div>
+          {error && <p className="text-red-500 mt-1 text-sm">{error}</p>}
+        </div>
+
+        <div className="flex justify-end mt-6">
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md"
+          >
+            Registrar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
     </>
   )
 }
