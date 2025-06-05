@@ -366,61 +366,140 @@ const UserTable = () => {
 
          {/* Modal de edición */}
       {editUser && (
-        <div className="fixed inset-0  flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-md">
-            <h2 className="text-xl font-bold mb-4">Editar usuario: {editUser.nickname}</h2>
-            <form onSubmit={handleUpdateUser} encType="multipart/form-data" action="" method="post">
-              <div className="mb-2">
-                <img src={previewImage || `/userAssets/${editUser.id}/${editUser.img}`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600'onClick={handleImageClick} />
-                <input type="file" name='newImg' accept="image/*" className='hidden' ref={fileInputRef}  onChange={handleImgChange} />
-              </div>
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+    <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg max-h-screen overflow-y-auto">
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+        Editar usuario: <span className="text-blue-600">{editUser.nickname}</span>
+      </h2>
 
-              <div className="mb-2">
-                <label>Nickname</label>
-                <input type="text" name="nickname" defaultValue={editUser.nickname} className="border p-2 w-full" />
-              </div>
-
-              <div className="mb-2">
-                <label>Nombre</label>
-                <input type="text" name='nombre' defaultValue={editUser.nombre} className="border p-2 w-full" />
-              </div>
-              <div className="mb-2">
-                <label>Email</label>
-                <input type="email" name='email' defaultValue={editUser.email} className="border p-2 w-full" />
-              </div>
-              <div className="mb-2">
-                <label>Teléfono</label>
-                <input type="text" name='telefono' defaultValue={editUser.telefono} className="border p-2 w-full" />
-              </div>
-              <div className="mb-2">
-                <label>Nacimiento</label>
-                <input type="date" name='nacimiento' defaultValue={editUser.nacimiento} className="border p-2 w-full" />
-              </div>
-              <div className="mb-2">
-                <label>Descripción</label>
-                <textarea name='descripcion' defaultValue={editUser.descripcion} className="border p-2 w-full" />
-              </div>
-              <div className="mb-2">
-                <label>Tags</label><br></br>
-                
-                  <div className='flex flex-wrap space-between'>
-                    {!editUser.tags && <span>Sin tags</span>}
-                    {editUser.tags && editUser.tags.split(', ').map((tag, index) => (
-                      <span key={index} className="display-inline bg-blue-200 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                
-                <Link to={`/edit-tags/${editUser.id}`} className='inline p-2 bg-blue-500 text-white'>Pincha aquí para añadir/editar tags</Link>
-              </div>
-              <div className="flex justify-end space-x-4 mt-4">
-                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
-                <button type="button" className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={() => setEditUser(null)}>Cancelar</button>
-              </div>
-            </form>
-          </div>
+      <form
+        onSubmit={handleUpdateUser}
+        encType="multipart/form-data"
+        action=""
+        method="post"
+        className="space-y-4"
+      >
+        {/* Imagen */}
+        <div className="text-center">
+          <img
+            src={previewImage || `/userAssets/${editUser.id}/${editUser.img}`}
+            alt="Imagen de perfil del usuario"
+            className="w-40 h-40 mx-auto rounded-full object-cover cursor-pointer hover:brightness-75 transition duration-300"
+            onClick={handleImageClick}
+          />
+          <input
+            type="file"
+            name="newImg"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handleImgChange}
+            className="hidden"
+          />
         </div>
+
+        {/* Campos */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Nickname</label>
+          <input
+            type="text"
+            name="nickname"
+            defaultValue={editUser.nickname}
+            className="mt-1 p-2 border border-gray-300 rounded w-full"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Nombre</label>
+          <input
+            type="text"
+            name="nombre"
+            defaultValue={editUser.nombre}
+            className="mt-1 p-2 border border-gray-300 rounded w-full"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            type="email"
+            name="email"
+            defaultValue={editUser.email}
+            className="mt-1 p-2 border border-gray-300 rounded w-full"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Teléfono</label>
+          <input
+            type="text"
+            name="telefono"
+            defaultValue={editUser.telefono}
+            className="mt-1 p-2 border border-gray-300 rounded w-full"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Nacimiento</label>
+          <input
+            type="date"
+            name="nacimiento"
+            defaultValue={editUser.nacimiento}
+            className="mt-1 p-2 border border-gray-300 rounded w-full"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Descripción</label>
+          <textarea
+            name="descripcion"
+            defaultValue={editUser.descripcion}
+            className="mt-1 p-2 border border-gray-300 rounded w-full"
+            rows={3}
+          />
+        </div>
+
+        {/* Tags */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {!editUser.tags && <span className="text-sm text-gray-500">Sin tags</span>}
+            {editUser.tags &&
+              editUser.tags.split(', ').map((tag, index) => (
+                <span
+                  key={index}
+                  className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded"
+                >
+                  {tag}
+                </span>
+              ))}
+          </div>
+          <Link
+            to={`/edit-tags/${editUser.id}`}
+            className="inline-block bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded transition"
+          >
+            Pincha aquí para añadir/editar tags
+          </Link>
+        </div>
+
+        {/* Botones */}
+        <div className="flex justify-end gap-4 pt-4">
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+          >
+            Guardar
+          </button>
+          <button
+            type="button"
+            onClick={() => setEditUser(null)}
+            className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
       )}
     </div>
 
