@@ -272,27 +272,55 @@ const UserTable = () => {
 
       {/* Modal de confirmación */}
       {confirmDeleteId !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-md text-center">
-            <p>¿Estás seguro de que quieres eliminar este usuario?</p>
-            <div className="mt-4 flex justify-center space-x-4">
-              <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center"
-                onClick={() => handleDelete(confirmDeleteId)}
-                disabled={isDeleting}
-              >
-                {isDeleting ? (
-                  <svg className="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-                  </svg>
-                ) : "Sí, eliminar"}
-              </button>
-              <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={() => setConfirmDeleteId(null)} disabled={isDeleting}>Cancelar</button>
-            </div>
-          </div>
-        </div>
-      )}
+  <div className="fixed inset-0  bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+    <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md max-h-screen overflow-y-auto text-center">
+      <p className="text-lg font-medium text-gray-800">
+        ¿Estás seguro de que quieres eliminar este usuario?
+      </p>
+
+      <div className="mt-6 flex justify-center gap-4">
+        <button
+          onClick={() => handleDelete(confirmDeleteId)}
+          disabled={isDeleting}
+          className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-5 rounded flex items-center justify-center transition"
+        >
+          {isDeleting ? (
+            <svg
+              className="animate-spin h-5 w-5 mr-2 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v8z"
+              ></path>
+            </svg>
+          ) : (
+            "Sí, eliminar"
+          )}
+        </button>
+
+        <button
+          onClick={() => setConfirmDeleteId(null)}
+          disabled={isDeleting}
+          className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-5 rounded transition"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
 
 
