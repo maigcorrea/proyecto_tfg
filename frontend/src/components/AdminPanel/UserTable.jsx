@@ -162,10 +162,11 @@ const UserTable = () => {
           <div className="hidden md:grid md:grid-cols-12 bg-gray-50 rounded-t-lg">
             <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1"></div>
             <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2">Usuario</div>
-            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2">Nombre</div>
+            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1">Nombre</div>
             <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2">Email</div>
             <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2">Teléfono</div>
-            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-3">Acciones</div>
+            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2">Nacimiento</div>
+            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2">Acciones</div>
           </div>
 
           {/* Cuerpo de la tabla */}
@@ -194,7 +195,7 @@ const UserTable = () => {
                     </div>
                   </div>
 
-                  <div className="hidden md:block px-4 py-3 col-span-2">
+                  <div className="hidden md:block px-4 py-3 col-span-1">
                     <div className="text-sm text-gray-900">{user.nombre || '-'}</div>
                   </div>
 
@@ -206,8 +207,12 @@ const UserTable = () => {
                     <div className="text-sm text-gray-900">{user.telefono || '-'}</div>
                   </div>
 
+                  <div className="hidden md:block px-4 py-3 col-span-2">
+                    <div className="text-sm text-gray-900">{user.nacimiento || '-'}</div>
+                  </div>
+
                   {/* Acciones */}
-                  <div className="px-4 py-3 col-span-12 md:col-span-3 flex space-x-2">
+                  <div className="px-4 py-3 col-span-12 md:col-span-2 flex space-x-2">
                     <button
                       onClick={() => {setEditUser(user); setPreviewImage(null);}}
                       className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-[#4c7389] hover:bg-[#3a5a6d] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4c7389]"
