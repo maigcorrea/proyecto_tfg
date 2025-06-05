@@ -22,20 +22,32 @@ const AdminSidebar = () => {
   return (
      <>
       {/* Botón hamburguesa */}
-      <button
-        className="fixed top-4 left-4 z-50 p-2 rounded-md text-white focus:outline-none"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <svg className="w-6 h-6 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
+      {/* Botón hamburguesa: visible siempre en mobile, o arriba a la izquierda */}
+      <div className='fixed z-50 '>
+        <div className='absolute top-4'>
+          <button
+            className="p-2 rounded-md bg-gray-800 text-white md:static ml-4"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {!isOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            ): "✕"}
+            
+          </button>
+        </div>
+
+      </div>
 
       {/* Sidebar */}
+      {
+      // En desktop: sidebar normal (colapsable)
+      }
       <div
-        className={`fixed top-0 left-0 h-full bg-[#4c7389]  z-40 transition-all duration-300 flex flex-col ${
-          isOpen ? 'w-64' : 'w-16'
-        }`}
+        className={`hidden md:flex h-screen sticky top-0 bg-[#4c7389] transition-all duration-300 flex-col overflow-y-auto ${
+    isOpen ? 'w-64' : 'w-16'
+  }`}
       >
         <div className="flex items-center justify-between p-4">
           {isOpen ? (
@@ -77,6 +89,33 @@ const AdminSidebar = () => {
           </div>
         </nav>
       </div>
+
+      {/* Sidebar en móvil */}
+      {isOpen && (
+        <div className="fixed inset-0 max-w-full w-full bg-[#4c7389] z-50 flex flex-col p-4 overflow-y-auto overflow-x-hidden transition-all duration-300 md:hidden">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-white text-2xl self-end mb-4"
+          >
+            ✕
+          </button>
+
+          {menuItems.map((item, idx) => (
+            <Link
+              key={idx}
+              to={item.to}
+              onClick={() => setIsOpen(false)}
+              className="text-white text-lg py-2"
+            >
+              {item.label}
+            </Link>
+          ))}
+
+          <div className="mt-auto">
+            <ProfileButtons />
+          </div>
+        </div>
+      )}
 
       {/* Overlay */}
       {/*isOpen && (

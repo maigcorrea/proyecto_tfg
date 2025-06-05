@@ -24,6 +24,7 @@ import CommentsManagement from './pages/CommentsManagement'
 import UserDetailsAdmin from './pages/UserDetailsAdmin'
 import TagsEdition from './pages/TagsEdition'
 import TagsManagement from './pages/TagsManagement'
+import AdminLayout from './layout/AdminLayout'
 
 function App() {
 
@@ -46,17 +47,19 @@ function App() {
                 <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
                 <Route path='/tags' element={<PrivateRoute><SelectTags></SelectTags></PrivateRoute>}></Route>
                 <Route path='/edit-tags/:id' element={<PrivateRoute><TagsEdition></TagsEdition></PrivateRoute>}></Route>
+                <Route path='/unathorized' element={<PrivateRoute><Unathorized></Unathorized></PrivateRoute>}></Route>
+              </Route>
                 {
                 //Proteger esta ruta para comprobar que el usuario es admin
                 }
-                <Route path='/unathorized' element={<PrivateRoute><Unathorized></Unathorized></PrivateRoute>}></Route>
-                <Route path='/dashboard' element={<PrivateRoute><PrivateAdminRoute><AdminDashBoard></AdminDashBoard></PrivateAdminRoute></PrivateRoute>}></Route>
-                <Route path='/admin/users' element={<PrivateRoute><PrivateAdminRoute><UserManagement></UserManagement></PrivateAdminRoute></PrivateRoute>}></Route>
-                <Route path='/admin/user/:id' element={<PrivateRoute><PrivateAdminRoute><UserDetailsAdmin></UserDetailsAdmin></PrivateAdminRoute></PrivateRoute>}></Route>
-                <Route path='/admin/posts' element={<PrivateRoute><PrivateAdminRoute><PostManagement></PostManagement></PrivateAdminRoute></PrivateRoute>}></Route>
-                <Route path='/admin/post/:id' element={<PrivateRoute><PrivateAdminRoute><PostDetailsAdmin></PostDetailsAdmin></PrivateAdminRoute></PrivateRoute>}></Route>
-                <Route path='/admin/comments' element={<PrivateRoute><PrivateAdminRoute><CommentsManagement></CommentsManagement></PrivateAdminRoute></PrivateRoute>}></Route>
-                <Route path='/admin/tags' element={<PrivateRoute><PrivateAdminRoute><TagsManagement></TagsManagement></PrivateAdminRoute></PrivateRoute>}></Route>
+              <Route element={<PrivateRoute><PrivateAdminRoute><AdminLayout /></PrivateAdminRoute></PrivateRoute>}>
+                <Route path='/dashboard' element={<AdminDashBoard></AdminDashBoard>}></Route>
+                <Route path='/admin/users' element={<UserManagement></UserManagement>}></Route>
+                <Route path='/admin/user/:id' element={<UserDetailsAdmin></UserDetailsAdmin>}></Route>
+                <Route path='/admin/posts' element={<PostManagement></PostManagement>}></Route>
+                <Route path='/admin/post/:id' element={<PostDetailsAdmin></PostDetailsAdmin>}></Route>
+                <Route path='/admin/comments' element={<CommentsManagement></CommentsManagement>}></Route>
+                <Route path='/admin/tags' element={<TagsManagement></TagsManagement>}></Route>
               </Route>
             </Routes>
           </BrowserRouter>
