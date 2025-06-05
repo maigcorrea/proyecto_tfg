@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getAllTotalPosts } from '../../services/postService';
 import { deletePost } from '../../services/postService';
 import { useNavigate } from 'react-router-dom';
+import Toast from '../UI/Toast';
 
 const PostTable = ({selectedUserId, currentPage, setCurrentPage}) => {
     const navigate = useNavigate();
@@ -178,7 +179,11 @@ const PostTable = ({selectedUserId, currentPage, setCurrentPage}) => {
           </div>
         </div>
 
-        <p>{message}</p>
+        <Toast 
+          message={message} 
+          type={message?.includes('Error') ? 'error' : 'success'}
+          onClose={() => setMessage('')} 
+        />
 
         {/* Modal de confirmación */}
         {confirmDeleteId !== null && (

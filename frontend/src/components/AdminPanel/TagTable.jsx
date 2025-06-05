@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { getAllTags } from '../../services/tagService';
 import { deleteTag } from '../../services/tagService';
+import Toast from '../UI/Toast';
 
 const TagTable = () => {
     const [tags, setTags] = useState([]);
@@ -135,7 +136,12 @@ const TagTable = () => {
           </div>
         </div>
 
-        <p>{message}</p>
+        {/* Toast de notificación */}
+        <Toast 
+          message={message} 
+          type={message?.includes('Error') ? 'error' : 'success'}
+          onClose={() => setMessage('')} 
+        />
 
         {/* Modal de confirmación */}
         {confirmDeleteId !== null && (

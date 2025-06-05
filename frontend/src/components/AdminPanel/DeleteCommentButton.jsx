@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { deleteComment } from '../../services/commentService';
+import Toast from '../UI/Toast';
 
-const DeleteCommentButton = ({commentId, setComments, comments, setFilteredComments, filteredComments}) => {
+const DeleteCommentButton = ({
+  commentId, 
+  setComments, 
+  comments, 
+  setFilteredComments, 
+  filteredComments,
+  setMessage
+}) => {
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
-    const [message, setMessage] = useState("");
     
 
     const handleDelete = async(id) => {
         try {
             setIsDeleting(true); // Inicia el spinner
-            console.log("SE DEBERÍA BORRAR EL POST", id);
             const response = await deleteComment(id);
-            console.log(response);
             setMessage(response.message);
             
             if(response.success){
@@ -64,8 +69,6 @@ const DeleteCommentButton = ({commentId, setComments, comments, setFilteredComme
   </div>
 )}
 
-        {/* Toast en el futuro */}
-        <p>{message}</p>
 
         {/* Spinner de carga */}
         {isDeleting && (

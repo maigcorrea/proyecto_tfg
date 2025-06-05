@@ -1,54 +1,54 @@
 import React, { useEffect, useState } from 'react'
 import { getAllComments } from '../../services/commentService';
 import DeleteCommentButton from './DeleteCommentButton';
+import Toast from '../UI/Toast';
 
 const CommentTable = () => {
     const [comments, setComments] = useState([]);
+    const [message, setMessage] = useState('');
     //Paginación
     const [totalComments, setTotalComments] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const limit = 10;
 
     //Búsqueda
-      const [search, setSearch] = useState('');
-      const [filteredComments, setFilteredComments] = useState([]);
+    const [search, setSearch] = useState('');
+    const [filteredComments, setFilteredComments] = useState([]);
 
     useEffect(() => {
       const getComments = async () => {
         const offset = (currentPage - 1) * limit;
-        console.log("OFFSET",offset);
-        console.log("LIMIT",limit);
-          try {
-            const response = await getAllComments(limit, offset);
-            console.log("COMENTARIOS",response);
-            setComments(response.comments);
-            setFilteredComments(response.comments);
-            setTotalComments(response.total);
-          } catch (error) {
-            console.error('Error al obtener los comentarios:', error);
-          }
+        try {
+          const response = await getAllComments(limit, offset);
+          setComments(response.comments);
+          setFilteredComments(response.comments);
+          setTotalComments(response.total);
+        } catch (error) {
+          console.error('Error al obtener los comentarios:', error);
+          setMessage('Error al cargar los comentarios');
+        }
       }
 
       getComments();
     }, [currentPage]);
 
-    //Paginación
-    const totalPages = Math.ceil(totalComments / limit);
-
     //Filtrado por contenido
-      useEffect(() => {
-        // Filtro local por contenido
-        const filtered = comments.filter(comment => comment.contenido.toLowerCase().includes(search.toLowerCase()));
-        setFilteredComments(filtered);
-      }, [search, comments]);
+    useEffect(() => {
+      const filtered = comments.filter(comment => 
+        comment.contenido.toLowerCase().includes(search.toLowerCase())
+      );
+      setFilteredComments(filtered);
+    }, [search, comments]);
     
-  return (
-    <>
+    return (
       <div className="p-6 bg-white rounded-lg shadow-md">
         {/* Barra de búsqueda */}
         <div className="relative mb-6">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <svg className="text-gray-400 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+            <svg className="text-gray-400 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
           </div>
           <input
             type="text"
@@ -75,44 +75,51 @@ const CommentTable = () => {
             {/* Cuerpo de la tabla */}
             <div className="bg-white divide-y divide-gray-200">
               {filteredComments.length > 0 ? (
-  filteredComments.map((comment) => (
-    <div
-      key={comment.id}
-      className="flex flex-col md:grid md:grid-cols-12 hover:bg-gray-50 transition-colors border-b md:border-0"
-    >
-      {/* Usuario */}
-      <div className="px-4 py-2 md:py-3 md:col-span-2 flex md:block">
-        <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Usuario:</span>
-        <span className="text-sm font-medium text-gray-900">{comment.usuario_nombre}</span>
-      </div>
-      {/* Post */}
-      <div className="px-4 py-2 md:py-3 md:col-span-2 flex md:block">
-        <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Post:</span>
-        <span className="text-sm text-gray-900">{comment.post_contenido}</span>
-      </div>
-      {/* Contenido */}
-      <div className="px-4 py-2 md:py-3 md:col-span-4 flex md:block">
-        <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Contenido:</span>
-        <span className="text-sm text-gray-900 break-words">{comment.contenido}</span>
-      </div>
-      {/* Fecha */}
-      <div className="px-4 py-2 md:py-3 md:col-span-2 flex md:block">
-        <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Fecha:</span>
-        <span className="text-sm text-gray-900">{comment.fecha.split(' ')[0]}</span>
-      </div>
-      {/* Hora */}
-      <div className="px-4 py-2 md:py-3 md:col-span-1 flex md:block">
-        <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Hora:</span>
-        <span className="text-sm text-gray-900">{comment.fecha.split(' ')[1]}</span>
-      </div>
-      {/* Acciones */}
-      <div className="px-4 py-2 md:py-3 md:col-span-1 flex items-center md:justify-center">
-        <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Acciones:</span>
-        <DeleteCommentButton commentId={comment.id} setComments={setComments} comments={comments} setFilteredComments={setFilteredComments} filteredComments={filteredComments}/>
-      </div>
-    </div>
-  ))
-) : (
+                filteredComments.map((comment) => (
+                  <div
+                    key={comment.id}
+                    className="flex flex-col md:grid md:grid-cols-12 hover:bg-gray-50 transition-colors border-b md:border-0"
+                  >
+                    {/* Usuario */}
+                    <div className="px-4 py-2 md:py-3 md:col-span-2 flex md:block">
+                      <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Usuario:</span>
+                      <span className="text-sm font-medium text-gray-900">{comment.usuario_nombre}</span>
+                    </div>
+                    {/* Post */}
+                    <div className="px-4 py-2 md:py-3 md:col-span-2 flex md:block">
+                      <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Post:</span>
+                      <span className="text-sm text-gray-900">{comment.post_contenido}</span>
+                    </div>
+                    {/* Contenido */}
+                    <div className="px-4 py-2 md:py-3 md:col-span-4 flex md:block">
+                      <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Contenido:</span>
+                      <span className="text-sm text-gray-900 break-words">{comment.contenido}</span>
+                    </div>
+                    {/* Fecha */}
+                    <div className="px-4 py-2 md:py-3 md:col-span-2 flex md:block">
+                      <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Fecha:</span>
+                      <span className="text-sm text-gray-900">{comment.fecha?.split(' ')[0] || ''}</span>
+                    </div>
+                    {/* Hora */}
+                    <div className="px-4 py-2 md:py-3 md:col-span-1 flex md:block">
+                      <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Hora:</span>
+                      <span className="text-sm text-gray-900">{comment.fecha?.split(' ')[1] || ''}</span>
+                    </div>
+                    {/* Acciones */}
+                    <div className="px-4 py-2 md:py-3 md:col-span-1 flex items-center md:justify-center">
+                      <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Acciones:</span>
+                      <DeleteCommentButton 
+                        commentId={comment.id} 
+                        setComments={setComments} 
+                        comments={comments} 
+                        setFilteredComments={setFilteredComments} 
+                        filteredComments={filteredComments}
+                        setMessage={setMessage}
+                      />
+                    </div>
+                  </div>
+                ))
+              ) : (
                 <div className="px-4 py-6 text-center text-gray-500">
                   No se encontraron comentarios
                 </div>
@@ -143,9 +150,15 @@ const CommentTable = () => {
             </button>
           </div>
         </div>
+      
+        {/* Toast de notificación */}
+        <Toast 
+          message={message} 
+          type={message?.includes('Error') ? 'error' : 'success'}
+          onClose={() => setMessage('')} 
+        />
       </div>
-    </>
-  )
-}
+    );
+  };
 
-export default CommentTable
+export default CommentTable;
