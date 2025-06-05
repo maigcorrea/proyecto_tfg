@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { getAllUsers } from '../../services/userService';
 import { deleteUser } from '../../services/userService';
 import { updateUser } from '../../services/userService';
+import { FaUsers, FaHome, FaComment, FaBlogger, FaTags, FaSearch, FaEdit, FaTrash } from 'react-icons/fa';
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
@@ -139,61 +140,122 @@ const UserTable = () => {
 
   return (
     <>
-      <input 
-        type="text" 
-        placeholder="Buscar nickname..." 
-        value={search} 
-        onChange={(e) => setSearch(e.target.value)} 
-        className="border p-2 my-2 w-full" 
-      />
-      <table>
-        <thead>
-          <th></th>
-          <th>Usuario</th>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Nacimiento</th>
-          <th>Teléfono</th>
-          <th>Descripción</th>
-          <th>Acciones</th>
-        </thead>
-        <tbody>
-        {
-          users && filteredUsers.map((user) => (
-            <tr>
-              <td><img src={ user.img ? `/userAssets/${user.id}/${user.img}` : `/userAssets/default/defaultImg.png`} alt={user.nickname} className='w-10 h-10 rounded-full' /></td>
-              <td><a href={`/admin/user/${user.id}`} className='hover:text-blue-500'>{user.nickname}</a></td>
-              <td>{user.nombre}</td>
-              <td>{user.email}</td>
-              <td>{user.nacimiento}</td>
-              <td>{user.telefono}</td>
-              <td>{user.descripcion}</td>
-              <td className='flex gap-2'><button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setEditUser(user); setPreviewImage(null);}}>Editar</button><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(user.id)}}>Eliminar</button></td>
-            </tr>
-          ))
-        }
-        </tbody>
-      </table>
+      <div className="p-6 bg-white rounded-lg shadow-md">
+      {/* Barra de búsqueda */}
+      <div className="relative mb-6">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <FaSearch className="text-gray-400" />
+        </div>
+        <input
+          type="text"
+          placeholder="Buscar por nickname..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4c7389] focus:border-[#4c7389] sm:text-sm"
+        />
+      </div>
+
+      {/* Tabla responsive */}
+      <div className="overflow-x-auto">
+        <div className="min-w-full divide-y divide-gray-200">
+          {/* Encabezados - visible en desktop */}
+          <div className="hidden md:grid md:grid-cols-12 bg-gray-50 rounded-t-lg">
+            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1"></div>
+            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2">Usuario</div>
+            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2">Nombre</div>
+            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2">Email</div>
+            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2">Teléfono</div>
+            <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-3">Acciones</div>
+          </div>
+
+          {/* Cuerpo de la tabla */}
+          <div className="bg-white divide-y divide-gray-200">
+            {filteredUsers.length > 0 ? (
+              filteredUsers.map((user) => (
+                <div key={user.id} className="grid grid-cols-1 md:grid-cols-12 hover:bg-gray-50 transition-colors">
+                  {/* Imagen - siempre visible */}
+                  <div className="px-4 py-3 flex items-center col-span-1">
+                    <img 
+                      src={user.img ? `/userAssets/${user.id}/${user.img}` : `/userAssets/default/defaultImg.png`} 
+                      alt={user.nickname} 
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                  </div>
+
+                  {/* Datos del usuario - responsive */}
+                  <div className="px-4 py-3 col-span-2">
+                    <div className="text-sm font-medium text-gray-900">
+                      <Link to={`/admin/user/${user.id}`} className="text-[#4c7389] hover:text-[#3a5a6d]">
+                        {user.nickname}
+                      </Link>
+                    </div>
+                    <div className="md:hidden text-sm text-gray-500">
+                      {user.email}
+                    </div>
+                  </div>
+
+                  <div className="hidden md:block px-4 py-3 col-span-2">
+                    <div className="text-sm text-gray-900">{user.nombre || '-'}</div>
+                  </div>
+
+                  <div className="hidden md:block px-4 py-3 col-span-2">
+                    <div className="text-sm text-gray-900">{user.email}</div>
+                  </div>
+
+                  <div className="hidden md:block px-4 py-3 col-span-2">
+                    <div className="text-sm text-gray-900">{user.telefono || '-'}</div>
+                  </div>
+
+                  {/* Acciones */}
+                  <div className="px-4 py-3 col-span-12 md:col-span-3 flex space-x-2">
+                    <button
+                      onClick={() => {setEditUser(user); setPreviewImage(null);}}
+                      className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-[#4c7389] hover:bg-[#3a5a6d] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4c7389]"
+                    >
+                      <FaEdit className="mr-1" /> Editar
+                    </button>
+                    <button
+                      onClick={() => setConfirmDeleteId(user.id)}
+                      className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    >
+                      <FaTrash className="mr-1" /> Eliminar
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="px-4 py-6 text-center text-gray-500">
+                No se encontraron usuarios
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
 
       {/* Paginación */}
-    <div className="flex justify-center mt-4">
-      <button
-        disabled={currentPage === 1}
-        onClick={() => setCurrentPage(prev => prev - 1)}
-        className="px-4 py-2 bg-gray-300 rounded mx-1"
-      >
-        Anterior
-      </button>
-      <span className="px-4 py-2">Página {currentPage} de {totalPages}</span>
-      <button
-        disabled={currentPage === totalPages}
-        onClick={() => setCurrentPage(prev => prev + 1)}
-        className="px-4 py-2 bg-gray-300 rounded mx-1"
-      >
-        Siguiente
-      </button>
-    </div>
+      <div className="flex items-center justify-between mt-4">
+        <div className="text-sm text-gray-700">
+          Mostrando <span className="font-medium">{(currentPage - 1) * limit + 1}</span> a <span className="font-medium">{Math.min(currentPage * limit, totalUsers)}</span> de <span className="font-medium">{totalUsers}</span> usuarios
+        </div>
+        <div className="flex space-x-2">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(prev => prev - 1)}
+            className={`px-4 py-2 rounded-md ${currentPage === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-[#4c7389] text-white hover:bg-[#3a5a6d]'}`}
+          >
+            Anterior
+          </button>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(prev => prev + 1)}
+            className={`px-4 py-2 rounded-md ${currentPage === totalPages ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-[#4c7389] text-white hover:bg-[#3a5a6d]'}`}
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
 
+      {/* [Mantén tus modales existentes de confirmación y edición...] */}
       <p>{message}</p>
 
 
@@ -349,7 +411,10 @@ const UserTable = () => {
           </div>
         </div>
       )}
+    </div>
 
+
+      
 
     </>
   )

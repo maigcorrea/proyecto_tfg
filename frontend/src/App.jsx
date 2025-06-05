@@ -47,7 +47,7 @@ function App() {
                 <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
                 <Route path='/tags' element={<PrivateRoute><SelectTags></SelectTags></PrivateRoute>}></Route>
                 <Route path='/edit-tags/:id' element={<PrivateRoute><TagsEdition></TagsEdition></PrivateRoute>}></Route>
-                <Route path='/unathorized' element={<PrivateRoute><Unathorized></Unathorized></PrivateRoute>}></Route>
+                <Route path='/unathorized' element={<Unathorized></Unathorized>}></Route>
               </Route>
                 {
                 //Proteger esta ruta para comprobar que el usuario es admin

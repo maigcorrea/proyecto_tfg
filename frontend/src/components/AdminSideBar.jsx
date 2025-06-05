@@ -92,7 +92,7 @@ const AdminSidebar = () => {
 
       {/* Sidebar en móvil */}
       {isOpen && (
-        <div className="fixed inset-0 max-w-full w-full bg-[#4c7389] z-50 flex flex-col p-4 overflow-y-auto overflow-x-hidden transition-all duration-300 md:hidden">
+        <div className="fixed inset-0  bg-[#4c7389] w-full z-50 flex flex-col p-4 overflow-hidden transition-all duration-300 md:hidden">
           <button
             onClick={() => setIsOpen(false)}
             className="text-white text-2xl self-end mb-4"
