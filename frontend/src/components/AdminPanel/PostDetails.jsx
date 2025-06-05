@@ -33,88 +33,182 @@ const PostDetails = () => {
     
 
   return (
-    <>
-        {postDetails &&
-            <div className="bg-white p-4 rounded shadow mb-4">
-                <div className="flex items-center space-x-3 mb-2 cursor-pointer">
+    <div className="w-full bg-gray-50 min-h-screen">
+      <div className="w-full max-w-full mx-auto space-y-8 p-6">
+        {/* Estado de carga */}
+        {loading ? (
+          <div className="flex justify-center items-center min-h-[300px]">
+            <div className="animate-spin inline-block w-10 h-10 border-4 border-gray-300 border-t-gray-800 rounded-full" role="status" aria-label="loading">
+              <span className="sr-only">Cargando...</span>
+            </div>
+          </div>
+        ) : postDetails ? (
+          <>
+            {/* Tarjeta de la publicación principal */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden w-full">
+              <div className="p-6 border-b border-gray-100">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0">
                     <img
-                        src={`/userAssets/${postDetails.user_id}/${postDetails.img}`}
-                        alt={postDetails.nickname}
-                        className="w-10 h-10 rounded-full object-cover"
+                      src={`/userAssets/${postDetails.user_id}/${postDetails.img}`}
+                      alt={postDetails.nickname}
+                      className="w-14 h-14 rounded-full object-cover border-2 border-gray-200"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/default-avatar.png';
+                      }}
                     />
-                    <div>
-                        <p className="font-semibold">{postDetails.nombre} <span className="text-gray-500 text-sm">@{postDetails.nickname}</span></p>
-                        <p className="text-xs text-gray-400">{postDetails.fecha}</p>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between flex-wrap">
+                      <h2 className="text-xl font-bold text-gray-900">
+                        {postDetails.nombre}
+                        <span className="text-gray-600 font-normal ml-2">@{postDetails.nickname}</span>
+                      </h2>
+                      <span className="text-sm text-gray-500 whitespace-nowrap">
+                        {new Date(postDetails.fecha).toLocaleDateString('es-ES', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
+                      </span>
                     </div>
+                  </div>
                 </div>
-
-                <p className="mb-2 text-gray-800">{postDetails.contenido}</p>
-            </div>
-        }
-
-
-        <div className='flex flex-wrap '>
-            <div className='w-1/2 border-2 border-gray-300'>
-                <h2 className='text-center text-3xl font-semibold'>LIKES</h2>
-                {likesDetails.map((like) => (
-                    <div className="bg-white p-4 rounded shadow mb-4">
-                        <div className="flex items-center space-x-3 mb-2 cursor-pointer w-full">
-                            <img
-                                src={`/userAssets/${like.id}/${like.img}`}
-                                alt={like.nickname}
-                                className="w-10 h-10 rounded-full object-cover"
-                            />
-                            <div className='flex lg:flex-col w-full'>
-                                <div className='inline-flex items-center justify-between'>
-                                    <p className="font-semibold">{like.nombre} </p>
-                                    <span className="text-gray-400 text-sm">{like.fecha}</span>
-                                </div>
-                                <p className="text-gray-500 text-sm">@{like.nickname}</p>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-
-            <div className='w-1/2 border-2 border-gray-300'>
-                <h2 className='text-center text-3xl font-semibold'>COMENTARIOS</h2>
-                {commentsDetails.map((comment) => (
-                    <div className="bg-white p-4 rounded shadow mb-4">
-                        <div className="flex items-center space-x-3 mb-2 cursor-pointer w-full">
-                            <img
-                                src={`/userAssets/${comment.usuario_id}/${comment.img}`}
-                                alt={comment.nickname}
-                                className="w-10 h-10 rounded-full object-cover"
-                            />
-                            <div className='flex lg:flex-col w-full'>
-                                <div className='inline-flex items-center justify-between'>
-                                    <p className="font-semibold">{comment.nombre} </p>
-                                    <span className="text-gray-400 text-sm">{comment.fecha}</span>
-                                </div>
-                                <p className="text-gray-500 text-sm">@{comment.nickname}</p>
-                            </div>
-                        </div>
-                        <div className='w-full flex justify-between items-center'>
-                            <p className="mb-2 text-gray-800">{comment.contenido}</p>
-                            <DeleteCommentButton commentId={comment.id} setComments={setCommentsDetails} comments={commentsDetails}></DeleteCommentButton>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-
-
-        {/* Si está cargando, mostrar un indicador */}
-        {loading && (
-            <div className="text-center mt-4">
-                <div className="animate-spin inline-block w-8 h-8 border-[3px] border-current border-t-transparent text-blue-600 rounded-full" role="status" aria-label="loading">
-                    <span className="sr-only">Cargando...</span>
+                <div className="mt-4">
+                  <p className="text-gray-800 whitespace-pre-line leading-relaxed">{postDetails.contenido}</p>
                 </div>
+              </div>
             </div>
+
+            {/* Sección de interacciones */}
+            <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Sección de Likes */}
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden w-full">
+                <div className="px-6 py-4 border-b border-gray-100">
+                  <h2 className="text-lg font-semibold text-gray-900 flex items-center">
+                    <span>Usuarios que dieron Me Gusta</span>
+                    {likesDetails.length > 0 && (
+                      <span className="ml-2 bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
+                        {likesDetails.length}
+                      </span>
+                    )}
+                  </h2>
+                </div>
+                <div className="divide-y divide-gray-100">
+                  {likesDetails.length > 0 ? (
+                    likesDetails.map((like, index) => (
+                      <div key={index} className="p-4 hover:bg-gray-50 transition-colors">
+                        <div className="flex items-center">
+                          <img
+                            src={`/userAssets/${like.id}/${like.img}`}
+                            alt={like.nickname}
+                            className="w-10 h-10 rounded-full object-cover border-2 border-gray-100 flex-shrink-0"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = '/default-avatar.png';
+                            }}
+                          />
+                          <div className="ml-3 min-w-0">
+                            <p className="text-base font-medium text-gray-900 truncate">{like.nombre}</p>
+                            <div className="flex items-center text-sm text-gray-500">
+                              <span>@{like.nickname}</span>
+                              <span className="mx-1">•</span>
+                              <span>
+                                {new Date(like.fecha).toLocaleDateString('es-ES', {
+                                  day: 'numeric',
+                                  month: 'short',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-6 text-center">
+                      <p className="text-gray-500">No hay likes en esta publicación</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Sección de Comentarios */}
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden w-full">
+                <div className="px-6 py-4 border-b border-gray-100">
+                  <h2 className="text-lg font-semibold text-gray-900 flex items-center">
+                    <span>Comentarios</span>
+                    {commentsDetails.length > 0 && (
+                      <span className="ml-2 bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
+                        {commentsDetails.length}
+                      </span>
+                    )}
+                  </h2>
+                </div>
+                <div className="divide-y divide-gray-100">
+                  {commentsDetails.length > 0 ? (
+                    commentsDetails.map((comment, index) => (
+                      <div key={index} className="p-4 hover:bg-gray-50 transition-colors">
+                        <div className="flex items-start">
+                          <img
+                            src={`/userAssets/${comment.usuario_id}/${comment.img}`}
+                            alt={comment.nickname}
+                            className="w-10 h-10 rounded-full object-cover border-2 border-gray-100 flex-shrink-0"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = '/default-avatar.png';
+                            }}
+                          />
+                          <div className="ml-3 flex-1 min-w-0">
+                            <div className="flex items-start justify-between">
+                              <div>
+                                <p className="text-base font-medium text-gray-900">{comment.nombre}</p>
+                                <p className="text-sm text-gray-500">
+                                  @{comment.nickname}
+                                  <span className="mx-1">•</span>
+                                  <span>
+                                    {new Date(comment.fecha).toLocaleDateString('es-ES', {
+                                      day: 'numeric',
+                                      month: 'short',
+                                      hour: '2-digit',
+                                      minute: '2-digit'
+                                    })}
+                                  </span>
+                                </p>
+                              </div>
+                              <DeleteCommentButton 
+                                commentId={comment.id} 
+                                setComments={setCommentsDetails} 
+                                comments={commentsDetails}
+                                className="text-gray-400 hover:text-gray-600 transition-colors"
+                              />
+                            </div>
+                            <p className="mt-1 text-base text-gray-700 whitespace-pre-line leading-relaxed">{comment.contenido}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-6 text-center">
+                      <p className="text-gray-500">No hay comentarios en esta publicación</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+            <p className="text-gray-600">No se pudo cargar la publicación</p>
+          </div>
         )}
-    </>
-  )
+      </div>
+    </div>
+  );
 }
 
 export default PostDetails
