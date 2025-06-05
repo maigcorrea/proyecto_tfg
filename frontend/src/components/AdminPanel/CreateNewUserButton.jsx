@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {userRegisterFromAdmin} from '../../services/authService';
 
-const CreateNewUserButton = () => {
+const CreateNewUserButton = ({ setMessage }) => {
     const [createUser, setCreateUser] = useState(false);
     const [nombre, setNombre] = useState("");
     const [email, setEmail] = useState("");
@@ -61,9 +61,10 @@ const CreateNewUserButton = () => {
       const response = await userRegisterFromAdmin(formData);
       if (!response.success) {
         setError(response.message);
+        setMessage(`Error: ${response.message}`);
         return;
       } else {
-        alert(response.message);
+        setMessage(response.message);
         handleCloseModal();
         setNombre("");
         setEmail("");
@@ -77,7 +78,9 @@ const CreateNewUserButton = () => {
       }
     } catch (err) {
       console.error("Error al crear usuario:", err);
-      setError("Ocurrió un error inesperado");
+      const errorMsg = err.response?.data?.message || "Ocurrió un error inesperado";
+      setError(errorMsg);
+      setMessage(`Error: ${errorMsg}`);
     }
   };
   return (
