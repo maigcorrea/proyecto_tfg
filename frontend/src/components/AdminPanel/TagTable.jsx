@@ -62,76 +62,105 @@ const TagTable = () => {
     
   return (
     <>
-        <h2>Todas las tags</h2>
-         <input 
-            type="text" 
-            placeholder="Buscar tags..." 
-            value={search} 
-            onChange={(e) => setSearch(e.target.value)} 
-            className="border p-2 my-2 w-full" 
-        />
-        <table className='w-full text-center'>
-        <thead>
-          <th>Nombre</th>
-          <th>Acciones</th>
-        </thead>
-        <tbody>
-        {
-            filteredTags.map(tag => (
-                <tr key={tag.id}>
-                    <td>{tag.nombre}</td>
-                    <td><button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => setConfirmDeleteId(tag.id)}>Eliminar</button></td>
-                </tr>
-            ))
-        }
-        </tbody>
-      </table>
+      <div className="p-6 bg-white rounded-lg shadow-md">
+        {/* Barra de búsqueda */}
+        <div className="relative mb-6">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg className="text-gray-400 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+          </div>
+          <input
+            type="text"
+            placeholder="Buscar por nombre..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4c7389] focus:border-[#4c7389] sm:text-sm"
+          />
+        </div>
 
+        {/* Tabla responsive */}
+        <div className="overflow-x-auto">
+          <div className="min-w-full divide-y divide-gray-200">
+            {/* Encabezados - visible en desktop */}
+            <div className="hidden md:grid md:grid-cols-6 bg-gray-50 rounded-t-lg">
+              <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-5">Nombre</div>
+              <div className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1">Acciones</div>
+            </div>
 
-      {/* Paginación */}
-    <div className="flex justify-center mt-4">
-      <button
-        disabled={currentPage === 1}
-        onClick={() => setCurrentPage(prev => prev - 1)}
-        className="px-4 py-2 bg-gray-300 rounded mx-1"
-      >
-        Anterior
-      </button>
-      <span className="px-4 py-2">Página {currentPage} de {totalPages}</span>
-      <button
-        disabled={currentPage === totalPages}
-        onClick={() => setCurrentPage(prev => prev + 1)}
-        className="px-4 py-2 bg-gray-300 rounded mx-1"
-      >
-        Siguiente
-      </button>
-    </div>
-
- <p>{message}</p>
-
-    {/* Modal de confirmación */}
-      {confirmDeleteId !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-md text-center">
-            <p>¿Estás seguro de que quieres eliminar esta etiqueta?</p>
-            <div className="mt-4 flex justify-center space-x-4">
-              <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center"
-                onClick={() => handleDelete(confirmDeleteId)}
-                disabled={isDeleting}
-              >
-                {isDeleting ? (
-                  <svg className="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-                  </svg>
-                ) : "Sí, eliminar"}
-              </button>
-              <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={() => setConfirmDeleteId(null)} disabled={isDeleting}>Cancelar</button>
+            {/* Cuerpo de la tabla */}
+            <div className="bg-white divide-y divide-gray-200">
+              {filteredTags.length > 0 ? (
+                filteredTags.map((tag) => (
+                  <div key={tag.id} className="flex flex-col md:grid md:grid-cols-6 hover:bg-gray-50 transition-colors border-b md:border-0">
+                    {/* Nombre */}
+                    <div className="px-4 py-2 md:py-3 md:col-span-5 flex md:block sm:justify-center">
+                      <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Nombre:</span>
+                      <span className="text-sm font-medium text-gray-900 w-28">{tag.nombre}</span>
+                    </div>
+                    {/* Acciones */}
+                    <div className="px-4 py-2 md:py-3 md:col-span-1 flex items-center sm:justify-center md:justify-start">
+                      <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Acciones:</span>
+                      <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer w-28' onClick={() => setConfirmDeleteId(tag.id)}>Eliminar</button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="px-4 py-6 text-center text-gray-500">
+                  No se encontraron etiquetas
+                </div>
+              )}
             </div>
           </div>
         </div>
-      )}
+
+        {/* Paginación */}
+        <div className="flex items-center justify-between mt-4">
+          <div className="text-sm text-gray-700">
+            Mostrando <span className="font-medium">{(currentPage - 1) * limit + 1}</span> a <span className="font-medium">{Math.min(currentPage * limit, totalTags)}</span> de <span className="font-medium">{totalTags}</span> etiquetas
+          </div>
+          <div className="flex space-x-2">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(prev => prev - 1)}
+              className={`px-4 py-2 rounded-md ${currentPage === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-[#4c7389] text-white hover:bg-[#3a5a6d]'}`}
+            >
+              Anterior
+            </button>
+            <button
+              disabled={currentPage === Math.ceil(totalTags / limit)}
+              onClick={() => setCurrentPage(prev => prev + 1)}
+              className={`px-4 py-2 rounded-md ${currentPage === Math.ceil(totalTags / limit) ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-[#4c7389] text-white hover:bg-[#3a5a6d]'}`}
+            >
+              Siguiente
+            </button>
+          </div>
+        </div>
+
+        <p>{message}</p>
+
+        {/* Modal de confirmación */}
+        {confirmDeleteId !== null && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded shadow-md text-center">
+              <p>¿Estás seguro de que quieres eliminar esta etiqueta?</p>
+              <div className="mt-4 flex justify-center space-x-4">
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center"
+                  onClick={() => handleDelete(confirmDeleteId)}
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? (
+                    <svg className="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                  ) : "Sí, eliminar"}
+                </button>
+                <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={() => setConfirmDeleteId(null)} disabled={isDeleting}>Cancelar</button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </>
   )
 }
