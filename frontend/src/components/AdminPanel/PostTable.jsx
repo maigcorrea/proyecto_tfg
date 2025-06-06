@@ -101,7 +101,7 @@ const PostTable = ({selectedUserId, currentPage, setCurrentPage}) => {
 
 
               {/* Contenido */}
-              <div className="bg-white divide-y divide-gray-200">
+              <div className="bg-white divide-y divide-gray-200 text-center">
                 {posts.map((post) => (
                   <div key={post.id} className="grid grid-cols-1 md:grid-cols-12 hover:bg-gray-50 transition-colors">
                     
