@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom';
-import { checkSession } from '../services/authService'; // Donde tienes la llamada a PHP
+import { checkSession } from '../services/authService'; 
 
 const PrivateRoute = ({children}) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -9,9 +9,6 @@ const PrivateRoute = ({children}) => {
   useEffect(() => {
     checkSession()
       .then(response => {
-        console.log(response.data); // Opcional, para debug 
-        // console.log('Status:', response.status);
-        // console.log('Status Text:', response.statusText);
         console.log('User data:', response.data.usuario);
         setLoggedIn(response.data.loggedIn); 
         console.log('Sesión activa', response.data.loggedIn)

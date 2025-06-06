@@ -24,7 +24,7 @@ const PrivateAdminRoute = ({children}) => {
     }, []);
 
     if (loading) {
-        return <div>Cargando... (puedes poner un spinner)</div>;
+        return <div>Cargando...</div>;
     }
 
     if (tipo !== "admin") {   

@@ -5,9 +5,9 @@ import Toast from '../UI/Toast';
 const DeleteCommentButton = ({
   commentId, 
   setComments, 
-  comments, 
+  comments = [], 
   setFilteredComments, 
-  filteredComments,
+  filteredComments = [],
   setMessage
 }) => {
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
@@ -21,8 +21,10 @@ const DeleteCommentButton = ({
             setMessage(response.message);
             
             if(response.success){
-                setComments(comments.filter(comment => comment.id !== id)); //Simulado localmente en vez de cargar todos los comentarios de nuevo
-                setFilteredComments(filteredComments.filter(comment => comment.id !== id)); // También actualiza filtrados
+                setComments(comments?.filter(comment => comment.id !== id) || []);
+                if (setFilteredComments) {
+                    setFilteredComments(filteredComments?.filter(comment => comment.id !== id) || []);
+                }
             }
 
         } catch (error) {
