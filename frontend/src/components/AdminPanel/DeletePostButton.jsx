@@ -3,34 +3,41 @@ import { deletePost } from '../../services/postService';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../context/UserrContext';
 
-const DeletePostButton = ({postId, setPostCreated, postCreated}) => {
+const DeletePostButton = ({ postId, setPostCreated, postCreated, setMessage }) => {
   const { userSession } = useContext(UserContext);
-    const navigate = useNavigate();
-    const [confirmDeleteId, setConfirmDeleteId] = useState(null);
-    const [isDeleting, setIsDeleting] = useState(false);
+  const navigate = useNavigate();
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-    const handleDelete = async(id) => {
-            try {
-              setIsDeleting(true); // Inicia el spinner
-              console.log("SE DEBERÍA BORRAR EL POST", id);
-              const response = await deletePost(id);
-              console.log(response);
-              alert(response.message);
-              if(response.success){
-                if(userSession.tipo === "admin"){
-                  navigate("/admin/posts");
-                }else{
-                  setPostCreated(postCreated.filter(post => post.id !== postId)); //Simulado localmente en vez de cargar todos los usuarios de nuevo
-                }
-              }
-        
-            } catch (error) {
-              console.log(error);
-            }finally {
-              setIsDeleting(false); // Finaliza el spinner
-              setConfirmDeleteId(null); // Cierra el modal después de eliminar
-            }
-          }
+  const handleDelete = async (id) => {
+    try {
+      setIsDeleting(true);
+      const response = await deletePost(id);
+      
+      if (setMessage) {
+        setMessage(response.message, response.success ? 'success' : 'error');
+      } else {
+        alert(response.message);
+      }
+
+      if (response.success) {
+        if (userSession.tipo === "admin") {
+          // Small delay to show the success message before navigating
+          setTimeout(() => navigate("/admin/posts"), 1500);
+        } else if (setPostCreated && postCreated) {
+          setPostCreated(postCreated.filter(post => post.id !== postId));
+        }
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      if (setMessage) {
+        setMessage("Error al eliminar la publicación", 'error');
+      }
+    } finally {
+      setIsDeleting(false);
+      setConfirmDeleteId(null);
+    }
+  }
   return (
     <>
         <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer' onClick={() => {setConfirmDeleteId(postId)}}>Eliminar publicación</button>
