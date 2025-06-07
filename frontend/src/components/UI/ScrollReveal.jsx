@@ -67,7 +67,7 @@ const ScrollReveal = ({
         scrollTrigger: {
           trigger: el,
           scroller,
-          start: 'top bottom-=5%',
+          start: 'top bottom-=50%',
           end: wordAnimationEnd,
           scrub: true,
         },
@@ -81,11 +81,11 @@ const ScrollReveal = ({
         {
           ease: 'none',
           filter: 'blur(0px)',
-          stagger: 0.15,
+          stagger: 0.05,
           scrollTrigger: {
             trigger: el,
             scroller,
-            start: 'top bottom-=20%',
+            start: 'top bottom-=55%',
             end: wordAnimationEnd,
             scrub: true,
           },
@@ -99,7 +99,7 @@ const ScrollReveal = ({
   }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
 
   return (
-    <h2 ref={containerRef} className={`my-5 ${containerClassName} `}>
+    <h2 ref={containerRef} className={`my-5 ${containerClassName} text-white`}>
       <p className={`text-[clamp(1.6rem,4vw,5rem)] leading-[1.5] font-semibold ${textClassName}`}>{splitText}</p>
     </h2>
   );

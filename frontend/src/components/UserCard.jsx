@@ -68,7 +68,7 @@ const handleClickBoton = (e, email) => {
 
   return (
     <>
-          <div className="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300 cursor-pointer" onClick={(e) => handleClickDiv(e,user.nickname)}>
+          <div className="bg-white p-4 rounded-lg shadow-md  text-center hover:shadow-lg transition duration-300 cursor-pointer" onClick={(e) => handleClickDiv(e,user.nickname)}>
               <img
                   src={user.img ? `/userAssets/${user.id}/${user.img}` : '/userAssets/default/defaultImg.png'}
                   alt={user.nickname}
