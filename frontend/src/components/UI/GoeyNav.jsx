@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const GooeyNav = ({
   items,
@@ -153,7 +154,7 @@ const GooeyNav = ({
         {`
           :root {
             --linear-ease: linear(0, 0.068, 0.19 2.7%, 0.804 8.1%, 1.037, 1.199 13.2%, 1.245, 1.27 15.8%, 1.274, 1.272 17.4%, 1.249 19.1%, 0.996 28%, 0.949, 0.928 33.3%, 0.926, 0.933 36.8%, 1.001 45.6%, 1.013, 1.019 50.8%, 1.018 54.4%, 1 63.1%, 0.995 68%, 1.001 85%, 1);
-          }
+            }
           .effect {
             position: absolute;
             opacity: 1;
@@ -163,7 +164,7 @@ const GooeyNav = ({
             z-index: 1;
           }
           .effect.text {
-            color: white;
+            color: blue;
             transition: color 0.3s ease;
           }
           .effect.text.active {
@@ -171,20 +172,20 @@ const GooeyNav = ({
           }
           .effect.filter {
             filter: blur(7px) contrast(100) blur(0);
-            mix-blend-mode: lighten;
+            mix-blend-mode: darken;
           }
           .effect.filter::before {
             content: "";
             position: absolute;
             inset: -75px;
             z-index: -2;
-            background: black;
+            background: none;
           }
           .effect.filter::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: white;
+            background: #a1c7c0;
             transform: scale(0);
             opacity: 0;
             z-index: -1;
@@ -267,7 +268,7 @@ const GooeyNav = ({
             }
           }
           li.active {
-            color: black;
+            color: gray;
             text-shadow: none;
           }
           li.active::after {
@@ -279,7 +280,7 @@ const GooeyNav = ({
             position: absolute;
             inset: 0;
             border-radius: 8px;
-            background: white;
+            background: #a1c7c0;
             opacity: 0;
             transform: scale(0);
             transition: all 0.3s ease;
@@ -307,13 +308,23 @@ const GooeyNav = ({
                   }`}
                 onClick={(e) => handleClick(e, index)}
               >
-                <a
-                  href={item.href}
-                  onKeyDown={(e) => handleKeyDown(e, index)}
-                  className="outline-none"
-                >
-                  {item.label}
-                </a>
+                {item.to ? (
+  <Link
+    to={item.to}
+    onKeyDown={(e) => handleKeyDown(e, index)}
+    className="outline-none"
+  >
+    {item.label}
+  </Link>
+) : (
+  <a
+    href={item.href}
+    onKeyDown={(e) => handleKeyDown(e, index)}
+    className="outline-none"
+  >
+    {item.label}
+  </a>
+)}
               </li>
             ))}
           </ul>

@@ -25,6 +25,7 @@ import UserDetailsAdmin from './pages/UserDetailsAdmin'
 import TagsEdition from './pages/TagsEdition'
 import TagsManagement from './pages/TagsManagement'
 import AdminLayout from './layout/AdminLayout'
+import ScrollToTop from './layout/ScrollToTop'
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
         <PostProvider>
 
           <BrowserRouter>
+          <ScrollToTop></ScrollToTop>
             <Routes>
               <Route path='/' element={<Layout />}>
                 <Route index element={<Inicio/>}></Route>
