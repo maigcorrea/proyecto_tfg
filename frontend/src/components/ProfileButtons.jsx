@@ -60,7 +60,13 @@ const ProfileButtons = () => {
                 {userSession.loggedIn ? <button onClick={cerrarSesion} ><FaSignOutAlt className=' text-gray-800 ml-2.5 cursor-pointer '/></button> : <Link to='/login'>Iniciar Sesión</Link>}
                 {/* <Link to='/login'>Iniciar Sesión</Link> */}
                 {/* Foto del usuario y desplegable con opciones al hacer hover sobre la foto*/}
-                {userSession.loggedIn ? userSession.img!=null ? <Link to="/my-profile"><img src={`/userAssets/${userSession.id}/${userSession.img}`} className="w-10 h-10 rounded-full object-cover cursor-pointer"/></Link> : <Link to={"/my-profile"}><img src={`/userAssets/default/defaultImg.png`} className="w-10 h-10 rounded-full object-cover cursor-pointer"/></Link> : <Link to='/register'>Registrarse</Link>}
+                {userSession.loggedIn ? (
+  userSession.img
+    ? <div className='w-10 h-10'><Link to="/my-profile"><img src={`/userAssets/${userSession.id}/${userSession.img}`} className="w-10 h-10 rounded-full object-fit cursor-pointer" /></Link></div>
+    : <div className='w-10 h-10'><Link to="/my-profile"><img src={`/userAssets/default/defaultImg.png`} className="w-10 h-10 rounded-full object-cover cursor-pointer" /></Link></div>
+) : (
+  <Link to='/register'>Registrarse</Link>
+)}
                 {/* <Link to='/register'>Registrarse</Link> */}
             </ul>
         </div>

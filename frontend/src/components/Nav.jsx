@@ -4,10 +4,17 @@ import ProfileButtons from './ProfileButtons'
 import { useContext } from 'react'
 import { UserContext } from '../../context/UserrContext'
 import AdminSidebar from './AdminSideBar'
+import GooeyNav from './UI/GoeyNav'
 
 
 const Nav = () => {
   const { userSession } = useContext(UserContext);
+
+  const items = [
+  { label: "Home", href: "#" },
+  { label: "About", href: "#" },
+  { label: "Contact", href: "#" },
+];
 
   return (
     <>
