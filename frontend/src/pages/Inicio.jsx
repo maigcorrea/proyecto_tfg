@@ -100,17 +100,6 @@ const Inicio = () => {
       </section>
 
 
-      <section className='flex align-center items-center'>
-        
-        <div className='w-[60%]'>
-      <p>alahaoansndednewld</p>
-        </div>
-        <div className='w-[40%]'>
-          <img src="../../public/externalResources/adnImg.jpg" alt="" />
-        </div>
-      </section>
-
-
       <section className="flex items-center justify-center min-h-[500px] w-full my-16">
         <div className="relative w-[90vw] max-w-6xl rounded-2xl overflow-hidden shadow-2xl">
           {/* Fondo con imagen y gradiente superior */}
@@ -119,22 +108,20 @@ const Inicio = () => {
           {/* Contenido */}
           <div className="relative z-10 flex flex-col items-center justify-center h-[500px] text-white px-8">
             <h2 className="text-3xl md:text-5xl font-light mb-12 drop-shadow-lg text-center leading-tight">
-              Vous avez une question ou un projet ?
+              ¿Quieres conocernos más?
             </h2>
             <div className="flex gap-8">
               <a
                 href="#write"
                 className="flex items-center gap-3 px-8 py-3 rounded-xl bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all duration-300 text-base md:text-lg font-medium hover:scale-105 transform"
               >
-                <span className="text-green-400 text-xl">&#10003;</span>
-                NOUS ÉCRIRE
+                Sobre nosotros
               </a>
               <a
                 href="#call"
                 className="flex items-center gap-3 px-8 py-3 rounded-xl bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all duration-300 text-base md:text-lg font-medium hover:scale-105 transform"
               >
-                <span className="text-green-400 text-xl">&#10003;</span>
-                NOUS APPELER
+                Contactar
               </a>
             </div>
           </div>
