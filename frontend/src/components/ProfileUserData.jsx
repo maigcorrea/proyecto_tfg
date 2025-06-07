@@ -272,11 +272,11 @@ const handlePasswordChange = async() => {
           .filter(([clave]) => clave !== 'ImgPerfil' && clave !== 'Tags' && clave !== 'Permiso' && clave !== 'Tipo' ) // Filtar los campos que no quieres mostrar
           .map(([clave, valor]) => (
             <div className='flex flex-col gap-2' key={clave}>
-              <label htmlFor={clave}>{clave === "Descripción" ? "Sobre mí:" : `${clave}:`}</label>
+              <label htmlFor={clave}>{clave === "Descripcion" ? "Sobre mí:" : `${clave}:`}</label>
               <div className='flex gap-2'>
                 <input
                   type={clave != "Nacimiento" ? "text" : "date"}
-                  value={valor || 'Añade información para que otros usuarios puedan conocerte mejor'}
+                  value={valor || null}
                   name={clave}
                   className='border p-2'
                   disabled={!editingField[clave]}
