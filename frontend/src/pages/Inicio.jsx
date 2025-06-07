@@ -69,6 +69,36 @@ const Inicio = () => {
         </div>
       </section>
 
+      <section className="flex flex-col md:flex-row items-center justify-center w-full min-h-[400px] my-20 px-4 md:px-16">
+        {/* Imagen con recorte personalizado */}
+        <div className="md:w-1/2 w-full flex justify-center md:justify-end mb-8 md:mb-0">
+          <div className="relative rounded-3xl" style={{
+            width: '100%',
+            maxWidth: '500px',
+            height: '320px',
+            clipPath: 'polygon(35% 26%, 35% 0%, 97% 0%, 96% 69%, 70% 69%, 70% 91%, 1% 91%, 1% 26%)',
+            WebkitClipPath: 'polygon(35% 26%, 35% 0%, 97% 0%, 96% 69%, 70% 69%, 70% 91%, 1% 91%, 1% 26%)'
+          }}>
+            <img 
+              src={('../../public/mp4/dna.gif')} 
+              alt="" 
+              className="object-cover w-full h-full"
+            />
+          </div>
+        </div>
+        {/* Contenido */}
+        <div className="md:w-1/2 w-full md:pl-12 flex flex-col justify-center">
+          <span className="text-primary-500 text-sm font-semibold mb-2">¿Por qué unirte?</span>
+          <h2 className="text-2xl md:text-3xl font-light italic mb-2">SingularLink, <span className="not-italic">la red social que</span></h2>
+          <h3 className="text-2xl md:text-3xl font-black mb-4">da visibilidad <span className="font-light ">a realidades</span> <span className="font-black">poco conocidas</span></h3>
+          <ul className="text-gray-700 text-sm md:text-base mb-4 space-y-2">
+            <li className="flex items-start"><span className="text-black mr-2 mt-1">◆</span> Conectar con personas que viven situaciones similares</li>
+            <li className="flex items-start"><span className="text-black mr-2 mt-1">◆</span> Compartir tu historia, tus avances y tus días difíciles.</li>
+            <li className="flex items-start"><span className="text-black mr-2 mt-1">◆</span> Sabemos lo delicado que es hablar de salud. Por eso tu privacidad es prioridad absoluta.</li>
+          </ul>
+        </div>
+      </section>
+
 
       <section className='flex align-center items-center'>
         

@@ -99,7 +99,7 @@ const ScrollReveal = ({
   }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
 
   return (
-    <h2 ref={containerRef} className={`my-5 ${containerClassName} text-white`}>
+    <h2 ref={containerRef} className={`my-5 ${containerClassName} text-gray-300`}>
       <p className={`text-[clamp(1.6rem,4vw,5rem)] leading-[1.5] font-semibold ${textClassName}`}>{splitText}</p>
     </h2>
   );
