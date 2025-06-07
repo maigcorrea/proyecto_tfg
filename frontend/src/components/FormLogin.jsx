@@ -1,122 +1,168 @@
-import React, { useEffect, useState } from 'react'
-import css from './FormLogin.module.css';
-import { sendLoginData } from "../services/authService";
-import { setSessions } from "../services/authService";
-import { useNavigate } from "react-router";
-import { useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router';
 import { UserContext } from '../../context/UserrContext';
+import { sendLoginData, setSessions } from '../services/authService';
+import css from './FormLogin.module.css';
 
 const FormLogin = () => {
+  const { setUserSession } = useContext(UserContext);
+  const navigate = useNavigate();
+  
+  // Estados
+  const [formData, setFormData] = useState({
+    nickname: '',
+    password: ''
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-    const { setUserSession } = useContext(UserContext);
-    const navigate= useNavigate();
-
-    //Importar dinámicamente el link de icons de Google
-    useEffect(() => {
-        const link = document.createElement('link');
-        link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility,visibility_off';
-        link.rel = 'stylesheet';
-        document.head.appendChild(link);
+  // Cargar iconos de Material Symbols
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_name=visibility,visibility_off';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
     
-        // Limpieza si el componente se desmonta
-        return () => {
-          document.head.removeChild(link);
-        };
-      }, []);
-
-      //Enviar datos del formulario a PHP con formData
-
-      //Definir los datos que se van a enviar
-      const [nickname, setNickname] = useState("");
-      const [password, setPassword] = useState("");
-
-      const handleSubmit = async (e) => {
-        e.preventDefault(); // Evita el comportamiento por defecto del formulario
-        
-      //Crear formData - Crea un objeto que contiene los datos que se quieren enviar al backend
-      const formData= new FormData();
-      formData.append("nickname", nickname);
-      formData.append("password", password);
-
-      try{
-        //Llamar al servicio que hace la petición, es decir, llamar a la función dentro de /services/userService.js
-        const response = await sendLoginData(formData);
-        
-        // 3. Trabajamos con la respuesta
-        console.log('Respuesta del backend:', response);
-        console.log('Datos de la respuesta:', response.success);
-        console.log(typeof response.success);
-        
-        // Aquí decides si rediriges, guardas el token, etc.
-
-        // Si response.data es un string, convierte ese string a un objeto JSON
-        // const responseData = JSON.parse(response.data);
-        
-        if (response.success) {
-            // Si el backend devuelve algo como success: true
-            //LLamar al servicio que hace la petición para setear las sesiones
-            const sesionsResponse= await setSessions(formData);
-            console.log("Sesiones:",sesionsResponse.success);
-            console.log("Sesiones:",sesionsResponse);
-            console.log("Datos que supuestamente están guardados en las sesiones:",sesionsResponse.usu," ",sesionsResponse.tipo, " ", sesionsResponse.id, " ", sesionsResponse.permiso);
-            console.log("Hay sesión:",sesionsResponse.contenidoSesion);
-
-            if(sesionsResponse.success){
-              const tipo=sesionsResponse.type;
-              console.log("Sesiones:",sesionsResponse.success);
-              //Actualizar el contexto del usuario
-              setUserSession({
-                 id: sesionsResponse.id,
-                 usuario: sesionsResponse.usu,
-                 tipo: sesionsResponse.tipo,
-                 permiso: sesionsResponse.permiso
-              });
-
-              //console.log("Datos dentro del contexto", userSession);
-              
-              alert(response.message);
-              // Redirige o guarda el token, lo que necesites
-              //Redirigir al dashboard en función del tipo de usuario
-              if(sesionsResponse.tipo==="usu"){
-                navigate("/");
-                setInterval(location.reload(),10000);
-              }else{
-                navigate("/dashboard");
-                setInterval(location.reload(),10000);
-              }
-
-            }
-        } else {
-            alert(response.message || 'Credenciales incorrectas');
-        }
-      }catch(error){
-        console.error('Error en el login:', error);
-      }
+    return () => {
+      document.head.removeChild(link);
     };
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('nickname', formData.nickname);
+    formDataToSend.append('password', formData.password);
+
+    try {
+      const response = await sendLoginData(formDataToSend);
+      
+      if (response.success) {
+        const sessionsResponse = await setSessions(formDataToSend);
+        
+        if (sessionsResponse.success) {
+          setUserSession({
+            id: sessionsResponse.id,
+            usuario: sessionsResponse.usu,
+            tipo: sessionsResponse.tipo,
+            permiso: sessionsResponse.permiso
+          });
+
+          // Redirigir según el tipo de usuario
+          if (sessionsResponse.tipo === "usu") {
+            navigate("/");
+          } else {
+            navigate("/dashboard");
+          }
+          
+          // Recargar la página después de 100ms para asegurar la navegación
+          setTimeout(() => window.location.reload(), 100);
+        } else {
+          setError(sessionsResponse.message || 'Error al iniciar sesión');
+        }
+      } else {
+        setError(response.message || 'Credenciales incorrectas');
+      }
+    } catch (error) {
+      console.error('Error en el login:', error);
+      setError('Error de conexión. Por favor, inténtalo de nuevo.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <>
-        <div className='bg-gray-500 h-screen flex items-center'>
-            <div className={css.formInicio}>
-                <div className={css.formSecundario}>
-                    <form onSubmit={handleSubmit} action="" method="post" className=''>
-                        <label htmlFor="nickname">Nickname o email:</label><br></br>
-                        <input type="text" name="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} className='border outline-none' id="" required /><br></br>
-                        <label htmlFor="contr">Contraseña:</label><br></br>
-                        <div className='relative w-fit'>
-                            <input type="text" name="password" value={password} onChange={(e) => setPassword(e.target.value)} id="" placeholder="Indica tu contraseña" className='border outline-none' required />
-                            <i className="material-symbols-outlined eye absolute right-[10px] bottom-[0px]">
-                            visibility
-                            </i>
-                        </div>
-
-                        <input type="submit" value="Enviar" className='border cursor-pointer' />
-                    </form>
-                </div>
+    <div className={css.loginContainer}>
+      <div className={css.loginCard}>
+        <header className={css.loginHeader}>
+          <h1>Bienvenido de nuevo</h1>
+          <p>Inicia sesión para continuar</p>
+        </header>
+        
+        <form onSubmit={handleSubmit} className={css.loginForm}>
+          {error && (
+            <div className={css.errorMessage}>
+              {error}
             </div>
-        </div>
-    </>
-  )
-}
+          )}
+          
+          <div className={css.formGroup}>
+            <label htmlFor="nickname">Usuario o correo electrónico</label>
+            <input
+              type="text"
+              id="nickname"
+              name="nickname"
+              value={formData.nickname}
+              onChange={handleChange}
+              className={css.formControl}
+              placeholder="Ingresa tu usuario o email"
+              required
+            />
+          </div>
+          
+          <div className={css.formGroup}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <label htmlFor="password">Contraseña</label>
+              <a href="/forgot-password" className={css.forgotPassword}>
+                ¿Olvidaste tu contraseña?
+              </a>
+            </div>
+            <div className={css.passwordWrapper}>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className={css.formControl}
+                placeholder="••••••••"
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className={css.togglePassword}
+                aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
+                  {showPassword ? 'visibility_off' : 'visibility'}
+                </span>
+              </button>
+            </div>
+          </div>
+          
+          <button
+            type="submit"
+            className={css.loginButton}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+          </button>
+          
+          <div className={css.loginFooter}>
+            ¿No tienes una cuenta?{' '}
+            <a href="/register">Regístrate</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-export default FormLogin
+export default FormLogin;
