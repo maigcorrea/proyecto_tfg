@@ -53,7 +53,7 @@ const GridMotion = ({ items = [], gradientColor = 'black' }) => {
       <section
         className="w-full h-screen overflow-hidden relative flex items-center justify-center"
         style={{
-          background: `radial-gradient(circle, ${gradientColor} 0%, transparent 100%)`,
+          background: `radial-gradient(circle, ${gradientColor} 20%, transparent 100%)`,
         }}
       >
         {/* Noise overlay */}
@@ -77,9 +77,9 @@ const GridMotion = ({ items = [], gradientColor = 'black' }) => {
                     <div
                       className="relative w-full h-full overflow-hidden rounded-[10px] bg-[#111] flex items-center justify-center text-white text-[1.5rem]"
                     >
-                      {typeof content === 'string' && content.startsWith('http') ? (
+                      {typeof content === 'string' && content.startsWith('/') ? (
                         <div
-                          className="w-full h-full bg-cover bg-center absolute top-0 left-0"
+                          className="w-full h-full bg-cover bg-center absolute top-0 left-0 grayscale hover:grayscale-0 transition duration-500"
                           style={{ backgroundImage: `url(${content})` }}
                         ></div>
                       ) : (
