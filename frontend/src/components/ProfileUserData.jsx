@@ -409,18 +409,30 @@ const handlePasswordChange = async() => {
     <div className="w-full lg:w-1/2 xl:w-[70%] mx-auto px-2 mt-10 lg:mt-0 flex flex-col">
       {/* Tabs */}
       <div className="w-full">
-        <div className="flex flex-wrap border-b border-gray-200 mb-4 overflow-x-auto">
+        <div className="flex flex-wrap items-center gap-2 bg-cyan-50 mt-10 rounded-xl p-2 border border-cyan-100 shadow-sm mb-4 overflow-x-auto">
           {['Creados', 'Me gusta', 'Comentados', 'Comentarios'].map((tab, idx) => (
             <button
               key={tab}
-              className={`py-2 px-4 -mb-px border-b-2 font-medium text-sm transition-colors duration-200 focus:outline-none whitespace-nowrap ${selectedTab === idx ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-blue-500'}`}
+              className={`relative py-2 px-5 font-semibold rounded-lg transition-all duration-200 focus:outline-none whitespace-nowrap
+                ${selectedTab === idx
+                  ? 'bg-gradient-to-tr from-blue-400 to-cyan-400 text-white shadow-md scale-105'
+                  : 'bg-white text-cyan-700 hover:bg-cyan-100 hover:text-blue-600 border border-transparent'}
+              `}
+              style={{ minWidth: 120 }}
               onClick={() => setSelectedTab(idx)}
               type="button"
             >
               {tab}
+              {selectedTab === idx && (
+                <span className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-2/3 h-1 rounded bg-blue-400 animate-fadeIn"></span>
+              )}
             </button>
           ))}
         </div>
+        <style>{`
+          @keyframes fadeIn { from { opacity: 0; transform: scaleX(0.5);} to { opacity: 1; transform: scaleX(1);} }
+          .animate-fadeIn { animation: fadeIn 0.3s; }
+        `}</style>
         <div className="p-2">
           {selectedTab === 0 && (
             <div className=''>
