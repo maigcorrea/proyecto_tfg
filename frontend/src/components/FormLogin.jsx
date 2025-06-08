@@ -88,78 +88,70 @@ const FormLogin = () => {
   };
 
   return (
-    <div className={css.loginContainer}>
-      <div className={css.loginCard}>
-        <header className={css.loginHeader}>
-          <h1>Bienvenido de nuevo</h1>
-          <p>Inicia sesión para continuar</p>
-        </header>
-        
-        <form onSubmit={handleSubmit} className={css.loginForm}>
-          {error && (
-            <div className={css.errorMessage}>
-              {error}
-            </div>
-          )}
-          
-          <div className={css.formGroup}>
-            <label htmlFor="nickname">Usuario o correo electrónico</label>
-            <input
-              type="text"
-              id="nickname"
-              name="nickname"
-              value={formData.nickname}
-              onChange={handleChange}
-              className={css.formControl}
-              placeholder="Ingresa tu usuario o email"
-              required
-            />
-          </div>
-          
-          <div className={css.formGroup}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <label htmlFor="password">Contraseña</label>
-              <a href="/forgot-password" className={css.forgotPassword}>
-                ¿Olvidaste tu contraseña?
-              </a>
-            </div>
-            <div className={css.passwordWrapper}>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#b0d5d3] to-slate-300 py-8 px-2 ">
+      <div className="w-full max-w-7xl flex rounded-3xl shadow-2xl overflow-hidden bg-white">
+        {/* Panel Izquierdo: Formulario */}
+        <div className="w-full md:w-1/2 bg-white px-8 py-12 flex flex-col justify-center">
+          <h2 className="text-3xl font-bold mb-2 text-center text-gray-900">Iniciar sesión</h2>
+          <p className="text-gray-500 text-center mb-6">Accede con tus credenciales</p>
+          <form onSubmit={handleSubmit} className="space-y-3">
+            {error && (
+              <div className="text-red-500 text-xs mt-1 text-center">{error}</div>
+            )}
+            <div>
+              <label htmlFor="nickname" className="block text-sm font-medium text-gray-700">Usuario o correo electrónico</label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                name="password"
-                value={formData.password}
+                type="text"
+                id="nickname"
+                name="nickname"
+                value={formData.nickname}
                 onChange={handleChange}
-                className={css.formControl}
-                placeholder="••••••••"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#b0d5d3]"
+                placeholder="Ingresa tu usuario o email"
                 required
               />
-              <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className={css.togglePassword}
-                aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
-                  {showPassword ? 'visibility_off' : 'visibility'}
-                </span>
-              </button>
             </div>
-          </div>
-          
-          <button
-            type="submit"
-            className={css.loginButton}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
-          </button>
-          
-          <div className={css.loginFooter}>
-            ¿No tienes una cuenta?{' '}
-            <a href="/register">Regístrate</a>
-          </div>
-        </form>
+            <div>
+              
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#b0d5d3] pr-10"
+                  placeholder="••••••••"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#b0d5d3] focus:outline-none"
+                  aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                >
+                  <span className="material-symbols-outlined text-lg">
+                    {showPassword ? 'visibility_off' : 'visibility'}
+                  </span>
+                </button>
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="w-full py-2 mt-2 bg-[#b0d5d3] hover:bg-[#92b1af] text-black font-semibold rounded-lg shadow transition"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+            </button>
+            
+          </form>
+        </div>
+        {/* Panel Derecho: Mensaje de bienvenida */}
+        <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-[#b0d5d3] to-[#92b1af] text-black px-10 py-12 relative">
+          <h2 className="text-3xl font-bold mb-2">¿Nuevo por aquí?</h2>
+          <p className="mb-6 text-center text-lg">Regístrate para acceder a todas las funcionalidades</p>
+          <button onClick={() => navigate('/register')} className="px-8 py-2 border-2 border-black rounded-lg text-black font-semibold hover:bg-black hover:text-white transition">REGÍSTRATE</button>
+        </div>
       </div>
     </div>
   );

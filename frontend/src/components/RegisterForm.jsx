@@ -93,63 +93,62 @@ const RegisterForm = () => {
         }
       }
   return (
-    <>
-         <div className='bg-gray-500 h-screen flex items-center'>
-            <div className={css.formInicio}>
-                <div className={css.formSecundario}>
-                    <form onSubmit={handleSubmit} encType="multipart/form-data" action="" method="post" className='text-center'>
-                        <label htmlFor="nombre">Nombre:</label><br></br>
-                        <input type="text" name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} className='border outline-none' id="" /><br></br>
-
-                        <label htmlFor="email">Email:</label><br></br>
-                        <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className='border outline-none' id="" /><br></br>
-
-                        {/* Comprobar si el nickname ya está pillado */}
-                        <label htmlFor="nickname">Nickname:</label><br></br>
-                        <input type="text" name="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} className='border outline-none' id="" /><br></br>
-
-                        {/* Comprobar que el número es válido (Se le puede enviar un sms) */}
-                        <label htmlFor="tel">Teléfono:</label><br></br>
-                        <input type="number" name="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} className='border outline-none' id="" required /><br></br>
-
-                        {/* Controlar que el usuario sea mayor de edad */}
-                        <label htmlFor="nickname">Nacimiento:</label><br></br>
-                        <input type="date" name="nacimiento" value={nac} onChange={(e) => setNac(e.target.value)} min="1927-01-01" max={limitYear} className='border outline-none' id="" /><br></br>
-
-                        {/* Controlar contraseña y que vayan saliendo mensajitos con colores en función de la longitud de la contraseña y cosas de esas */}
-                        <label htmlFor="contr">Contraseña:</label><br></br>
-                        <div className='relative w-fit text-center m-auto'>
-                            <input type="password" name="contr" value={password} onChange={(e) => setPassword(e.target.value)} id="" placeholder="Indica tu contraseña" className='border outline-none' required />
-                            <i className="material-symbols-outlined eye absolute right-[10px] bottom-[0px]">
-                            visibility
-                            </i>
-                        </div>
-
-
-                        <label htmlFor="repContr">Repetir contraseña:</label><br></br>
-                        <div className='relative w-fit text-center m-auto'>
-                            <input type="password" name="repContr" value={repPass} onChange={(e) => setRepPass(e.target.value)} id="" placeholder="Indica tu contraseña" className='border outline-none' required />
-                            <i className="material-symbols-outlined eye absolute right-[10px] bottom-[0px]">
-                            visibility
-                            </i>
-                        </div>
-
-                        <label htmlFor="imgPerfil">Imagen:</label><br></br>
-                        <input type="file" name="img" onChange={(e) => setPerfil(e.target.files[0])}
-                        accept="image/*" id="" className='cursor-pointer' /><br></br>
-
-                        
-                        <input type="checkbox" name="permiso" value={permiso} onChange={(e) => setPermiso(e.target.checked)} id="" className='cursor-pointer' />Doy permiso para que otros usuarios me contacten a través de correo electrónico<br></br>
-
-                        {error && <p className="text-red-500">{error}</p>}
-                        {success && <p className="text-green-500">{success}</p>}
-
-                        <input type="submit" value="Enviar" className='border cursor-pointer' />
-                    </form>
-                </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#b0d5d3] to-slate-300 py-8 px-2">
+      <div className="w-full max-w-7xl flex rounded-3xl shadow-2xl overflow-hidden bg-white mt-16">
+        {/* Panel Izquierdo: Formulario */}
+        <div className="w-full md:w-1/2 bg-white px-8 py-12 flex flex-col justify-center">
+          <h2 className="text-3xl font-bold mb-2 text-center text-gray-900">Registro</h2>
+          <p className="text-gray-500 text-center mb-6">Crea tu cuenta</p>
+          <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-3">
+            <div>
+              <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">Nombre</label>
+              <input type="text" name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" />
             </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+            </div>
+            <div>
+              <label htmlFor="nickname" className="block text-sm font-medium text-gray-700">Nickname</label>
+              <input type="text" name="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+            </div>
+            <div>
+              <label htmlFor="tel" className="block text-sm font-medium text-gray-700">Teléfono</label>
+              <input type="number" name="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" required />
+            </div>
+            <div>
+              <label htmlFor="nacimiento" className="block text-sm font-medium text-gray-700">Nacimiento</label>
+              <input type="date" name="nacimiento" value={nac} onChange={(e) => setNac(e.target.value)} min="1927-01-01" max={limitYear} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+            </div>
+            <div>
+              <label htmlFor="contr" className="block text-sm font-medium text-gray-700">Contraseña</label>
+              <input type="password" name="contr" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Indica tu contraseña" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" required />
+            </div>
+            <div>
+              <label htmlFor="repContr" className="block text-sm font-medium text-gray-700">Repetir contraseña</label>
+              <input type="password" name="repContr" value={repPass} onChange={(e) => setRepPass(e.target.value)} placeholder="Repite tu contraseña" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" required />
+            </div>
+            <div>
+              <label htmlFor="imgPerfil" className="block text-sm font-medium text-gray-700">Imagen</label>
+              <input type="file" name="img" onChange={(e) => setPerfil(e.target.files[0])} accept="image/*" className="mt-1 block w-full cursor-pointer text-sm" />
+            </div>
+            <div className="flex items-center space-x-2">
+              <input type="checkbox" name="permiso" checked={permiso} onChange={(e) => setPermiso(e.target.checked)} className="cursor-pointer accent-black" />
+              <span className="text-xs text-gray-600">Doy permiso para que otros usuarios me contacten a través de correo electrónico</span>
+            </div>
+            {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+            {success && <p className="text-green-500 text-xs mt-1">{success}</p>}
+            <button type="submit" className="w-full py-2 mt-2 bg-[#b0d5d3] hover:bg-[#92b1af] text-black font-semibold rounded-lg shadow transition">Enviar</button>
+          </form>
         </div>
-    </>
+        {/* Panel Derecho: Mensaje de bienvenida */}
+        <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-[#b0d5d3] to-purple-500 text-black px-10 py-12 relative">
+          <h2 className="text-3xl font-bold mb-2 text-center">Hola, ya tienes cuenta?</h2>
+          <p className="mb-6 text-center text-lg">Identificate para tener acceso a todo el contenido</p>
+          <button onClick={() => navigate('/login')} className="px-8 py-2 border-2 border-black rounded-lg text-black font-semibold hover:bg-black hover:text-white transition">INICIAR SESIÓN</button>
+        </div>
+      </div>
+    </div>
   )
 }
 
