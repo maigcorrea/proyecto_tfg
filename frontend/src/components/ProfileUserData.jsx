@@ -280,11 +280,11 @@ const handlePasswordChange = async() => {
         </div>
       )}
 
-<div className='flex'>
+<div className='flex mt-16 flex-col items-start lg:flex-row w-full min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100'>
 
 
       {/* Contenedor principal */}
-      <div className="flex lg:w-[50%] w-[100%] wrap flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100 py-8 px-2">
+      <div className="w-full lg:w-1/2 flex flex-col items-center ml-4 justify-center py-8 px-2 bg-gradient-to-br from-blue-50 to-cyan-100">
         {/* Tarjeta perfil */}
         <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-xl flex flex-col items-center gap-8 border-t-8 border-cyan-400">
 
@@ -406,14 +406,14 @@ const handlePasswordChange = async() => {
       </div>
 
 
-    <div className="w-[70%]">
+    <div className="w-full lg:w-1/2 xl:w-[70%] mx-auto px-2 mt-10 lg:mt-0 flex flex-col">
       {/* Tabs */}
-      <div className="w-full mt-20">
-        <div className="flex border-b border-gray-200 mb-4">
+      <div className="w-full">
+        <div className="flex flex-wrap border-b border-gray-200 mb-4 overflow-x-auto">
           {['Creados', 'Me gusta', 'Comentados', 'Comentarios'].map((tab, idx) => (
             <button
               key={tab}
-              className={`py-2 px-4 -mb-px border-b-2 font-medium text-sm transition-colors duration-200 focus:outline-none ${selectedTab === idx ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-blue-500'}`}
+              className={`py-2 px-4 -mb-px border-b-2 font-medium text-sm transition-colors duration-200 focus:outline-none whitespace-nowrap ${selectedTab === idx ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-blue-500'}`}
               onClick={() => setSelectedTab(idx)}
               type="button"
             >
