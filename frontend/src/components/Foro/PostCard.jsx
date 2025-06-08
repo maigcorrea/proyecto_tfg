@@ -142,7 +142,7 @@ const PostCard = ({post}) => {
     <>
         <div className="bg-white p-6 rounded-2xl shadow-lg mb-6 border border-gray-100 transition-shadow hover:shadow-2xl group">
           {/* Header usuario */}
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-4 mb-4 cursor-pointer" onClick={handleNavigate}> 
             <div className="relative">
               <img
                 src={`/userAssets/${post.user_id}/${post.img}`}

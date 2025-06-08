@@ -62,31 +62,47 @@ const CommentSection = ({postId, setCommentsCount }) => {
 
   return (
     <>
-        <div className="mt-4">
-      <input
-        type="text"
-        className="w-full border px-2 py-1 rounded text-sm"
-        placeholder="Añade un comentario..."
-        value={comentario}
-        onChange={(e) => setComentario(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleEnviar()}
-      />
-      <div className="mt-2 space-y-2">
-        {comentarios.slice(0, mostrarMas).map((c) => (
-          <div key={c.id} className="text-sm border-b pb-1">
-            <span className="font-semibold">{c.usuario_nombre}</span>: {c.contenido} <span className="text-xs text-gray-400">({c.fecha})</span>
-          </div>
-        ))}
-        {comentarios.length > mostrarMas && (
+      <div className="mt-4">
+        <div className="flex gap-2 mb-3">
+          <input
+            type="text"
+            className="flex-1 border border-gray-200 rounded-full px-4 py-2 text-sm shadow-sm focus:outline-none focus:border-[#a1c7c0] focus:ring-1 focus:ring-[#a1c7c0] transition-all placeholder-gray-400 bg-white"
+            placeholder="Añade un comentario..."
+            value={comentario}
+            onChange={(e) => setComentario(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleEnviar()}
+            maxLength={80}
+          />
           <button
-            className="text-blue-500 text-xs mt-1"
-            onClick={() => setMostrarMas(prev => prev + 3)}
+            onClick={handleEnviar}
+            className={`px-4 py-2 rounded-full text-sm font-semibold shadow transition-all duration-200
+              ${comentario.trim() ? 'bg-gradient-to-r from-[#a1c7c0] to-[#a1c7c0] text-black hover:from-[#6c837f] hover:to-[#6c837f] scale-105 cursor-pointer' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+            disabled={!comentario.trim()}
+            title="Enviar comentario"
           >
-            Mostrar más comentarios
+            Enviar
           </button>
-        )}
+        </div>
+        <div className="space-y-3">
+          {comentarios.slice(0, mostrarMas).map((c) => (
+            <div key={c.id} className="bg-gray-50 border border-gray-100 rounded-lg px-4 py-2 shadow-sm flex flex-col">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-semibold text-blue-700 text-sm">{c.usuario_nombre}</span>
+                <span className="text-xs text-gray-400">{c.fecha}</span>
+              </div>
+              <span className="text-gray-800 text-sm">{c.contenido}</span>
+            </div>
+          ))}
+          {comentarios.length > mostrarMas && (
+            <button
+              className="text-sm text-blue-500 hover:underline hover:text-blue-700 transition mt-1"
+              onClick={() => setMostrarMas(prev => prev + 3)}
+            >
+              Mostrar más comentarios
+            </button>
+          )}
+        </div>
       </div>
-    </div>
     </>
   )
 }

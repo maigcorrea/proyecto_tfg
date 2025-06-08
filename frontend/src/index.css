@@ -35,3 +35,25 @@
     animation: comments-collapse 0.3s cubic-bezier(0.4,0,0.2,1) forwards;
     overflow: hidden;
 }
+
+/* Animaciones para modal */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes modal-pop {
+  0%   { opacity: 0; transform: scale(0.95) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes modal-unpop {
+  0%   { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(0.95) translateY(20px); }
+}
+.animate-fade-in { animation: fade-in 0.3s both; }
+.animate-fade-out { animation: fade-out 0.25s both; }
+.animate-modal-pop { animation: modal-pop 0.35s cubic-bezier(0.4,0,0.2,1) both; }
+.animate-modal-unpop { animation: modal-unpop 0.25s cubic-bezier(0.4,0,0.2,1) both; }
