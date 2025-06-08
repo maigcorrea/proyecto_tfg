@@ -4,6 +4,17 @@ const MobileFiltersModal = ({ open, onClose, children }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [showAnim, setShowAnim] = useState(false);
 
+  // Bloquea scroll vertical del body cuando el modal está visible
+  useEffect(() => {
+    if (isVisible) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+    // Limpieza extra por si acaso
+    return () => document.body.classList.remove('overflow-hidden');
+  }, [isVisible]);
+
   useEffect(() => {
     if (open) {
       setIsVisible(true);
