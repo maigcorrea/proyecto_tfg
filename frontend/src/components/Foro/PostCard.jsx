@@ -1,5 +1,5 @@
 //REPRESENTA UN POST INDIVIDUAL EN EL FORO
-import React,{useContext, useEffect, useState} from 'react'
+import React,{useContext, useEffect, useState, useRef} from 'react'
 import CommentSection from './CommentSection';
 import { useNavigate } from 'react-router-dom';
 import { createLike } from '../../services/likeService';
@@ -16,6 +16,8 @@ const PostCard = ({post}) => {
     const [color, setColor] = useState(post.userLiked ? "text-blue-500" : "text-gray-600");
     const [likesCount, setLikesCount] = useState(post.likesCount || 0);
     const [commentsCount, setCommentsCount] = useState( post.commentsCount || 0); //Faltaría recuperar el número inicial de comentarios del post del contexto 
+    const [likeAnimation, setLikeAnimation] = useState(''); // 'pop' o 'unpop'
+
 
     //AQUÍ
     /*const { setPosts } = useContext(PostContext); // <- Obtenemos setPosts del contexto
@@ -83,6 +85,7 @@ const PostCard = ({post}) => {
 
 
   const handleCreateLike = async () => {
+    setLikeAnimation('pop');
     const formData = new FormData();
     formData.append('postId', post.id);
 
@@ -109,6 +112,7 @@ const PostCard = ({post}) => {
   }
 
   const handleRemoveLike = async () => {
+    setLikeAnimation('unpop');
     const formData = new FormData();
     formData.append('postId', post.id);
 
@@ -136,31 +140,71 @@ const PostCard = ({post}) => {
   
   return (
     <>
-        <div className="bg-white p-4 rounded shadow mb-4">
-      <div className="flex items-center space-x-3 mb-2 cursor-pointer" onClick={handleNavigate}>
-        <img
-          src={`/userAssets/${post.user_id}/${post.img}`}
-          alt={post.nickname}
-          className="w-10 h-10 rounded-full object-cover"
-        />
-        <div>
-          <p className="font-semibold">{post.nombre} <span className="text-gray-500 text-sm">@{post.nickname}</span></p>
-          <p className="text-xs text-gray-400">{tiempoDesde(post.fecha)}</p>
+        <div className="bg-white p-6 rounded-2xl shadow-lg mb-6 border border-gray-100 transition-shadow hover:shadow-2xl group">
+          {/* Header usuario */}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="relative">
+              <img
+                src={`/userAssets/${post.user_id}/${post.img}`}
+                alt={post.nickname}
+                className="w-14 h-14 rounded-full object-cover border-2 border-blue-200 shadow-sm group-hover:scale-105 transition-transform"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-gray-800 leading-tight text-base">{post.nombre}
+                <span className="ml-2 text-gray-400 text-sm font-normal">@{post.nickname}</span>
+              </span>
+              <span className="text-xs text-gray-400 mt-1">{tiempoDesde(post.fecha)}</span>
+            </div>
+          </div>
+
+          {/* Contenido */}
+          <div className="mb-4 px-1">
+            <p className="text-gray-900 text-[1.05rem] leading-relaxed break-words whitespace-pre-line">{post.contenido}</p>
+          </div>
+
+          {/* Acciones */}
+          <div className="flex items-center gap-8 mt-2 px-1">
+            <button
+              className={`flex items-center gap-2 px-3 py-1 rounded-full transition-colors text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-100 ${color} hover:bg-blue-50`}
+              onClick={crear ? handleCreateLike : handleRemoveLike}
+            >
+              <span
+                className={`text-lg transition-all duration-300 ease-in-out transform 
+                  ${likeAnimation === 'pop' && !crear ? 'animate-like-pop' : ''}
+                  ${likeAnimation === 'unpop' && crear ? 'animate-like-unpop' : ''}
+                `}
+                style={{ display: 'inline-block', cursor: 'pointer' }}
+                key={crear ? 'unliked' : 'liked'}
+                onAnimationEnd={() => setLikeAnimation('')}
+              >
+                {crear ? '🤍' : '❤️'}
+              </span>
+              <span className='text-black cursor-pointer'>Like</span>
+              {likesCount !== 0 && <span className="ml-1 text-gray-500 font-semibold">{likesCount}</span>}
+            </button>
+            <button
+              onClick={() => setMostrarComentarios(!mostrarComentarios)}
+              className="flex items-center gap-2 px-3 py-1 rounded-full transition-colors text-base font-medium text-gray-600 hover:text-blue-500 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-100"
+            >
+              
+              <span className='text-black cursor-pointer'>Comentar</span>
+              {commentsCount !== 0 && <span className="ml-1 text-gray-500 font-semibold">{commentsCount}</span>}
+            </button>
+          </div>
+
+          {/* Sección de comentarios con animación simple Tailwind */}
+          <div
+            className={`transition-all duration-300 ease-in-out overflow-hidden
+              ${mostrarComentarios ? 'max-h-[1000px] opacity-100 mt-4 border-t pt-4 border-gray-100' : 'max-h-0 opacity-0'}
+            `}
+            style={{ willChange: 'max-height, opacity' }}
+          >
+            {mostrarComentarios && (
+              <CommentSection postId={post.id} setCommentsCount={setCommentsCount} />
+            )}
+          </div>
         </div>
-      </div>
-
-      <p className="mb-2 text-gray-800">{post.contenido}</p>
-
-      <div className="flex space-x-6 text-sm text-gray-600">
-        {/*<button className={`cursor-pointer hover:text-blue-500 ${localState.liked  ? "text-blue-500" : "text-gray-600"}`} onClick={!localState.liked ? handleCreateLike : handleRemoveLike}>{!localState.liked ? "🤍 Like" : "❤️ Like"} {localState.likes !=0 && localState.likes}</button>*/}
-        <button className={`cursor-pointer hover:text-blue-500 ${color}`} onClick={crear ? handleCreateLike : handleRemoveLike}>{crear ? "🤍 Like" : "❤️ Like"} {likesCount !=0 && likesCount}</button>
-        <button onClick={() => setMostrarComentarios(!mostrarComentarios)} className="cursor-pointer hover:text-blue-500">
-          💬 Comentar {commentsCount !=0 && commentsCount}
-        </button>
-      </div>
-
-      {mostrarComentarios && <CommentSection postId={post.id} setCommentsCount={setCommentsCount} />}
-    </div>
     </>
   )
 }

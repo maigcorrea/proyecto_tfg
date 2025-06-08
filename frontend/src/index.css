@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+@keyframes like-pop {
+    0% { transform: scale(1);}
+    50% { transform: scale(1.5);}
+    100% { transform: scale(1);}
+}
+.animate-like-pop {
+    animation: like-pop 0.3s;
+}
+
+@keyframes like-unpop {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.7); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.animate-like-unpop {
+    animation: like-unpop 0.3s;
+}
+
+/* Animación para mostrar/ocultar comentarios */
+@keyframes comments-expand {
+    0% { max-height: 0; opacity: 0; }
+    100% { max-height: 1000px; opacity: 1; }
+}
+@keyframes comments-collapse {
+    0% { max-height: 1000px; opacity: 1; }
+    100% { max-height: 0; opacity: 0; }
+}
+.animate-comments-expand {
+    animation: comments-expand 0.4s cubic-bezier(0.4,0,0.2,1) forwards;
+    overflow: hidden;
+}
+.animate-comments-collapse {
+    animation: comments-collapse 0.3s cubic-bezier(0.4,0,0.2,1) forwards;
+    overflow: hidden;
+}

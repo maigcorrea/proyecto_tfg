@@ -65,7 +65,7 @@ const Foro = () => {
 
   return (
     <>
-      <div className="max-w-xl mx-auto mt-10 px-4">
+      <div className="max-w-7xl mx-auto mt-10 px-4">
       <CreatePost onCreate={handleCreate} />
       {posts.length===0 && <p>No hay publicaciones todavía</p>}
       {posts.map(post => (
