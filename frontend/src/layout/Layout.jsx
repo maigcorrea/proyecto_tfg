@@ -12,7 +12,7 @@ const Layout = () => {
   return (
     <>
         <Header></Header>
-        <main className={`min-h-screen ${isAdminRoute ? 'bg-white' : 'bg-white'}`}>
+        <main className={`min-h-screen overflow-x-hidden ${isAdminRoute ? 'bg-white' : 'bg-white'}`}>
             <Outlet></Outlet>
         </main>
         <Footer></Footer>
