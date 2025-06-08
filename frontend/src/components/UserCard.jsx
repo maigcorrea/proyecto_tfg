@@ -68,28 +68,59 @@ const handleClickBoton = (e, email) => {
 
   return (
     <>
-          <div className="bg-white p-4 rounded-lg shadow-md  text-center hover:shadow-lg transition duration-300 cursor-pointer" onClick={(e) => handleClickDiv(e,user.nickname)}>
-              <img
+          <div className="bg-white p-6 rounded-2xl shadow-lg text-center hover:shadow-2xl transition duration-300 cursor-pointer border border-gray-100 relative overflow-hidden group" onClick={(e) => handleClickDiv(e,user.nickname)}>
+            {/* Imagen de usuario */}
+            <div className="flex justify-center mb-3">
+              <div className="w-24 h-24 rounded-full shadow-lg overflow-hidden group-hover:scale-105 transition-transform duration-300">
+                <img
                   src={user.img ? `/userAssets/${user.id}/${user.img}` : '/userAssets/default/defaultImg.png'}
                   alt={user.nickname}
-                  className="w-20 h-20 mx-auto rounded-full mb-3 object-cover border"
-              />
-              <h3 className="text-lg font-semibold">{user.nombre}</h3>
-              <p className="text-sm text-gray-500">@{user.nickname}</p>
-              <p className="text-sm text-gray-500">{user.nacimiento ? `${calcularEdad(user.nacimiento)} años` : 'Edad no disponible'}</p>
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            {/* Nombre y nickname */}
+            <h3 className="text-xl font-bold text-gray-800 mb-1">{user.nombre}</h3>
+            <p className="text-sm text-blue-600 font-medium mb-1">@{user.nickname}</p>
+            <p className="text-xs text-gray-500 mb-2">{user.nacimiento ? `${calcularEdad(user.nacimiento)} años` : 'Edad no disponible'}</p>
 
-                <p className="text-sm text-gray-700">
+            {/* En común */}
+            <div className="flex items-center justify-center mb-2">
+              <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
                 En común: {calcularCoincidencias(user.tags)}/12
-                </p>
-              {user.tags && (
-                  <div className="mt-2 text-xs text-blue-600">
-                      <span className="font-medium">Tags:</span> {user.tags}
-                  </div>
-              )}
+              </span>
+            </div>
 
-              {user.permiso == 1 && (
-                <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 cursor-pointer" onClick={(e) => handleClickBoton(e,user.email)}>Contactar</button>
-              )}
+            {/* Tags del usuario */}
+            {user.tags && user.tags.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-2 mt-2 mb-2">
+                <span className="block w-full text-xs text-gray-500 mb-1 text-center font-medium">Tags:</span>
+                {(Array.isArray(user.tags) ? user.tags : String(user.tags).split(',')).map((tag, idx) => {
+                  const tagTrim = tag.trim();
+                  const propias = userSession?.tags || [];
+                  const enComun = propias.includes(tagTrim);
+                  return (
+                    <span
+                      key={idx}
+                      className={`px-2 py-1 rounded-full text-xs font-medium border shadow-sm transition
+                        ${enComun ? 'bg-green-100 text-green-800 border-green-300' : 'bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-200'}`}
+                    >
+                      {tagTrim}
+                    </span>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Botón Contactar */}
+            {user.permiso == 1 && (
+              <button
+                className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white py-2 px-6 rounded-full mt-4 font-semibold shadow-lg transition"
+                onClick={(e) => handleClickBoton(e,user.email)}
+              >
+                Contactar
+              </button>
+            )}
           </div>
     </>
   )
