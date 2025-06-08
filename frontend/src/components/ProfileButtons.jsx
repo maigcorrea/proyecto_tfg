@@ -53,11 +53,11 @@ const ProfileButtons = ({ isOpen = true }) => {
 
   return (
     <>
-     <div className='flex justify-items-end w-[50%]'>
+     <div className='flex justify-items-end '>
             <ul className='flex gap-4 items-center'>
                 {/* Una vez que el usuario se ha autenticado estos link desaparecerán y se verá una foto de perfil del usuario */}
                 {/* Botón de cerrar sesión */}
-                {userSession.loggedIn ? <button onClick={cerrarSesion} ><FaSignOutAlt className=' text-gray-800 ml-2.5 cursor-pointer '/></button> : <Link to='/login'>Iniciar Sesión</Link>}
+                {userSession.loggedIn ? <button onClick={cerrarSesion} ><FaSignOutAlt className=' text-gray-800 ml-2.5 cursor-pointer '/></button> : <Link to='/login' className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-xl p-[10px]'>Iniciar Sesión</Link>}
                 {/* <Link to='/login'>Iniciar Sesión</Link> */}
                 {/* Foto del usuario y desplegable con opciones al hacer hover sobre la foto*/}
                 {(userSession.loggedIn && ((userSession.tipo !== 'admin') || (userSession.tipo === 'admin' && isOpen))) ? (
@@ -65,7 +65,7 @@ const ProfileButtons = ({ isOpen = true }) => {
     ? <div className='w-10 h-10'><Link to="/my-profile"><img src={`/userAssets/${userSession.id}/${userSession.img}`} className="w-10 h-10 rounded-full object-fit cursor-pointer" /></Link></div>
     : <div className='w-10 h-10'><Link to="/my-profile"><img src={`/userAssets/default/defaultImg.png`} className="w-10 h-10 rounded-full object-cover cursor-pointer" /></Link></div>
 ) : (
-  !userSession.loggedIn && <Link to='/register'>Registrarse</Link>
+  !userSession.loggedIn && <Link to='/register' className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-xl p-[10px]'>Registrarse</Link>
 )}
                 {/* <Link to='/register'>Registrarse</Link> */}
             </ul>

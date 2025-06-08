@@ -25,7 +25,7 @@ const Nav = () => {
           <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 pt-0">
             <Link to="/"><img src="/externalResources/logo.png" alt="" className='w-20 h-20'/></Link>
 
-            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse items-end">
               {/* <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get started</button> */}
               <ProfileButtons></ProfileButtons>
               <button
