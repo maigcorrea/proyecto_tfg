@@ -81,12 +81,12 @@ const handleClickBoton = (e, email) => {
             </div>
             {/* Nombre y nickname */}
             <h3 className="text-xl font-bold text-gray-800 mb-1">{user.nombre}</h3>
-            <p className="text-sm text-blue-600 font-medium mb-1">@{user.nickname}</p>
+            <p className="text-sm text-blackfont-medium mb-1">@{user.nickname}</p>
             <p className="text-xs text-gray-500 mb-2">{user.nacimiento ? `${calcularEdad(user.nacimiento)} años` : 'Edad no disponible'}</p>
 
             {/* En común */}
             <div className="flex items-center justify-center mb-2">
-              <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
+              <span className="bg-[#a6d3cb] text-black text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
                 En común: {calcularCoincidencias(user.tags)}/12
               </span>
             </div>
@@ -103,7 +103,7 @@ const handleClickBoton = (e, email) => {
                     <span
                       key={idx}
                       className={`px-2 py-1 rounded-full text-xs font-medium border shadow-sm transition
-                        ${enComun ? 'bg-green-100 text-green-800 border-green-300' : 'bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-200'}`}
+                        ${enComun ? 'bg-green-100 text-green-800 border-green-300' : 'bg-gray-300 text-gray-700 border-gray-600'}`}
                     >
                       {tagTrim}
                     </span>

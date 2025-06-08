@@ -81,7 +81,7 @@ const Inicio = () => {
     <section className='bg-white h-screen text-center'>
       <GridMotion items={items} gradientColor="black" />
         <div className="absolute bottom-50 left-20 bg-gradient-to-br z-10">
-          <h1 className="text-[100px] text-center text-[#9feeb5] font-bold">Singular Link</h1>
+          <h1 className="text-[150px] bg-black/50 text-center text-white px-6 font-bold">Singular Link</h1>
         </div>
       </section>
 

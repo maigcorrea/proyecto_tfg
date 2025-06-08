@@ -27,7 +27,7 @@ const UserFiltersSidebar = ({ onFiltersChange }) => {
       <div className="space-y-0 text-base text-gray-700">
         {/* Filtro: Solo con tags en común */}
         <label className="flex items-center gap-3 cursor-pointer group py-3">
-          <span className="flex-1">Solo con <span className="font-semibold text-blue-600">tags en común</span></span>
+          <span className="flex-1">Solo con <span className="">tags en común</span></span>
           <input
             type="checkbox"
             checked={soloConTagsEnComun}
@@ -38,7 +38,7 @@ const UserFiltersSidebar = ({ onFiltersChange }) => {
         <hr className="w-3/4 mx-auto my-2 border-t-2 border-gray-200" />
         {/* Filtro: Solo con descripción */}
         <label className="flex items-center gap-3 cursor-pointer group py-3">
-          <span className="flex-1">Solo con <span className="font-semibold text-blue-600">descripción</span></span>
+          <span className="flex-1">Solo con <span className="">descripción</span></span>
           <input
             type="checkbox"
             checked={soloConDescripcion}
@@ -49,7 +49,7 @@ const UserFiltersSidebar = ({ onFiltersChange }) => {
         <hr className="w-3/4 mx-auto my-2 border-t-2 border-gray-200" />
         {/* Filtro: Solo permite contacto */}
         <label className="flex items-center gap-3 cursor-pointer group py-3">
-          <span className="flex-1">Solo usuarios que <span className="font-semibold text-blue-600">permiten contacto</span></span>
+          <span className="flex-1">Solo usuarios que <span className="">permiten contacto</span></span>
           <input
             type="checkbox"
             checked={soloConPermiteContacto}

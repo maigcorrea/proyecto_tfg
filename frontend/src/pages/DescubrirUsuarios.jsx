@@ -107,7 +107,7 @@ useEffect(() => {
           <div className="space-y-0 text-base text-gray-700">
             {/* Filtro: Solo con tags en común */}
             <label className="flex items-center gap-3 cursor-pointer group py-3">
-              <span className="flex-1">Solo con <span className="font-semibold text-blue-600">tags en común</span></span>
+              <span className="flex-1">Solo con <span className="font-semibold">tags en común</span></span>
               <input
                 type="checkbox"
                 checked={filters.soloConTagsEnComun}
@@ -118,7 +118,7 @@ useEffect(() => {
             <hr className="w-3/4 mx-auto my-2 border-t-2 border-gray-200" />
             {/* Filtro: Solo con descripción */}
             <label className="flex items-center gap-3 cursor-pointer group py-3">
-              <span className="flex-1">Solo con <span className="font-semibold text-blue-600">descripción</span></span>
+              <span className="flex-1">Solo con <span className="font-semibold">descripción</span></span>
               <input
                 type="checkbox"
                 checked={filters.soloConDescripcion}
@@ -129,7 +129,7 @@ useEffect(() => {
             <hr className="w-3/4 mx-auto my-2 border-t-2 border-gray-200" />
             {/* Filtro: Solo permite contacto */}
             <label className="flex items-center gap-3 cursor-pointer group py-3">
-              <span className="flex-1">Solo usuarios que <span className="font-semibold text-blue-600">permiten contacto</span></span>
+              <span className="flex-1">Solo usuarios que <span className="font-semibold">permiten contacto</span></span>
               <input
                 type="checkbox"
                 checked={filters.soloConPermiteContacto}
@@ -157,7 +157,7 @@ useEffect(() => {
             <div className="text-center mt-6">
               <button
                 onClick={handleVerMas}
-                className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                className="px-6 py-2 bg-[#a1c7c0] text-black rounded hover:bg-[#a1c7c0]/80 transition cursor-pointer"
               >
                 Ver más
               </button>
