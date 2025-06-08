@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0f100f] relative z-[60] text-white font-sans rounded-t-[80px] ">
+    <footer className="bg-[#0f100f] relative z-[60] text-white font-sans ">
       {/* Sección principal */}
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-start gap-10 relative ">
         {/* Glow verde */}

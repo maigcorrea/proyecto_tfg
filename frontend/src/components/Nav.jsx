@@ -47,17 +47,17 @@ const Nav = () => {
               class={`items-center justify-between w-full md:flex md:w-auto z-[100] md:order-1 ${menuOpen ? '' : 'hidden'} md:block`}
               id="navbar-sticky"
             >
-              <ul class="flex flex-col p-4 md:p-0 mt-4 z-[100] font-medium border rounded-xl bg-white/80 backdrop-blur-md cursor-pointer md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 sm:border-0">
-                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-full p-[10px]'> 
+              <ul class="flex flex-col p-4 md:p-0 mt-4 z-[100] font-medium border rounded-xl bg-transparent sm:bg-white/80 lg:bg-transparent backdrop-blur-md cursor-pointer md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 sm:border-0">
+                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-xl p-[10px]'> 
                   <Link to="/" onClick={handleNavLinkClick}>Inicio</Link>
                 </li>
-                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-full p-[10px]'>
+                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-xl p-[10px]'>
                   <Link to='/discover' onClick={handleNavLinkClick}>Descubrir</Link>
                 </li>
-                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-full p-[10px]'>
+                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-xl p-[10px]'>
                   <Link to='/foro' onClick={handleNavLinkClick}>Foro</Link>
                 </li>
-                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-full p-[10px]'>
+                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-xl p-[10px]'>
                   <Link to='/contacto' onClick={handleNavLinkClick}>Contacto</Link>
                 </li>
               </ul>
