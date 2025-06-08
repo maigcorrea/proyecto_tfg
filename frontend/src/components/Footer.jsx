@@ -2,9 +2,9 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0f100f]  text-white font-sans">
+    <footer className="bg-[#0f100f]  text-white font-sans rounded-t-[80px] sticky bottom-0 z-[-1]">
       {/* Sección principal */}
-      <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-start gap-10 relative">
+      <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-start gap-10 relative z-[1]">
         {/* Glow verde */}
         <div className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-16 w-72 h-40 bg-[#a1c7c0] opacity-30 blur-3xl rounded-full pointer-events-none z-0"></div>
 

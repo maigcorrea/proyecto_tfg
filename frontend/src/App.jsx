@@ -5,6 +5,7 @@ import Inicio from './pages/Inicio'
 import Foro from './pages/Foro'
 import Comunidades from './pages/Comunidades'
 import Noticias from './pages/Noticias'
+import Contacto from './pages/Contacto'
 import Login from './pages/Login'
 import Registro from './pages/Registro'
 import PrivateRoute from './components/PrivateRoute'
@@ -42,13 +43,12 @@ function App() {
                 <Route path='discover' element={<PrivateRoute><DescubrirUsuarios></DescubrirUsuarios></PrivateRoute>}></Route>
                 <Route path='userDetail/:nickname' element={<PrivateRoute><UserDetails></UserDetails></PrivateRoute>}></Route>
                 <Route path='foro' element={<PrivateRoute><Foro/></PrivateRoute>}></Route>
-                <Route path='comunidades' element={<PrivateRoute><Comunidades></Comunidades></PrivateRoute>}></Route>
-                <Route path='/noticias' element={<PrivateRoute><Noticias></Noticias></PrivateRoute>}></Route>
                 <Route path='login' element={<Login></Login>}></Route>
                 <Route path='/register' element={<Registro></Registro>}></Route>
                 <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
                 <Route path='/tags' element={<PrivateRoute><SelectTags></SelectTags></PrivateRoute>}></Route>
                 <Route path='/edit-tags/:id' element={<PrivateRoute><TagsEdition></TagsEdition></PrivateRoute>}></Route>
+                <Route path='/contacto' element={<Contacto></Contacto>}></Route>
                 <Route path='/unathorized' element={<Unathorized></Unathorized>}></Route>
               </Route>
                 {
