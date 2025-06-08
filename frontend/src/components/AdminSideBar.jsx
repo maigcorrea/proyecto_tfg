@@ -85,7 +85,7 @@ const AdminSidebar = () => {
           })}
 
           <div className="mt-4 px-2">
-            <ProfileButtons />
+            <ProfileButtons isOpen={isOpen} />
           </div>
         </nav>
       </div>
