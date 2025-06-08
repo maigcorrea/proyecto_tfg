@@ -424,25 +424,21 @@ const handlePasswordChange = async() => {
         <div className="p-2">
           {selectedTab === 0 && (
             <div className=''>
-              {/* Contenido de Información */}
               <PostMadeByUser postCreated={postCreated} idUsuario={userSession.id} setPostCreated={setPostCreated}/>
             </div>
           )}
           {selectedTab === 1 && (
             <div>
-              {/* Contenido de Actividad */}
               <LikedPostByUser postLiked={postLiked}/>
             </div>
           )}
           {selectedTab === 2 && (
             <div>
-              {/* Contenido de Ajustes */}
               <CommentedPostByUser postCommented={postCommented}/>
             </div>
           )}
           {selectedTab === 3 && (
             <div>
-              {/* Contenido de Ajustes */}
               <CommentsMadeByUser comments={comments} idUsuario={userSession.id} setComments={setComments}/>
             </div>
           )}
@@ -456,7 +452,7 @@ const handlePasswordChange = async() => {
 
 {/* Modal con steps */}
 {modifyPassword && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
     <div className="bg-white rounded-lg p-6 shadow-lg w-96 relative">
       <h2 className="text-xl font-semibold mb-4">Cambiar contraseña</h2>
 
