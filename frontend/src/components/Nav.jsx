@@ -16,7 +16,7 @@ const Nav = () => {
       {userSession.tipo === "admin" ? (
         null
       ) : (
-          <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600 z-50">
+          <nav class="bg-white/50 dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600 z-50 backdrop-blur-md bg-opacity-50 h-16">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
               <Link to="/"><span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Mi WEB</span></Link>
 

@@ -12,7 +12,6 @@ const UserFiltersSidebar = ({ onFiltersChange }) => {
   if (filterName === 'soloConDescripcion') setSoloConDescripcion(value);
   if (filterName === 'soloConPermiteContacto') setSoloConPermiteContacto(value); // 2.2 Y en el handleCheckboxChange, actualiza el estado correspondiente
 
-
   onFiltersChange((prevFilters) => ({
     ...prevFilters,
     [filterName]: value,
@@ -20,35 +19,43 @@ const UserFiltersSidebar = ({ onFiltersChange }) => {
 };
 
   return (
-    <aside className="w-64 p-6 border-r border-gray-300">
-      <h2 className="text-lg font-semibold mb-4">Filtros</h2>
-      <div className="space-y-4 text-sm text-gray-700">
-        <label className="flex items-center space-x-2">
+    <aside className="hidden md:block fixed top-16 left-0 z-40 h-[calc(100vh-4rem)] w-72 max-w-full p-6 bg-white/80 rounded-2xl shadow-lg border border-gray-200 backdrop-blur-md overflow-y-auto">
+      <h2 className="text-2xl font-bold mb-4 text-black flex items-center gap-2">
+        Filtra según lo que busques
+      </h2>
+      <hr className="w-3/4 mx-auto my-3 border-t-2 border-gray-200" />
+      <div className="space-y-0 text-base text-gray-700">
+        {/* Filtro: Solo con tags en común */}
+        <label className="flex items-center gap-3 cursor-pointer group py-3">
+          <span className="flex-1">Solo con <span className="font-semibold text-blue-600">tags en común</span></span>
           <input
-                type="checkbox"
-                checked={soloConTagsEnComun}
-                onChange={handleCheckboxChange('soloConTagsEnComun')}
-            />
-          <span>Solo con tags en común</span>
+            type="checkbox"
+            checked={soloConTagsEnComun}
+            onChange={handleCheckboxChange('soloConTagsEnComun')}
+            className="w-5 h-5 accent-blue-500 rounded transition-all duration-200 shadow focus:ring focus:ring-blue-200"
+          />
         </label>
-
-        <label className="flex items-center space-x-2">
-        <input
+        <hr className="w-3/4 mx-auto my-2 border-t-2 border-gray-200" />
+        {/* Filtro: Solo con descripción */}
+        <label className="flex items-center gap-3 cursor-pointer group py-3">
+          <span className="flex-1">Solo con <span className="font-semibold text-blue-600">descripción</span></span>
+          <input
             type="checkbox"
             checked={soloConDescripcion}
             onChange={handleCheckboxChange('soloConDescripcion')}
-        />
-          <span>Solo con descripción</span>
+            className="w-5 h-5 accent-blue-500 rounded transition-all duration-200 shadow focus:ring focus:ring-blue-200"
+          />
         </label>
-
-        {/* 2. Modifica el UserFiltersSidebar.jsx para añadir el nuevo checkbox */}
-        <label className="flex items-center space-x-2">
-        <input
+        <hr className="w-3/4 mx-auto my-2 border-t-2 border-gray-200" />
+        {/* Filtro: Solo permite contacto */}
+        <label className="flex items-center gap-3 cursor-pointer group py-3">
+          <span className="flex-1">Solo usuarios que <span className="font-semibold text-blue-600">permiten contacto</span></span>
+          <input
             type="checkbox"
             checked={soloConPermiteContacto}
             onChange={handleCheckboxChange('soloConPermiteContacto')}
-        />
-            <span>Solo usuarios que permiten contacto</span>
+            className="w-5 h-5 accent-blue-500 rounded transition-all duration-200 shadow focus:ring focus:ring-blue-200"
+          />
         </label>
       </div>
     </aside>
