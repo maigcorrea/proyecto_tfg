@@ -82,64 +82,60 @@ const SelectTags = () => {
 
   return (
     <>
-         <div className="min-h-screen flex flex-col justify-between p-6 bg-gray-50">
-      <div className="max-w-3xl mx-auto w-full">
-        <h1 className="text-2xl font-semibold mb-4 text-center">Selecciona tus temas de interés</h1>
+      <div className="min-h-screen w-full flex flex-col justify-center items-center p-6 bg-gradient-to-br from-white via-[#e8f5f1] to-[#a1c7c0]">
+        <h1 className="text-xl md:text-4xl font-bold mb-8 md:mb-12 text-[#4b8376] text-center">Selecciona tus temas de interés</h1>
 
-        {selectedTags.length ===12 && <p className='text-red-700'>{message}</p>}
-        <input
-          type="text"
-          placeholder="Buscar o añadir tema..."
-          value={customTag}
-          onChange={(e) => setCustomTag(e.target.value)}
-          onKeyPress={handleKeyPress}
-          className="w-full px-4 py-2 border rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 mb-6"
-        />
-        <p className='text-gray-500'>{cont}/12</p>
+        <div className="w-full max-w-xs md:max-w-4xl flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mb-6 md:mb-10 mx-auto">
+          <input
+            type="text"
+            placeholder="Buscar o añadir tema..."
+            value={customTag}
+            onChange={(e) => setCustomTag(e.target.value)}
+            onKeyPress={handleKeyPress}
+            className="flex-1 px-4 py-2 md:px-8 md:py-5 rounded-full bg-[#f3f4f6] border-2 border-[#a1c7c0] text-base md:text-xl text-[#222] placeholder:text-[#a1c7c0]/60 shadow-inner focus:outline-none focus:ring-2 focus:ring-[#a1c7c0] focus:border-[#a1c7c0] transition-all duration-200"
+          />
+          <span className="text-black font-semibold text-base md:text-lg">{cont}/12</span>
+        </div>
 
-        <div className="flex flex-wrap gap-3 justify-center">
+        {selectedTags.length === 12 && <p className='text-red-500 text-sm mb-2'>Sólo puedes seleccionar un máximo de 12 temas de interés</p>}
+
+        <div className="flex flex-wrap gap-3 md:gap-6 justify-center w-full max-w-xs md:max-w-4xl mb-8 md:mb-14 mt-2 md:mt-4">
           {[...predefinedTags, ...selectedTags.filter(tag => !predefinedTags.includes(tag))].map(tag => (
             <button
               key={tag}
               onClick={() => toggleTag(tag)}
-              className={`px-4 py-1 rounded-full border transition ${
-                selectedTags.includes(tag)
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'bg-white text-gray-700 border-gray-300 hover:bg-blue-100'
-              }`}
+              className={`px-4 py-2 md:px-8 md:py-4 rounded-full border-2 font-medium md:font-semibold text-sm md:text-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#a1c7c0] shadow-sm
+                ${selectedTags.includes(tag)
+                  ? 'bg-[#a1c7c0] text-[#181c1b] border-[#a1c7c0] scale-105 shadow-lg'
+                  : 'bg-[#f3f4f6] text-[#4b8376] border-[#e0ece9] hover:bg-[#e8f5f1] hover:border-[#a1c7c0] hover:text-[#222]'}
+              `}
             >
               {tag}
             </button>
           ))}
         </div>
-      </div>
 
-      <div className="flex justify-between mt-10 max-w-3xl mx-auto w-full">
-        <button onClick={() => {
-            setUserSession(prev => ({
-              ...prev,
-              tags: [], // asegurar que el contexto queda en blanco
-            }));
-            navigate('/');
-          }}
-          className="text-sm text-gray-600 hover:underline cursor-pointer">
-          Saltar
-        </button>
+        <div className="flex justify-between w-full max-w-xs md:max-w-4xl mt-8 md:mt-12 mx-auto">
+          <button onClick={() => {
+              setUserSession(prev => ({
+                ...prev,
+                tags: [], // asegurar que el contexto queda en blanco
+              }));
+              navigate('/');
+            }}
+            className="text-base md:text-md text-black hover:underline cursor-pointer transition-all px-2 py-2 md:px-6 md:py-3">
+            Saltar
+          </button>
 
-        <button
-          className={`px-6 py-2 rounded-full text-white transition ${
-            selectedTags.length < 12
-              ? 'bg-blue-600 hover:bg-blue-700'
-              : 'bg-gray-400 cursor-not-allowed'
-          }`}
-          disabled={selectedTags.length === 12}
-          onClick={handleContinue}
-        >
-          Continuar
-        </button>
+          <button
+            className={`px-6 py-2 md:px-12 md:py-4 rounded-full font-bold text-md md:text-md text-[#181c1b] bg-[#a1c7c0] shadow-md transition-all duration-200 hover:bg-[#7bb8a8] disabled:bg-gray-400 disabled:text-gray-200 ${selectedTags.length === 12 ? 'opacity-60 cursor-not-allowed' : ''}`}
+            disabled={selectedTags.length === 12}
+            onClick={handleContinue}
+          >
+            Continuar
+          </button>
+        </div>
       </div>
-    </div>
-        
     </>
   )
 }
