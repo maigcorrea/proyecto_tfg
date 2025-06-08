@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="mb-3 text-2xl md:text-2xl font-medium leading-tight">Suscríbete a nuestra newsletter y no te pierdas nada!</div>
           <div className="flex flex-col md:flex-row gap-3 mt-4">
             <input type="text" id="email" name="email" className="px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-[#a1c7c0] focus:outline-none focus:ring focus:ring-[#a1c7c0] focus:ring-opacity-40" placeholder="Email Address" />
-            <button className="px-6 py-2.5 text-sm font-medium tracking-wider text-white bg-[#232323] rounded-lg hover:bg-[#a1c7c0] hover:text-[#171717] transition-colors duration-300">Subscribe</button>
+            <button className="px-6 py-2.5 text-sm font-medium tracking-wider text-white bg-[#232323] rounded-lg hover:bg-[#a1c7c0] hover:text-[#171717] transition-colors duration-300 cursor-pointer">Suscribirse</button>
           </div>
         </div>
 
@@ -23,18 +23,18 @@ const Footer = () => {
           <div>
             <p className="font-semibold text-[#f8fcf7] mb-3">SOBRE NOSOTROS</p>
             <div className="flex flex-col items-start space-y-2">
-              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition">Compromiso social</a>
-              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition">Contacto</a>
-              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition">FAQ</a>
+              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition cursor-pointer">Compromiso social</a>
+              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition cursor-pointer">Contacto</a>
+              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition cursor-pointer">FAQ</a>
             </div>
           </div>
           {/* Industries */}
           <div>
             <p className="font-semibold text-[#f8fcf7] mb-3">Industries</p>
             <div className="flex flex-col items-start space-y-2">
-              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition">Descubrir</a>
-              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition">Foro</a>
-              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition">Compromiso social</a>
+              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition cursor-pointer">Descubrir</a>
+              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition cursor-pointer">Foro</a>
+              <a href="#" className="text-[#d7d7d7] hover:text-[#a1c7c0] transition cursor-pointer">Compromiso social</a>
             </div>
           </div>
         </div>

@@ -47,8 +47,8 @@ const Nav = () => {
               class={`items-center justify-between w-full md:flex md:w-auto z-[100] md:order-1 ${menuOpen ? '' : 'hidden'} md:block`}
               id="navbar-sticky"
             >
-              <ul class="flex flex-col p-4 md:p-0 mt-4 z-[100] font-medium border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-full p-[10px]'>
+              <ul class="flex flex-col p-4 md:p-0 mt-4 z-[100] font-medium border rounded-full cursor-pointer md:space-x-8 rtl:space-x-reverse sm:bg-white md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-full p-[10px]'> 
                   <Link to="/" onClick={handleNavLinkClick}>Inicio</Link>
                 </li>
                 <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-full p-[10px]'>
