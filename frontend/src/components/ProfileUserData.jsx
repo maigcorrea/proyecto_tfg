@@ -248,98 +248,129 @@ const handlePasswordChange = async() => {
         </div>
       )}
 
-      {/* Imagen de perfil */}
-      <div className='flex justify-center items-center h-screen'>
-        <img src={userData.ImgPerfil ? `/userAssets/${userSession.id}/${userData.ImgPerfil}` : `/userAssets/default/defaultImg.png`} alt="Imagen de perfil del usuario" className=' w-[200px] h-[200px] rounded-full object-cover cursor-pointer hover:brightness-75 transition-all duration-600' onClick={handleImageClick}/>
-        <input type="file" accept="image/*" className='hidden' ref={fileInputRef} onChange={handleImgChange} />
-      </div>
+      {/* Contenedor principal */}
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100 py-8 px-2">
+        {/* Tarjeta perfil */}
+        <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-xl flex flex-col items-center gap-8 border-t-8 border-cyan-400">
 
-      {/* Permiso */}
-      <div>
-          <input
-            type="checkbox"
-            checked={userSession.permiso === 1 || userSession.permiso === "1"}
-            onChange={(e) => handlePermissionChange(e.target.checked ? 1 : 0)}
-          /> Doy permiso para que me contacten por email
-        </div>
+          {/* Imagen de perfil */}
+          <div className="relative group mb-2">
+            <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-400 blur opacity-60 group-hover:opacity-90 transition-all"></div>
+            <img
+              src={userData.ImgPerfil ? `/userAssets/${userSession.id}/${userData.ImgPerfil}` : `/userAssets/default/defaultImg.png`}
+              alt="Imagen de perfil del usuario"
+              className="w-40 h-40 rounded-full object-cover border-4 border-white shadow-lg z-10 relative cursor-pointer hover:scale-105 transition-all duration-300"
+              onClick={handleImageClick}
+            />
+            <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleImgChange} />
+           
+          </div>
 
+          {/* Datos de usuario */}
+          <form action="" className="flex flex-col gap-6 w-full">
+            <h1 className="text-2xl font-bold text-cyan-700 mb-2 text-center">Datos de usuario</h1>
 
-      {/* Datos de usuario */}
-      <form action="" className='flex flex-col gap-4 w-fit'>
-        <h1 className='text-3xl'>Datos de usuario</h1>
-                
-        {Object.entries(userData)
-          .filter(([clave]) => clave !== 'ImgPerfil' && clave !== 'Tags' && clave !== 'Permiso' && clave !== 'Tipo' ) // Filtar los campos que no quieres mostrar
-          .map(([clave, valor]) => (
-            <div className='flex flex-col gap-2' key={clave}>
-              <label htmlFor={clave}>{clave === "Descripcion" ? "Sobre mí:" : `${clave}:`}</label>
-              <div className='flex gap-2'>
-                <input
-                  type={clave != "Nacimiento" ? "text" : "date"}
-                  value={valor || null}
-                  name={clave}
-                  className='border p-2'
-                  disabled={!editingField[clave]}
-                  onChange={(e) => handleChange(clave, e.target.value)}
-                  ref={(input) => {
-                    if (editingField[clave] && input) {
-                      input.focus();
-                    }
-                  }}
-                  min={clave === "Nacimiento" ? "1927-01-01" : undefined}
-                  max={clave === "Nacimiento" ? limitYear : undefined}
-                ></input>
-
-
-                {!editingField[clave] ? (
-                  <button
-                    type="button"
-                    className='rounded-3xl bg-cyan-700 p-3 cursor-pointer hover:bg-blue-600'
-                    onClick={() => handleEdit(clave)}
-                  >
-                    Editar
-                  </button>
-                ) : (
-                  <>
-                    <button
-                      type="button"
-                      className='rounded-3xl bg-green-600 p-3 cursor-pointer hover:bg-green-800'
-                      onClick={() => handleSave(clave)}
-                    >
-                      Guardar
-                    </button>
-                    <button
-                      type="button"
-                      className='rounded-3xl bg-red-600 p-3 cursor-pointer hover:bg-red-800'
-                      onClick={() => handleCancel(clave)}
-                    >
-                      Cancelar
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-          ))}
-
-          <div>
-            <label htmlFor="Tags">Tags</label>
-            <div className='flex gap-2'>
-              {userData.Tags.map((tag, index) => (
-                <div key={index} className='flex gap-2 rounded-3xl bg-cyan-300 p-3'>
-                  <p>{tag}</p>
+            {Object.entries(userData)
+              .filter(([clave]) => clave !== 'ImgPerfil' && clave !== 'Tags' && clave !== 'Permiso' && clave !== 'Tipo')
+              .map(([clave, valor]) => (
+                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 bg-cyan-50 p-3 rounded-xl shadow-sm" key={clave}>
+                  <label htmlFor={clave} className="w-20 font-medium text-gray-600 text-sm md:text-base">
+                    {clave === "Descripcion" ? "Sobre mí:" : `${clave}:`}
+                  </label>
+                  <div className="flex-1 flex gap-2 items-center">
+                    <input
+                      type={clave !== "Nacimiento" ? "text" : "date"}
+                      value={valor || ''}
+                      name={clave}
+                      className="border-b-4 border-black rounded-lg p-2 w-full focus:outline-none text-gray-700 bg-white transition-all disabled:bg-gray-100 disabled:text-gray-400"
+                      disabled={!editingField[clave]}
+                      onChange={(e) => handleChange(clave, e.target.value)}
+                      ref={(input) => {
+                        if (editingField[clave] && input) {
+                          input.focus();
+                        }
+                      }}
+                      min={clave === "Nacimiento" ? "1927-01-01" : undefined}
+                      max={clave === "Nacimiento" ? limitYear : undefined}
+                    />
+                    {!editingField[clave] ? (
+                      <button
+                        type="button"
+                        className="rounded-full cursor-pointer bg-cyan-600 text-white px-4 py-2 text-xs md:text-sm font-semibold shadow hover:bg-cyan-700 transition-all flex items-center gap-1"
+                        onClick={() => handleEdit(clave)}
+                      >
+                         Editar
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          type="button"
+                          className="rounded-full cursor-pointer bg-green-500 text-white px-4 py-2 text-xs md:text-sm font-semibold shadow hover:bg-green-600 transition-all flex items-center gap-1"
+                          onClick={() => handleSave(clave)}
+                        >
+                           Guardar
+                        </button>
+                        <button
+                          type="button"
+                          className="rounded-full cursor-pointer bg-red-500 text-white px-4 py-2 text-xs md:text-sm font-semibold shadow hover:bg-red-600 transition-all flex items-center gap-1"
+                          onClick={() => handleCancel(clave)}
+                        >
+                           Cancelar
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
               ))}
-              <button onClick={() => navigate(`/edit-tags/${userSession.id}`)} className='rounded-3xl bg-cyan-700 p-3 cursor-pointer hover:bg-blue-600'>Editar</button>
-            </div>
-          </div>
-      </form>
 
-      {/* Botón para abrir el modal de cambiar contraseña */}
-      <div>
-        <button onClick={() => setModifyPassword(true)} className="rounded-3xl bg-yellow-500 p-3 cursor-pointer hover:bg-yellow-600">
-          Cambiar contraseña
-        </button>
+            {/* Tags */}
+            <div className="flex flex-col gap-2 bg-cyan-50 p-3 rounded-xl shadow-sm">
+              <label htmlFor="Tags" className="font-medium text-gray-600 text-sm md:text-base">Tags</label>
+              <div className="flex flex-wrap gap-2 items-center">
+                {userData.Tags.map((tag, index) => (
+                  <span key={index} className="px-3 py-1 rounded-full bg-cyan-300 text-cyan-900 text-xs font-semibold shadow-sm">
+                    {tag}
+                  </span>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => navigate(`/edit-tags/${userSession.id}`)}
+                  className="rounded-full cursor-pointer bg-cyan-600 text-white px-4 py-1 text-xs font-semibold shadow hover:bg-cyan-700 transition-all ml-2"
+                >
+                  Editar
+                </button>
+              </div>
+            </div>
+
+
+            {/* Permiso */}
+          <div className="flex items-center gap-2 w-full justify-end">
+            <input
+              id="permiso-contacto"
+              type="checkbox"
+              checked={userSession.permiso === 1 || userSession.permiso === "1"}
+              onChange={(e) => handlePermissionChange(e.target.checked ? 1 : 0)}
+              className="accent-cyan-500 w-5 h-5"
+            />
+            <label htmlFor="permiso-contacto" className="text-gray-700 text-sm">Permitir que me contacten por email</label>
+          </div>
+          </form>
+
+          {/* Botón cambiar contraseña */}
+          <div className="w-full flex justify-end mt-2">
+            <button
+              onClick={() => setModifyPassword(true)}
+              className="rounded-full cursor-pointer bg-yellow-400 text-yellow-900 px-6 py-2 font-semibold shadow hover:bg-yellow-500 transition-all flex items-center gap-1"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 50 50">
+<path d="M 25 3 C 18.363281 3 13 8.363281 13 15 L 13 20 L 9 20 C 7.355469 20 6 21.355469 6 23 L 6 47 C 6 48.644531 7.355469 50 9 50 L 41 50 C 42.644531 50 44 48.644531 44 47 L 44 23 C 44 21.355469 42.644531 20 41 20 L 37 20 L 37 15 C 37 8.363281 31.636719 3 25 3 Z M 25 5 C 30.566406 5 35 9.433594 35 15 L 35 20 L 15 20 L 15 15 C 15 9.433594 19.433594 5 25 5 Z M 9 22 L 41 22 C 41.554688 22 42 22.445313 42 23 L 42 47 C 42 47.554688 41.554688 48 41 48 L 9 48 C 8.445313 48 8 47.554688 8 47 L 8 23 C 8 22.445313 8.445313 22 9 22 Z M 25 30 C 23.300781 30 22 31.300781 22 33 C 22 33.898438 22.398438 34.6875 23 35.1875 L 23 38 C 23 39.101563 23.898438 40 25 40 C 26.101563 40 27 39.101563 27 38 L 27 35.1875 C 27.601563 34.6875 28 33.898438 28 33 C 28 31.300781 26.699219 30 25 30 Z"></path>
+</svg> Cambiar contraseña
+            </button>
+          </div>
+        </div>
       </div>
+
+      
 
 
 {/* Modal con steps */}
