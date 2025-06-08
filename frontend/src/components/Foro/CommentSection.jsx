@@ -87,7 +87,7 @@ const CommentSection = ({postId, setCommentsCount }) => {
           {comentarios.slice(0, mostrarMas).map((c) => (
             <div key={c.id} className="bg-gray-50 border border-gray-100 rounded-lg px-4 py-2 shadow-sm flex flex-col">
               <div className="flex items-center gap-2 mb-1">
-                <span className="font-semibold text-blue-700 text-sm">{c.usuario_nombre}</span>
+                <span className="font-semibold text-black text-sm">{c.usuario_nombre}</span>
                 <span className="text-xs text-gray-400">{c.fecha}</span>
               </div>
               <span className="text-gray-800 text-sm">{c.contenido}</span>
@@ -95,7 +95,7 @@ const CommentSection = ({postId, setCommentsCount }) => {
           ))}
           {comentarios.length > mostrarMas && (
             <button
-              className="text-sm text-blue-500 hover:underline hover:text-blue-700 transition mt-1"
+              className="text-sm text-black hover:underline hover:text-black transition cursor-pointer mt-1"
               onClick={() => setMostrarMas(prev => prev + 3)}
             >
               Mostrar más comentarios
