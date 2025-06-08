@@ -96,7 +96,7 @@ const FormLogin = () => {
           <p className="text-gray-500 text-center mb-6">Accede con tus credenciales</p>
           <form onSubmit={handleSubmit} className="space-y-3">
             {error && (
-              <div className="text-red-500 text-xs mt-1 text-center">{error}</div>
+              <div className="text-red-500 text-md mt-1 text-center">{error}</div>
             )}
             <div>
               <label htmlFor="nickname" className="block text-sm font-medium text-gray-700">Usuario o correo electrónico</label>
