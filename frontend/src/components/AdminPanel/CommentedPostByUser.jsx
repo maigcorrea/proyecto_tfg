@@ -20,8 +20,8 @@ const CommentedPostByUser = ({ postCommented }) => {
         <div className="space-y-4">
           {postCommented.map((post, index) => (
             <div key={index} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
-              <div className="mb-3">
-                <p className="text-gray-700">{post.contenido}</p>
+              <div className="mb-3 w-[50%]">
+                <p className="text-gray-700 truncate">{post.contenido}</p>
               </div>
               <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
                 <div className="flex items-center">

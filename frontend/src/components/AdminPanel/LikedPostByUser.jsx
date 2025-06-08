@@ -21,8 +21,8 @@ const LikedPostByUser = ({ postLiked }) => {
           {postLiked.map(post => (
             <div key={post.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
               <div className="flex items-start">
-                <div className="flex-1">
-                  <p className="text-gray-700 mb-2">{post.contenido}</p>
+                <div className="flex-1 w-[50%]">
+                  <p className="text-gray-700 mb-2 truncate">{post.contenido}</p>
                   <div className="flex items-center text-sm text-gray-500">
                     <FaCalendarAlt className="mr-1" />
                     <span>{new Date(post.fecha).toLocaleDateString('es-ES', {

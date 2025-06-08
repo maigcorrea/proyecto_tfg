@@ -24,8 +24,8 @@ const CommentsMadeByUser = ({ comments, idUsuario, setComments }) => {
         <div className="space-y-4">
           {comments.map(comment => (
             <div key={comment.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
-              <div className="mb-3">
-                <p className="text-gray-700">{comment.contenido}</p>
+              <div className="mb-3 w-[50%]">
+                <p className="text-gray-700 truncate">{comment.contenido}</p>
               </div>
               
               <div className="mb-3 p-3 bg-gray-50 rounded-md">
@@ -33,7 +33,9 @@ const CommentsMadeByUser = ({ comments, idUsuario, setComments }) => {
                   
                   <span className="font-medium">Publicación:</span>
                 </div>
-                <p className="text-sm text-gray-700 ml-6">{comment.post_contenido}</p>
+                <div className="w-[50%]">
+                  <p className="text-sm text-gray-700 ml-6 truncate">{comment.post_contenido}</p>
+                </div>
               </div>
               
               <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">

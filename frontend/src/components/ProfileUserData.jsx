@@ -9,8 +9,14 @@ import { useNavigate } from 'react-router-dom';
 import { updatePermission } from '../services/userService';
 import { verifyPassword } from '../services/authService';
 import { changePassword } from '../services/authService';
+import PostMadeByUser from './AdminPanel/PostMadeByUser';
+import { getExtendedDataUser } from '../services/userService';
+import LikedPostByUser from './AdminPanel/LikedPostByUser';
+import CommentedPostByUser from './AdminPanel/CommentedPostByUser';
+import CommentsMadeByUser from './AdminPanel/CommentsMadeByUser';
 
 const ProfileUserData = () => {
+  const [selectedTab, setSelectedTab] = useState(0);
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const fileInputRef = useRef(null); // Referencia al input de tipo file
@@ -33,6 +39,12 @@ const ProfileUserData = () => {
 
   // Contexto para manejar la sesión del usuario
   const { userSession, setUserSession } = useContext(UserContext);
+
+  //Información más extensa del usuario
+  const [comments, setComments] = useState([]);
+  const [postCommented, setPostCommented] = useState([]);
+  const [postLiked, setPostLiked] = useState([]);
+  const [postCreated, setPostCreated] = useState([])
 
 // Mapeo de campos del formulario a los nombres que espera el backend
   const fieldMapping = {
@@ -65,6 +77,26 @@ const contextFieldMapping = {
       })
       .catch(error => console.error(error));
     }, [])
+
+
+//Obtener datos del perfil más extensa al cargar el componente
+     useEffect(() => {
+          const getUserDetails = async () => {
+            try {
+              const response = await getExtendedDataUser(userSession.id);
+              console.log("RESPONSEEEEEEEEEEE",response);
+              setPostCommented(response.commented_posts);
+              setComments(response.user_comments);
+              setPostLiked(response.liked_posts);
+              setPostCreated(response.created_posts);
+              
+            } catch (error) {
+              console.log("Error obteniendo los detalles del usuario", error);
+            }
+          }
+    
+          getUserDetails();
+        }, [])
 
 console.log("User data",userData);
 
@@ -248,8 +280,11 @@ const handlePasswordChange = async() => {
         </div>
       )}
 
+<div className='flex'>
+
+
       {/* Contenedor principal */}
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100 py-8 px-2">
+      <div className="flex lg:w-[50%] w-[100%] wrap flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100 py-8 px-2">
         {/* Tarjeta perfil */}
         <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-xl flex flex-col items-center gap-8 border-t-8 border-cyan-400">
 
@@ -370,6 +405,52 @@ const handlePasswordChange = async() => {
         </div>
       </div>
 
+
+    <div className="w-[70%]">
+      {/* Tabs */}
+      <div className="w-full mt-20">
+        <div className="flex border-b border-gray-200 mb-4">
+          {['Creados', 'Me gusta', 'Comentados', 'Comentarios'].map((tab, idx) => (
+            <button
+              key={tab}
+              className={`py-2 px-4 -mb-px border-b-2 font-medium text-sm transition-colors duration-200 focus:outline-none ${selectedTab === idx ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-blue-500'}`}
+              onClick={() => setSelectedTab(idx)}
+              type="button"
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+        <div className="p-2">
+          {selectedTab === 0 && (
+            <div className=''>
+              {/* Contenido de Información */}
+              <PostMadeByUser postCreated={postCreated} idUsuario={userSession.id} setPostCreated={setPostCreated}/>
+            </div>
+          )}
+          {selectedTab === 1 && (
+            <div>
+              {/* Contenido de Actividad */}
+              <LikedPostByUser postLiked={postLiked}/>
+            </div>
+          )}
+          {selectedTab === 2 && (
+            <div>
+              {/* Contenido de Ajustes */}
+              <CommentedPostByUser postCommented={postCommented}/>
+            </div>
+          )}
+          {selectedTab === 3 && (
+            <div>
+              {/* Contenido de Ajustes */}
+              <CommentsMadeByUser comments={comments} idUsuario={userSession.id} setComments={setComments}/>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+
+</div>
       
 
 
@@ -444,8 +525,6 @@ const handlePasswordChange = async() => {
 )}
 
 
-
-      <ProfileUserDataExtended></ProfileUserDataExtended>
     </>
   )
 }

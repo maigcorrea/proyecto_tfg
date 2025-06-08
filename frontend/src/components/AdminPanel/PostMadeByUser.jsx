@@ -25,8 +25,8 @@ const PostMadeByUser = ({ postCreated, idUsuario, setPostCreated }) => {
           {postCreated.map(post => (
             <div key={post.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
               <div className="flex justify-between items-start">
-                <div>
-                  <p className="text-gray-700 mb-2">{post.contenido}</p>
+                <div className='w-[50%]'>
+                  <p className="text-gray-700 mb-2 truncate">{post.contenido}</p>
                   <div className="flex items-center text-sm text-gray-500">
                     
                     <span>{new Date(post.fecha).toLocaleDateString('es-ES', {
