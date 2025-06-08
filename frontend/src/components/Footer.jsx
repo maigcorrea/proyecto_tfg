@@ -5,8 +5,7 @@ const Footer = () => {
     <footer className="bg-[#0f100f] relative z-[60] text-white font-sans ">
       {/* Sección principal */}
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-start gap-10 relative ">
-        {/* Glow verde */}
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-16 w-72 h-40 bg-[#a1c7c0] opacity-30 blur-3xl rounded-full pointer-events-none z-0"></div>
+        
 
         {/* Newsletter */}
         <div className="z-10 flex-1 min-w-[270px] md:pr-10">

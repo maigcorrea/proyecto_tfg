@@ -109,7 +109,7 @@ const PostTable = ({selectedUserId, currentPage, setCurrentPage}) => {
 
                     <div className='col-span-3'>
                       <div className="md:hidden text-xs text-gray-500 mt-2 text-center">Contenido</div>
-                      <div className="px-4 py-3 text-sm text-gray-900 truncate">{post.contenido}</div>
+                      <div className="px-4 py-3 text-sm text-gray-900  truncate">{post.contenido}</div>
                     </div>
 
                   <div className='col-span-2'>

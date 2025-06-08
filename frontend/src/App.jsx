@@ -48,7 +48,6 @@ function App() {
                 <Route path='/my-profile' element={<PrivateRoute><UserPanel /></PrivateRoute>}></Route>
                 <Route path='/tags' element={<PrivateRoute><SelectTags></SelectTags></PrivateRoute>}></Route>
                 <Route path='/edit-tags/:id' element={<PrivateRoute><TagsEdition></TagsEdition></PrivateRoute>}></Route>
-                <Route path='/contacto' element={<Contacto></Contacto>}></Route>
                 <Route path='/unathorized' element={<Unathorized></Unathorized>}></Route>
               </Route>
                 {

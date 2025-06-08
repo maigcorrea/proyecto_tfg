@@ -57,9 +57,7 @@ const Nav = () => {
                 <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-xl p-[10px]'>
                   <Link to='/foro' onClick={handleNavLinkClick}>Foro</Link>
                 </li>
-                <li className='hover:bg-[#a1c7c0] transition-colors duration-300 rounded-xl p-[10px]'>
-                  <Link to='/contacto' onClick={handleNavLinkClick}>Contacto</Link>
-                </li>
+                
               </ul>
             </div>
           </div>
