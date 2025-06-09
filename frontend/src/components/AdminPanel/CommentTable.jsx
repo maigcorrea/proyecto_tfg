@@ -88,12 +88,12 @@ const CommentTable = () => {
                     {/* Post */}
                     <div className="px-4 py-2 md:py-3 md:col-span-2 flex md:block">
                       <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Post:</span>
-                      <span className="text-sm text-gray-900 truncate">{comment.post_contenido}</span>
+                      <span className="text-sm text-gray-900 truncate overflow-hidden whitespace-nowrap max-w-xs block">{comment.post_contenido}</span>
                     </div>
                     {/* Contenido */}
                     <div className="px-4 py-2 md:py-3 md:col-span-4 flex md:block">
                       <span className="block font-semibold text-xs text-gray-500 md:hidden w-28">Contenido:</span>
-                      <span className="text-sm text-gray-900 break-words truncate">{comment.contenido}</span>
+                      <span className="text-sm text-gray-900 truncate overflow-hidden whitespace-nowrap max-w-xs block">{comment.contenido}</span>
                     </div>
                     {/* Fecha */}
                     <div className="px-4 py-2 md:py-3 md:col-span-2 flex md:block">
