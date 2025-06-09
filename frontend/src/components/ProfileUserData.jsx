@@ -124,8 +124,8 @@ if (!userData) return <p>Cargando datos...</p>;
       })
       .then((updatedData) => {
         console.log("Datos actualizados:", updatedData);
-        setUserData(updatedData); // 👈 Actualizar el estado local
-        setUserSession(prev => ({ ...prev, img: updatedData.ImgPerfil })); // 👈 Actualizar el global
+        setUserData(updatedData); 
+        setUserSession(prev => ({ ...prev, img: updatedData.ImgPerfil })); 
       })
       .catch(error => {
         console.error("Error al actualizar la imagen", error);
