@@ -53,7 +53,7 @@ const AdminSidebar = () => {
           {isOpen ? (
             null
           ) : (
-            <span className="text-xl font-bold mb-6"> </span> // compacto
+            <span className="text-xl font-bold mb-6"> </span>
           )}
           {isOpen && (
             <button
@@ -92,10 +92,10 @@ const AdminSidebar = () => {
 
       {/* Sidebar en móvil */}
       {isOpen && (
-        <div className="fixed inset-0  bg-[#4c7389] w-full z-50 flex flex-col p-4 overflow-hidden transition-all duration-300 md:hidden">
+        <div className="fixed inset-0  bg-[#4c7389] w-full z-50 flex flex-col py-4 overflow-hidden transition-all duration-300 md:hidden">
           <button
             onClick={() => setIsOpen(false)}
-            className="text-white text-2xl self-end mb-4"
+            className="text-white text-2xl self-end mb-4 pr-4 cursor-pointer"
           >
             ✕
           </button>
@@ -105,7 +105,7 @@ const AdminSidebar = () => {
               key={idx}
               to={item.to}
               onClick={() => setIsOpen(false)}
-              className="text-white text-lg py-2"
+              className="text-white font-light text-[50px] py-2 px-4 hover:bg-white/20 hover:border-t-white hover:border-b-white "
             >
               {item.label}
             </Link>
