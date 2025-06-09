@@ -10,32 +10,32 @@ const Inicio = () => {
 
   const items = [
   '/externalResources/pattern.jpg',
+  '/externalResources/pills2.png',
+  '/externalResources/medicalReport.png',
+  '/externalResources/medicalReport.png',
   '/externalResources/smilingWoman.png',
   '/externalResources/smilingWoman.png',
   '/externalResources/smilingWoman.png',
   '/externalResources/smilingWoman.png',
+  '/externalResources/mutatingDna.png',
   '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
+  '/externalResources/supportCircle.png',
+  '/externalResources/map.png',
   '/externalResources/smilingFamily.png',
-  '/externalResources/smilingWoman.png',
+  '/externalResources/medialConsultation.png',
   '/externalResources/smilingFamily.png',
-  '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
+  '/externalResources/medicalReport.png',
+  '/externalResources/waitingRoom.png',
   '/externalResources/adnImg.jpg',
-  '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
+  '/externalResources/friends.png',
+  '/externalResources/scientists.png',
   '/externalResources/smilingFamily.png',
   '/externalResources/smilingWoman.png',
   '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
-  '/externalResources/smilingWoman.png',
+  '/externalResources/scientists.png',
+  '/externalResources/medialConsultation.png',
+  '/externalResources/pills.png',
+  '/externalResources/family.png',
   // Add more items as needed
 ];
 
@@ -81,7 +81,7 @@ const Inicio = () => {
     <section className='bg-white h-screen text-center'>
       <GridMotion items={items} gradientColor="black" />
         <div className="absolute bottom-50 bg-gradient-to-br z-10 pl-20">
-          <h1 className=" bg-[#a1c7c0]/80 rounded-full p-[20px] text-center text-white px-6 font-serif  text-[150px]">Singular Link</h1>
+          <h1 className=" bg-[#a1c7c0]/40 backdrop-blur-md rounded-full p-[20px] text-center text-white px-6 font-serif font-semibold  text-[150px]">Singular Link</h1>
         </div>
       </section>
 
@@ -147,13 +147,13 @@ const Inicio = () => {
                 href="#write"
                 className="flex items-center gap-3 px-8 py-3 rounded-xl bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all duration-300 text-base md:text-lg font-medium hover:scale-105 transform"
               >
-                Sobre nosotros
+                Explorar
               </a>
               <a
                 href="#call"
                 className="flex items-center gap-3 px-8 py-3 rounded-xl bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all duration-300 text-base md:text-lg font-medium hover:scale-105 transform"
               >
-                Contactar
+                Foro
               </a>
             </div>
           </div>
