@@ -182,7 +182,6 @@ const handleSave = async (field) => {
       }));
 
       // Actualizar los datos del perfil después de guardar
-      //getDataProfile();
 
       // Mostrar el toast de éxito
       setToastMessage(`Campo ${fieldMapping[field]} actualizado correctamente`);
