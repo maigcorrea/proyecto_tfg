@@ -83,7 +83,6 @@ const RegisterForm = () => {
                 setError(response.message);
                 return;
             }else{
-                alert(response.message);
                 navigate("/tags");
                 window.location.reload();
             }

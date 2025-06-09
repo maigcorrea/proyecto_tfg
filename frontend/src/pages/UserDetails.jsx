@@ -104,7 +104,7 @@ const UserDetails = () => {
               className="block mt-4 w-full"
             >
               <button
-                className="w-full py-3 px-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-bold rounded-2xl shadow-lg text-lg transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none animate-pulse hover:animate-none"
+                className="w-full py-3 px-6 bg-black cursor-pointer text-white font-bold rounded-2xl shadow-lg text-lg transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none animate-pulse hover:animate-none"
               >
                 Contactar
               </button>

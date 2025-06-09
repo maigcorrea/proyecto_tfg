@@ -2,9 +2,11 @@ import React, { useContext, useState } from 'react'
 import { deletePost } from '../../services/postService';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../context/UserrContext';
+import { PostContext } from '../../../context/PostContext';
 
 const DeletePostButton = ({ postId, setPostCreated, postCreated, setMessage }) => {
-  const { userSession } = useContext(UserContext);
+  const { userSession, setUsserSession } = useContext(UserContext);
+  const { posts,setPosts } = useContext(PostContext);
   const navigate = useNavigate();
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -21,6 +23,7 @@ const DeletePostButton = ({ postId, setPostCreated, postCreated, setMessage }) =
       }
 
       if (response.success) {
+        setPosts(posts.filter(post => post.id !== postId));
         if (userSession.tipo === "admin") {
           // Small delay to show the success message before navigating
           setTimeout(() => navigate("/admin/posts"), 1500);

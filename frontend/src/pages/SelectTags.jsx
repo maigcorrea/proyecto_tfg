@@ -104,7 +104,7 @@ const SelectTags = () => {
             <button
               key={tag}
               onClick={() => toggleTag(tag)}
-              className={`px-4 py-2 md:px-8 md:py-4 rounded-full border-2 font-medium md:font-semibold text-sm md:text-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#a1c7c0] shadow-sm
+              className={`px-4 py-2 md:px-8 md:py-4 rounded-full cursor-pointer border-2 font-medium md:font-semibold text-sm md:text-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#a1c7c0] shadow-sm
                 ${selectedTags.includes(tag)
                   ? 'bg-[#a1c7c0] text-[#181c1b] border-[#a1c7c0] scale-105 shadow-lg'
                   : 'bg-[#f3f4f6] text-[#4b8376] border-[#e0ece9] hover:bg-[#e8f5f1] hover:border-[#a1c7c0] hover:text-[#222]'}
@@ -128,7 +128,7 @@ const SelectTags = () => {
           </button>
 
           <button
-            className={`px-6 py-2 md:px-12 md:py-4 rounded-full font-bold text-md md:text-md text-[#181c1b] bg-[#a1c7c0] shadow-md transition-all duration-200 hover:bg-[#7bb8a8] disabled:bg-gray-400 disabled:text-gray-200 ${selectedTags.length === 12 ? 'opacity-60 cursor-not-allowed' : ''}`}
+            className={`px-6 py-2 md:px-12 md:py-4 rounded-full font-bold text-md cursor-pointer md:text-md text-[#181c1b] bg-[#a1c7c0] shadow-md transition-all duration-200 hover:bg-[#7bb8a8] disabled:bg-gray-400 disabled:text-gray-200 ${selectedTags.length === 12 ? 'opacity-60 cursor-not-allowed ' : ''}`}
             disabled={selectedTags.length === 12}
             onClick={handleContinue}
           >

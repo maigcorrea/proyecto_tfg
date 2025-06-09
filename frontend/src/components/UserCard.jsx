@@ -115,7 +115,7 @@ const handleClickBoton = (e, email) => {
             {/* Botón Contactar */}
             {user.permiso == 1 && (
               <button
-                className="relative overflow-hidden py-2 px-8 rounded-full mt-4 font-bold text-white shadow-xl transition-all duration-300 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-size-200 bg-pos-0 hover:bg-pos-100 focus:outline-none hover:scale-105 active:scale-95 group"
+                className="relative overflow-hidden py-2 px-8 rounded-full mt-4 font-bold text-white shadow-xl transition-all duration-300 bg-black cursor-pointer bg-size-200 bg-pos-0 hover:bg-pos-100 focus:outline-none hover:scale-105 active:scale-95 group"
                 style={{backgroundSize: '200% 200%', backgroundPosition: '0% 50%'}}
                 onClick={(e) => handleClickBoton(e,user.email)}
               >

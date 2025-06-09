@@ -145,9 +145,13 @@ const PostCard = ({post}) => {
           <div className="flex items-center gap-4 mb-4 cursor-pointer" onClick={handleNavigate}> 
             <div className="relative">
               <img
-                src={`/userAssets/${post.user_id}/${post.img}`}
+                src={ `/userAssets/${post.user_id}/${post.img}`}
                 alt={post.nickname}
                 className="w-14 h-14 rounded-full object-cover border-2 border-blue-200 shadow-sm group-hover:scale-105 transition-transform"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/userAssets/default/defaultImg.png';
+                }}
               />
             </div>
             <div className="flex flex-col">

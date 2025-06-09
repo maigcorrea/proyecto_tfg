@@ -65,7 +65,7 @@ const PostDetails = () => {
                                             className="w-14 h-14 rounded-full object-cover border-2 border-gray-200"
                                             onError={(e) => {
                                                 e.target.onerror = null;
-                                                e.target.src = '/default-avatar.png';
+                                                e.target.src = '/userAssets/default/defaultImg.png';
                                             }}
                                         />
                                     </div>
@@ -118,7 +118,7 @@ const PostDetails = () => {
                                                         className="w-10 h-10 rounded-full object-cover border-2 border-gray-100 flex-shrink-0"
                                                         onError={(e) => {
                                                             e.target.onerror = null;
-                                                            e.target.src = '/default-avatar.png';
+                                                            e.target.src = '/userAssets/default/defaultImg.png';
                                                         }}
                                                     />
                                                     <div className="ml-3 min-w-0">
@@ -170,7 +170,7 @@ const PostDetails = () => {
                                                         className="w-10 h-10 rounded-full object-cover border-2 border-gray-100 flex-shrink-0"
                                                         onError={(e) => {
                                                             e.target.onerror = null;
-                                                            e.target.src = '/default-avatar.png';
+                                                            e.target.src = '/userAssets/default/defaultImg.png';
                                                         }}
                                                     />
                                                     <div className="ml-3 flex-1 min-w-0">
