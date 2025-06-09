@@ -180,7 +180,7 @@ const Inicio = () => {
           </div>
           {/* Testimonio 2 */}
           <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center h-full hover:shadow-2xl transition-shadow duration-300">
-            <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mb-4 text-primary-500 text-3xl font-bold">A</div>
+            <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mb-4 text-primary-500 text-3xl font-bold">J</div>
             <h3 className="font-semibold text-lg mb-1">Javier P.</h3>
             <span className="text-xs text-gray-400 mb-2">Familiar y cuidador</span>
             <p className="text-gray-600 italic text-center">“Compartir mi experiencia aquí me ha ayudado a sobrellevar los días difíciles y a aprender de otros.”</p>
