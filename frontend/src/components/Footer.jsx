@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="z-10 flex-1 min-w-[270px] md:pr-10">
           <div className="mb-3 text-2xl md:text-2xl font-medium leading-tight">Suscríbete a nuestra newsletter y no te pierdas nada!</div>
           <div className="flex flex-col md:flex-row gap-3 mt-4">
-            <input type="text" id="email" name="email" className="px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-[#a1c7c0] focus:outline-none focus:ring focus:ring-[#a1c7c0] focus:ring-opacity-40" placeholder="Email Address" />
+            <input type="text" id="email" name="email" className="px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-[#a1c7c0] focus:outline-none focus:ring focus:ring-[#a1c7c0] focus:ring-opacity-40" placeholder="example@gmail.com" />
             <button className="px-6 py-2.5 text-sm font-medium tracking-wider text-white bg-[#232323] rounded-lg hover:bg-[#a1c7c0] hover:text-[#171717] transition-colors duration-300 cursor-pointer">Suscribirse</button>
           </div>
         </div>
