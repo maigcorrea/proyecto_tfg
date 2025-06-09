@@ -81,7 +81,7 @@ const Inicio = () => {
     <section className='bg-white h-screen text-center'>
       <GridMotion items={items} gradientColor="black" />
         <div className="absolute bottom-50 bg-gradient-to-br z-10 pl-20">
-          <h1 className=" bg-[#a1c7c0]/40 backdrop-blur-md rounded-full p-[20px] text-center text-white px-6 font-serif font-semibold  text-[150px]">Singular Link</h1>
+          <h1 className="bg-[#a1c7c0]/40 backdrop-blur-md rounded-full p-4 md:p-8 text-center text-white px-4 md:px-10 font-serif font-semibold text-4xl sm:text-6xl md:text-8xl lg:text-[120px] xl:text-[150px] leading-tight break-words w-full max-w-full mx-auto">Singular Link</h1>
         </div>
       </section>
 
@@ -101,32 +101,39 @@ const Inicio = () => {
         </div>
       </section>
 
-      <section className="flex flex-col md:flex-row items-center justify-center w-full min-h-[400px] my-20 px-4 md:px-16">
+<div className='w-full h-[400px] bg-gradient-to-t from-white from-10% to-[#0f100f] to-100%'></div>
+      <section className="flex flex-col md:flex-row items-center justify-center w-full min-h-[650px] px-4 md:px-32 lg:px-52">
+        
         {/* Imagen con recorte personalizado */}
-        <div className="md:w-1/2 w-full flex justify-center md:justify-end mb-8 md:mb-0">
-          <div className="relative rounded-3xl" style={{
-            width: '100%',
-            maxWidth: '500px',
-            height: '320px',
-            clipPath: 'polygon(35% 26%, 35% 0%, 97% 0%, 96% 69%, 70% 69%, 70% 91%, 1% 91%, 1% 26%)',
-            WebkitClipPath: 'polygon(35% 26%, 35% 0%, 97% 0%, 96% 69%, 70% 69%, 70% 91%, 1% 91%, 1% 26%)'
-          }}>
-            <img 
-              src={('../../public/mp4/dna.gif')} 
-              alt="" 
+        <div className="md:w-1/2 w-full flex justify-center md:justify-end mb-10 md:mb-0">
+          <div
+            className="relative rounded-3xl shadow-2xl"
+            style={{
+              width: '100%',
+              maxWidth: '600px',
+              height: '420px',
+              clipPath:
+                'polygon(35% 26%, 35% 0%, 97% 0%, 96% 69%, 70% 69%, 70% 91%, 1% 91%, 1% 26%)',
+              WebkitClipPath:
+                'polygon(35% 26%, 35% 0%, 97% 0%, 96% 69%, 70% 69%, 70% 91%, 1% 91%, 1% 26%)',
+            }}
+          >
+            <img
+              src={('../../public/mp4/dna.gif')}
+              alt="Animación de ADN"
               className="object-cover w-full h-full"
             />
           </div>
         </div>
         {/* Contenido */}
-        <div className="md:w-1/2 w-full md:pl-12 flex flex-col justify-center">
-          <span className="text-primary-500 text-sm font-semibold mb-2">¿Por qué unirte?</span>
-          <h2 className="text-2xl md:text-3xl font-light italic mb-2">SingularLink, <span className="not-italic">la red social que</span></h2>
-          <h3 className="text-2xl md:text-3xl font-black mb-4">da visibilidad <span className="font-light ">a realidades</span> <span className="font-black">poco conocidas</span></h3>
-          <ul className="text-gray-700 text-sm md:text-base mb-4 space-y-2">
-            <li className="flex items-start"><span className="text-black mr-2 mt-1">◆</span> Conectar con personas que viven situaciones similares</li>
-            <li className="flex items-start"><span className="text-black mr-2 mt-1">◆</span> Compartir tu historia, tus avances y tus días difíciles.</li>
-            <li className="flex items-start"><span className="text-black mr-2 mt-1">◆</span> Sabemos lo delicado que es hablar de salud. Por eso tu privacidad es prioridad absoluta.</li>
+        <div className="md:w-1/2 w-full md:pl-20 flex flex-col justify-center">
+          <span className="text-primary-500 text-base md:text-lg font-semibold mb-4">¿Por qué unirte?</span>
+          <h2 className="text-3xl md:text-5xl font-light italic mb-2">SingularLink, <span className="not-italic">la red social que</span></h2>
+          <h3 className="text-3xl md:text-5xl font-black mb-8">da visibilidad <span className="font-light">a realidades</span> <span className="font-black">poco conocidas</span></h3>
+          <ul className="text-gray-700 text-base md:text-xl mb-6 space-y-4">
+            <li className="flex items-start"> - Conecta con personas que viven situaciones similares</li>
+            <li className="flex items-start"> - Comparte tu historia, tus avances y tus días difíciles.</li>
+            <li className="flex items-start"> - Sabemos lo delicado que es hablar de salud. Por eso tu privacidad es prioridad absoluta.</li>
           </ul>
         </div>
       </section>
