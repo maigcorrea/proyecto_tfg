@@ -80,7 +80,7 @@ const Inicio = () => {
     <>
     <section className='bg-white h-screen text-center'>
       <GridMotion items={items} gradientColor="black" />
-        <div className="absolute bottom-50 bg-gradient-to-br z-10 pl-20">
+        <div className="absolute bottom-30 bg-gradient-to-br z-10 pl-20">
           <h1 className="bg-[#a1c7c0]/40 backdrop-blur-md rounded-full p-4 md:p-8 text-center text-white px-4 md:px-10 font-serif font-semibold text-4xl sm:text-6xl md:text-8xl lg:text-[120px] xl:text-[150px] leading-tight break-words w-full max-w-full mx-auto">Singular Link</h1>
         </div>
       </section>
@@ -126,7 +126,7 @@ const Inicio = () => {
           </div>
         </div>
         {/* Contenido */}
-        <div className="md:w-1/2 w-full md:pl-20 flex flex-col justify-center">
+        <div className="md:w-1/2 w-full md:pl-20 flex flex-col justify-center pl-4">
           <span className="text-primary-500 text-base md:text-lg font-semibold mb-4">¿Por qué unirte?</span>
           <h2 className="text-3xl md:text-5xl font-light italic mb-2">SingularLink, <span className="not-italic">la red social que</span></h2>
           <h3 className="text-3xl md:text-5xl font-black mb-8">da visibilidad <span className="font-light">a realidades</span> <span className="font-black">poco conocidas</span></h3>
@@ -140,7 +140,7 @@ const Inicio = () => {
 
 
       <section className="flex items-center justify-center min-h-[500px] w-full my-16">
-        <div className="relative w-[90vw] max-w-6xl rounded-2xl overflow-hidden shadow-2xl">
+        <div className="relative w-[90vw] max-w-6xl rounded-2xl overflow-hidden shadow-2xl shadow-[#a1c7c0]">
           {/* Fondo con imagen y gradiente superior */}
           <div className="absolute inset-0 bg-[url('../../public/externalResources/adnImg.jpg')] bg-cover bg-center" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent" />
@@ -163,6 +163,41 @@ const Inicio = () => {
                 Foro
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sección de testimonios */}
+      <section className="w-full  py-20 bg-gradient-to-b from-white to-[#a1c7c0] flex flex-col items-center">
+        <h2 className="text-2xl md:text-4xl font-bold text-primary-500 mb-10 text-center">Testimonios de la comunidad</h2>
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 md:px-8 h-full">
+          {/* Testimonio 1 */}
+          <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center h-full hover:shadow-2xl transition-shadow duration-300">
+            <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mb-4 text-primary-500 text-3xl font-bold">M</div>
+            <h3 className="font-semibold text-lg mb-1">Marina G.</h3>
+            <span className="text-xs text-gray-400 mb-2">Paciente con enfermedad rara</span>
+            <p className="text-gray-600 italic text-center">“Por fin encontré un lugar donde puedo hablar sin miedo y conocer a personas que realmente me entienden.”</p>
+          </div>
+          {/* Testimonio 2 */}
+          <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center h-full hover:shadow-2xl transition-shadow duration-300">
+            <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mb-4 text-primary-500 text-3xl font-bold">A</div>
+            <h3 className="font-semibold text-lg mb-1">Javier P.</h3>
+            <span className="text-xs text-gray-400 mb-2">Familiar y cuidador</span>
+            <p className="text-gray-600 italic text-center">“Compartir mi experiencia aquí me ha ayudado a sobrellevar los días difíciles y a aprender de otros.”</p>
+          </div>
+          {/* Testimonio 3 */}
+          <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center h-full hover:shadow-2xl transition-shadow duration-300">
+            <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mb-4 text-primary-500 text-3xl font-bold">L</div>
+            <h3 className="font-semibold text-lg mb-1">Lucía R.</h3>
+            <span className="text-xs text-gray-400 mb-2">Profesional sanitario</span>
+            <p className="text-gray-600 italic text-center">“Esta comunidad me ha permitido comprender mejor a mis pacientes y ofrecerles recursos útiles.”</p>
+          </div>
+          {/* Testimonio 4 */}
+          <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center h-full hover:shadow-2xl transition-shadow duration-300">
+            <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mb-4 text-primary-500 text-3xl font-bold">S</div>
+            <h3 className="font-semibold text-lg mb-1">Sofía T.</h3>
+            <span className="text-xs text-gray-400 mb-2">Voluntaria</span>
+            <p className="text-gray-600 italic text-center">“Ayudar en SingularLink me ha permitido aportar mi granito de arena y sentirme parte de algo importante.”</p>
           </div>
         </div>
       </section>
