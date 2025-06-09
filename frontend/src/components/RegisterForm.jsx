@@ -102,31 +102,31 @@ const RegisterForm = () => {
           <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-3">
             <div>
               <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">Nombre</label>
-              <input type="text" name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+              <input type="text" name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#b0d5d3] " />
             </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-              <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+              <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#b0d5d3] " />
             </div>
             <div>
               <label htmlFor="nickname" className="block text-sm font-medium text-gray-700">Nickname</label>
-              <input type="text" name="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+              <input type="text" name="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#b0d5d3] " />
             </div>
             <div>
               <label htmlFor="tel" className="block text-sm font-medium text-gray-700">Teléfono</label>
-              <input type="number" name="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" required />
+              <input type="number" name="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#b0d5d3] " required />
             </div>
             <div>
               <label htmlFor="nacimiento" className="block text-sm font-medium text-gray-700">Nacimiento</label>
-              <input type="date" name="nacimiento" value={nac} onChange={(e) => setNac(e.target.value)} min="1927-01-01" max={limitYear} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+              <input type="date" name="nacimiento" value={nac} onChange={(e) => setNac(e.target.value)} min="1927-01-01" max={limitYear} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#b0d5d3] " />
             </div>
             <div>
               <label htmlFor="contr" className="block text-sm font-medium text-gray-700">Contraseña</label>
-              <input type="password" name="contr" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Indica tu contraseña" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" required />
+              <input type="password" name="contr" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Indica tu contraseña" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#b0d5d3] " required />
             </div>
             <div>
               <label htmlFor="repContr" className="block text-sm font-medium text-gray-700">Repetir contraseña</label>
-              <input type="password" name="repContr" value={repPass} onChange={(e) => setRepPass(e.target.value)} placeholder="Repite tu contraseña" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400" required />
+              <input type="password" name="repContr" value={repPass} onChange={(e) => setRepPass(e.target.value)} placeholder="Repite tu contraseña" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#b0d5d3] " required />
             </div>
             <div>
               <label htmlFor="imgPerfil" className="block text-sm font-medium text-gray-700">Imagen</label>
