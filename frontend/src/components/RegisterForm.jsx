@@ -138,14 +138,14 @@ const RegisterForm = () => {
             </div>
             {error && <p className="text-red-500 text-md mt-1">{error}</p>}
             {success && <p className="text-green-500 text-md mt-1">{success}</p>}
-            <button type="submit" className="w-full py-2 mt-2 bg-[#b0d5d3] hover:bg-[#92b1af] text-black font-semibold rounded-lg shadow transition">Enviar</button>
+            <button type="submit" className="w-full py-2 mt-2 bg-[#b0d5d3] hover:bg-[#92b1af] text-black font-semibold rounded-lg shadow transition cursor-pointer">Enviar</button>
           </form>
         </div>
         {/* Panel Derecho: Mensaje de bienvenida */}
-        <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-[#b0d5d3] to-yellow-100 text-black px-10 py-12 relative">
+        <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-[#b0d5d3] to-[#92b1af] text-black px-10 py-12 relative">
           <h2 className="text-3xl font-bold mb-2 text-center">Hola, ya tienes cuenta?</h2>
           <p className="mb-6 text-center text-lg">Identificate para tener acceso a todo el contenido</p>
-          <button onClick={() => navigate('/login')} className="px-8 py-2 border-2 border-black rounded-lg text-black font-semibold hover:bg-black hover:text-white transition">INICIAR SESIÓN</button>
+          <button onClick={() => navigate('/login')} className="px-8 py-2 border-2 border-black rounded-lg text-black font-semibold cursor-pointer hover:bg-black hover:text-white transition">INICIAR SESIÓN</button>
         </div>
       </div>
     </div>

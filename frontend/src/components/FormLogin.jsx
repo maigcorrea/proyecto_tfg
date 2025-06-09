@@ -127,7 +127,7 @@ const FormLogin = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#b0d5d3] focus:outline-none"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#b0d5d3] cursor-pointer focus:outline-none"
                   aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                 >
                   <span className="material-symbols-outlined text-lg">
@@ -138,7 +138,7 @@ const FormLogin = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-2 mt-2 bg-[#b0d5d3] hover:bg-[#92b1af] text-black font-semibold rounded-lg shadow transition"
+              className="w-full py-2 mt-2 bg-[#b0d5d3] hover:bg-[#92b1af] cursor-pointer text-black font-semibold rounded-lg shadow transition"
               disabled={isLoading}
             >
               {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
@@ -150,7 +150,7 @@ const FormLogin = () => {
         <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-[#b0d5d3] to-[#92b1af] text-black px-10 py-12 relative">
           <h2 className="text-3xl font-bold mb-2">¿Nuevo por aquí?</h2>
           <p className="mb-6 text-center text-lg">Regístrate para acceder a todas las funcionalidades</p>
-          <button onClick={() => navigate('/register')} className="px-8 py-2 border-2 border-black rounded-lg text-black font-semibold hover:bg-black hover:text-white transition">REGÍSTRATE</button>
+          <button onClick={() => navigate('/register')} className="cursor-pointer px-8 py-2 border-2 border-black rounded-lg text-black font-semibold hover:bg-black hover:text-white transition">REGÍSTRATE</button>
         </div>
       </div>
     </div>
