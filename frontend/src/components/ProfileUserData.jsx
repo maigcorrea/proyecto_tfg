@@ -280,17 +280,17 @@ const handlePasswordChange = async() => {
         </div>
       )}
 
-<div className='flex mt-16 flex-col items-start lg:flex-row w-full min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100'>
+<div className='flex mt-16 flex-col items-start lg:flex-row w-full min-h-screen '>
 
 
       {/* Contenedor principal */}
-      <div className="w-full lg:w-1/2 flex flex-col items-center ml-4 justify-center py-8 px-2 bg-gradient-to-br from-blue-50 to-cyan-100">
+      <div className="w-full lg:w-1/2 flex flex-col items-center ml-4 justify-center py-8 px-2 ">
         {/* Tarjeta perfil */}
-        <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-xl flex flex-col items-center gap-8 border-t-8 border-cyan-400">
+        <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-xl flex flex-col items-center gap-8 border-t-8 border-[#a1c7c0]">
 
           {/* Imagen de perfil */}
           <div className="relative group mb-2">
-            <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-400 blur opacity-60 group-hover:opacity-90 transition-all"></div>
+            <div className="absolute -inset-2 rounded-full bg-[#a1c7c0] blur opacity-60 group-hover:opacity-90 transition-all"></div>
             <img
               src={userData.ImgPerfil ? `/userAssets/${userSession.id}/${userData.ImgPerfil}` : `/userAssets/default/defaultImg.png`}
               alt="Imagen de perfil del usuario"
@@ -303,7 +303,7 @@ const handlePasswordChange = async() => {
 
           {/* Datos de usuario */}
           <form action="" className="flex flex-col gap-6 w-full">
-            <h1 className="text-2xl font-bold text-cyan-700 mb-2 text-center">Datos de usuario</h1>
+            <h1 className="text-2xl font-bold text-black mb-2 text-center">Datos de usuario</h1>
 
             {Object.entries(userData)
               .filter(([clave]) => clave !== 'ImgPerfil' && clave !== 'Tags' && clave !== 'Permiso' && clave !== 'Tipo')
@@ -340,7 +340,7 @@ const handlePasswordChange = async() => {
                       <>
                         <button
                           type="button"
-                          className="rounded-full cursor-pointer bg-green-500 text-white px-4 py-2 text-xs md:text-sm font-semibold shadow hover:bg-green-600 transition-all flex items-center gap-1"
+                          className="rounded-full cursor-pointer bg-[#637776] text-white px-4 py-2 text-xs md:text-sm font-semibold shadow hover:bg-[#92b1af]/80 transition-all flex items-center gap-1"
                           onClick={() => handleSave(clave)}
                         >
                            Guardar
@@ -363,7 +363,7 @@ const handlePasswordChange = async() => {
               <label htmlFor="Tags" className="font-medium text-gray-600 text-sm md:text-base">Tags</label>
               <div className="flex flex-wrap gap-2 items-center">
                 {userData.Tags.map((tag, index) => (
-                  <span key={index} className="px-3 py-1 rounded-full bg-cyan-300 text-cyan-900 text-xs font-semibold shadow-sm">
+                  <span key={index} className="px-3 py-1 rounded-full bg-[#a1c7c0] text-cyan-900 text-xs font-semibold shadow-sm">
                     {tag}
                   </span>
                 ))}
@@ -395,7 +395,7 @@ const handlePasswordChange = async() => {
           <div className="w-full flex justify-end mt-2">
             <button
               onClick={() => setModifyPassword(true)}
-              className="rounded-full cursor-pointer bg-yellow-400 text-yellow-900 px-6 py-2 font-semibold shadow hover:bg-yellow-500 transition-all flex items-center gap-1"
+              className="rounded-full cursor-pointer bg-[#607574] text-white px-6 py-2 font-semibold shadow hover:bg-[#92b1af]/80 transition-all flex items-center gap-1"
             >
               <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 50 50">
 <path d="M 25 3 C 18.363281 3 13 8.363281 13 15 L 13 20 L 9 20 C 7.355469 20 6 21.355469 6 23 L 6 47 C 6 48.644531 7.355469 50 9 50 L 41 50 C 42.644531 50 44 48.644531 44 47 L 44 23 C 44 21.355469 42.644531 20 41 20 L 37 20 L 37 15 C 37 8.363281 31.636719 3 25 3 Z M 25 5 C 30.566406 5 35 9.433594 35 15 L 35 20 L 15 20 L 15 15 C 15 9.433594 19.433594 5 25 5 Z M 9 22 L 41 22 C 41.554688 22 42 22.445313 42 23 L 42 47 C 42 47.554688 41.554688 48 41 48 L 9 48 C 8.445313 48 8 47.554688 8 47 L 8 23 C 8 22.445313 8.445313 22 9 22 Z M 25 30 C 23.300781 30 22 31.300781 22 33 C 22 33.898438 22.398438 34.6875 23 35.1875 L 23 38 C 23 39.101563 23.898438 40 25 40 C 26.101563 40 27 39.101563 27 38 L 27 35.1875 C 27.601563 34.6875 28 33.898438 28 33 C 28 31.300781 26.699219 30 25 30 Z"></path>
@@ -415,8 +415,8 @@ const handlePasswordChange = async() => {
               key={tab}
               className={`relative py-2 px-5 font-semibold rounded-lg transition-all duration-200 focus:outline-none whitespace-nowrap
                 ${selectedTab === idx
-                  ? 'bg-gradient-to-tr from-blue-400 to-cyan-400 text-white shadow-md scale-105'
-                  : 'bg-white text-cyan-700 hover:bg-cyan-100 hover:text-blue-600 border border-transparent'}
+                  ? 'bg-[#a1c7c0] text-white shadow-md scale-105 cursor-pointer'
+                  : 'bg-white text-cyan-700 hover:bg-cyan-100 hover:text-[#a1c7c0] border border-transparent cursor-pointer'}
               `}
               style={{ minWidth: 120 }}
               onClick={() => setSelectedTab(idx)}
@@ -424,7 +424,7 @@ const handlePasswordChange = async() => {
             >
               {tab}
               {selectedTab === idx && (
-                <span className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-2/3 h-1 rounded bg-blue-400 animate-fadeIn"></span>
+                <span className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-2/3 h-1 rounded bg-[#a1c7c0] animate-fadeIn"></span>
               )}
             </button>
           ))}
